@@ -1,9 +1,15 @@
 package DBModels;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import Entities.Registrant;
 
 public class RegistrantDBModel {
-
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+	
 	public boolean authenticate(String name, String password) {
 		return false;
 	}
@@ -13,6 +19,7 @@ public class RegistrantDBModel {
 	}
 
 	public void setConfirmed(String name, String activationCode) {
+		
 	}
 
 	public boolean saveAccount(Registrant registrant) {
