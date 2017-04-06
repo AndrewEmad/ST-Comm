@@ -12,59 +12,61 @@ public class Registrant {
 	private String password;
 	private boolean confirmed;
 	
-	public void Registrant() {
+	
+	public void setInfo(String name, Date birtdate, String gender, String mail, String country, String password,
+			boolean confirmed) {
+		this.name = name;
+		this.birtdate = birtdate;
+		this.gender = gender;
+		this.mail = mail;
+		this.country = country;
+		this.password = password;
+		this.confirmed = confirmed;
 	}
 
 	public String getName() {
-		return null;
+		return name;
 	}
-
 	public void setName(String name) {
+		this.name = name;
 	}
-
-	public Date getBirthdate() {
-		return null;
+	public Date getBirtdate() {
+		return birtdate;
 	}
-
-	public void setBirthdate(Date birthdate) {
+	public void setBirtdate(Date birtdate) {
+		this.birtdate = birtdate;
 	}
-
 	public String getGender() {
-		return null;
+		return gender;
 	}
-
 	public void setGender(String gender) {
+		this.gender = gender;
 	}
-
 	public String getMail() {
-		return null;
+		return mail;
 	}
-
 	public void setMail(String mail) {
+		this.mail = mail;
 	}
-
 	public String getCountry() {
-		return null;
+		return country;
 	}
-
 	public void setCountry(String country) {
+		this.country = country;
 	}
-
 	public String getPassword() {
-		return null;
+		return password;
 	}
-
 	public void setPassword(String password) {
+		this.password = password;
 	}
-
-	public void setInfo(String name, Date birthdate, String gender, String mail, String country, String password) {
-	}
-
-	public void setConfirmed() {
-	}
-
 	public boolean isConfirmed() {
-		return false;
+		return confirmed;
 	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
+	
+
 
 }
