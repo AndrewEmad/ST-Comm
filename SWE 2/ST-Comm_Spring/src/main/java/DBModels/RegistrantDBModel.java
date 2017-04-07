@@ -26,4 +26,7 @@ public class RegistrantDBModel {
 		return false;
 	}
 
+	public static String getActivationCode(String name){
+		return "DummyActivationCode";
+	}
 }
