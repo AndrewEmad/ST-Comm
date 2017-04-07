@@ -23,7 +23,7 @@ public class RegistrantDBModel {
 	}
 
 	public static boolean saveAccount(Registrant registrant) {
-		return false;
+		return true;
 	}
 
 	public static String getActivationCode(String name){
