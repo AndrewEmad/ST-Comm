@@ -1,6 +1,5 @@
 package Entities;
 
-import java.sql.Date;
 
 public class Student extends Registrant {
 
@@ -13,7 +12,4 @@ public class Student extends Registrant {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	  
-	  
-	  
 }

@@ -11,15 +11,15 @@ public class RegistrantDBModel {
 	JdbcTemplate jdbcTemplate;
 	
 	public static boolean authenticate(String name, String password) {
-		return false;
+		return true;
 	}
 
 	public static boolean exists(String name, String mail) {
 		return false;
 	}
 
-	public static void setConfirmed(String name, String activationCode) {
-		
+	public static boolean setConfirmed(String name, String activationCode) {
+		return true;
 	}
 
 	public static boolean saveAccount(Registrant registrant) {

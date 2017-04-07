@@ -1,39 +1,33 @@
 package Controllers;
 
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.Date;
-import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import DBModels.RegistrantDBModel;
 import Entities.Registrant;
-import ch.qos.logback.classic.Logger;
 
 @RestController
 public class RegistrantController {
 
 	@Autowired
 	JavaMailSender javaMailSender;
+
+	@Autowired
+	HttpServletResponse httpServletResponse;
 	
 	@RequestMapping(method=RequestMethod.POST, value="/st-comm.com/signup")
 	public boolean createAccount(@RequestParam String name, @RequestParam("birthdate") @DateTimeFormat(pattern="yyyy-MM-dd") Date birthdate,
@@ -57,9 +51,9 @@ public class RegistrantController {
 		return true;
 	}
 
-	@RequestMapping("/st-comm.com/login")
-	public boolean authenticate(String name, String password) {
-		return true;
+	@RequestMapping(method=RequestMethod.POST, value="/st-comm.com/login")
+	public boolean authenticate(@RequestParam String name, @RequestParam String password) {
+		return RegistrantDBModel.authenticate(name, password);
 	}
 
 	public boolean ValidateInput(String name, Date birthdate, String gender, String mail, String country,
@@ -68,9 +62,13 @@ public class RegistrantController {
 	}
 
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
-	public  void setConfirmed(String name, @PathVariable String activationCode) {
-//		RegistrantDBModel.setConfirmed(name, activationCode);
-//		return new ModelAndView("redirect:" + "accountActivationError.html");
+	public  void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
+		if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
+			//go to home page
+		}
+		else{
+			httpServletResponse.sendRedirect("http://localhost:8090/accountActivationError.html");
+		}
 	}
 
 	public void sendConfirmationMail(String activationCode, Registrant registrant) throws MessagingException {
