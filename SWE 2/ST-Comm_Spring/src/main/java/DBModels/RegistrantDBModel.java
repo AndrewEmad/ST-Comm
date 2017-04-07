@@ -10,19 +10,19 @@ public class RegistrantDBModel {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public boolean authenticate(String name, String password) {
+	public static boolean authenticate(String name, String password) {
 		return false;
 	}
 
-	public boolean exists(String name, String mail) {
+	public static boolean exists(String name, String mail) {
 		return false;
 	}
 
-	public void setConfirmed(String name, String activationCode) {
+	public static void setConfirmed(String name, String activationCode) {
 		
 	}
 
-	public boolean saveAccount(Registrant registrant) {
+	public static boolean saveAccount(Registrant registrant) {
 		return false;
 	}
 

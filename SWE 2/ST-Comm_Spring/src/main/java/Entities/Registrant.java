@@ -13,10 +13,10 @@ public class Registrant {
 	private boolean confirmed;
 	
 	
-	public void setInfo(String name, Date birtdate, String gender, String mail, String country, String password,
+	public void setInfo(String name, Date birthdate, String gender, String mail, String country, String password,
 			boolean confirmed) {
 		this.name = name;
-		this.birtdate = birtdate;
+		this.birtdate = birthdate;
 		this.gender = gender;
 		this.mail = mail;
 		this.country = country;
