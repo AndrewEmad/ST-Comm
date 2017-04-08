@@ -52,7 +52,7 @@ public class RegistrantDBModel {
 		return callableSt.getBoolean(3);
 	}
 
-	public static boolean saveAccount(Registrant registrant) {
+	public static boolean saveAccount(Registrant registrant, String type) {
 		return false;
 	}
 

@@ -33,8 +33,8 @@ public class RegistrantController {
 	@RequestMapping(method=RequestMethod.POST, value="/st-comm.com/signup")
 	public boolean createAccount(@RequestParam String name, @RequestParam("birthdate") @DateTimeFormat(pattern="yyyy-MM-dd") Date birthdate,
 								 @RequestParam String gender, @RequestParam String mail,
-								 @RequestParam String country, @RequestParam String password) {
-		//Validate input
+								 @RequestParam String country, @RequestParam String password,
+								 @RequestParam String type) {
 		try {
 			if(RegistrantDBModel.exists(name, mail) == true){
 				return false;
@@ -45,7 +45,7 @@ public class RegistrantController {
 		}
 		Registrant registrant = new Registrant();
 		registrant.setInfo(name, birthdate, gender, mail, country, password, false);
-		if(RegistrantDBModel.saveAccount(registrant) == false){
+		if(RegistrantDBModel.saveAccount(registrant, type) == false){
 			return false;
 		}
 		try {
@@ -66,11 +66,6 @@ public class RegistrantController {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	public boolean ValidateInput(String name, Date birthdate, String gender, String mail, String country,
-			String password) {
-		return true;
 	}
 
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
