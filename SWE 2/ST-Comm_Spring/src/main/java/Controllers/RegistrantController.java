@@ -34,7 +34,7 @@ public class RegistrantController {
 	public boolean createAccount(@RequestParam String name, @RequestParam("birthdate") @DateTimeFormat(pattern="yyyy-MM-dd") Date birthdate,
 								 @RequestParam String gender, @RequestParam String mail,
 								 @RequestParam String country, @RequestParam String password,
-								 @RequestParam String type) {
+								 @RequestParam int type) {
 		try {
 			if(RegistrantDBModel.exists(name, mail) == true){
 				return false;
@@ -72,10 +72,10 @@ public class RegistrantController {
 	public  void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
 		try {
 			if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
-				//go to home page
+				httpServletResponse.sendRedirect("/accountActivated.html");
 			}
 			else{
-				httpServletResponse.sendRedirect("http://localhost:8090/accountActivationError.html");
+				httpServletResponse.sendRedirect("/accountActivationError.html");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
