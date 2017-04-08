@@ -72,10 +72,10 @@ public class RegistrantController {
 	public  void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
 		try {
 			if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
-				//go to home page
+				httpServletResponse.sendRedirect("/accountActivated.html");
 			}
 			else{
-				httpServletResponse.sendRedirect("http://localhost:8090/accountActivationError.html");
+				httpServletResponse.sendRedirect("/accountActivationError.html");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
