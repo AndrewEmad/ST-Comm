@@ -5,7 +5,7 @@ import java.util.Date;
 public class Registrant {
 
 	private String name;
-	private Date birtdate;
+	private Date birthdate;
 	private String gender;
 	private String mail;
 	private String country;
@@ -16,7 +16,7 @@ public class Registrant {
 	public void setInfo(String name, Date birthdate, String gender, String mail, String country, String password,
 			boolean confirmed) {
 		this.name = name;
-		this.birtdate = birthdate;
+		this.birthdate = birthdate;
 		this.gender = gender;
 		this.mail = mail;
 		this.country = country;
@@ -30,11 +30,11 @@ public class Registrant {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getBirtdate() {
-		return birtdate;
+	public Date getBirthdate() {
+		return birthdate;
 	}
-	public void setBirtdate(Date birtdate) {
-		this.birtdate = birtdate;
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 	public String getGender() {
 		return gender;

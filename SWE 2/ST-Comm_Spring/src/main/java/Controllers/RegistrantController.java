@@ -34,7 +34,7 @@ public class RegistrantController {
 	public boolean createAccount(@RequestParam String name, @RequestParam("birthdate") @DateTimeFormat(pattern="yyyy-MM-dd") Date birthdate,
 								 @RequestParam String gender, @RequestParam String mail,
 								 @RequestParam String country, @RequestParam String password,
-								 @RequestParam String type) {
+								 @RequestParam int type) {
 		try {
 			if(RegistrantDBModel.exists(name, mail) == true){
 				return false;
