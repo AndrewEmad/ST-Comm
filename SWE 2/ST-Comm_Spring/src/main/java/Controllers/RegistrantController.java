@@ -45,10 +45,10 @@ public class RegistrantController {
 		}
 		Registrant registrant = new Registrant();
 		registrant.setInfo(name, birthdate, gender, mail, country, password, false);
-		if(RegistrantDBModel.saveAccount(registrant, type) == false){
-			return false;
-		}
 		try {
+			if(RegistrantDBModel.saveAccount(registrant, type) == false){
+				return false;
+			}
 			String activationCode = RegistrantDBModel.getActivationCode(name);
 			sendConfirmationMail(activationCode, registrant);
 		} catch (Exception e) {
