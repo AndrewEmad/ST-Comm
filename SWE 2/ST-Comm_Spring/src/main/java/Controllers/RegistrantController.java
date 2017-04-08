@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.mail.MessagingException;
@@ -34,8 +35,13 @@ public class RegistrantController {
 								 @RequestParam String gender, @RequestParam String mail,
 								 @RequestParam String country, @RequestParam String password) {
 		//Validate input
-		if(RegistrantDBModel.exists(name, mail) == true){
-			return false;
+		try {
+			if(RegistrantDBModel.exists(name, mail) == true){
+				return false;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		Registrant registrant = new Registrant();
 		registrant.setInfo(name, birthdate, gender, mail, country, password, false);
@@ -45,7 +51,7 @@ public class RegistrantController {
 		try {
 			String activationCode = RegistrantDBModel.getActivationCode(name);
 			sendConfirmationMail(activationCode, registrant);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			return false;
 		}
 		return true;
@@ -53,7 +59,13 @@ public class RegistrantController {
 
 	@RequestMapping(method=RequestMethod.POST, value="/st-comm.com/login")
 	public boolean authenticate(@RequestParam String name, @RequestParam String password) {
-		return RegistrantDBModel.authenticate(name, password);
+		try {
+			return RegistrantDBModel.authenticate(name, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean ValidateInput(String name, Date birthdate, String gender, String mail, String country,
@@ -63,11 +75,16 @@ public class RegistrantController {
 
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
 	public  void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
-		if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
-			//go to home page
-		}
-		else{
-			httpServletResponse.sendRedirect("http://localhost:8090/accountActivationError.html");
+		try {
+			if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
+				//go to home page
+			}
+			else{
+				httpServletResponse.sendRedirect("http://localhost:8090/accountActivationError.html");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
