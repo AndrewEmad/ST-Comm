@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="main">
+<head>
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css" />
+    <script src="JS/jquery-3.1.1.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script type="text/javascript" src="JS/jsHome.js" ></script>
+    <script src="JS/bootstrap.min.js"></script>
+    <title>home</title>
+</head>
+<body>
+	<div ng-controller="ctrl">
+        <ul>
+            <li ng-repeat="course in courses">
+                {{course}}
+            </li>
+        </ul>
+		
+		<form action="index.html">
+        	<input type="submit" value="Sign Out" id="signOut" />
+    	</form>    
+    </div>
+    
+
+</body>
+</html>
