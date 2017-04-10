@@ -37,7 +37,7 @@ public class RegistrantController {
 	public boolean createAccount(@RequestParam String name, @RequestParam("birthdate") @DateTimeFormat(pattern="yyyy-MM-dd") Date birthdate,
 								 @RequestParam String gender, @RequestParam String mail,
 								 @RequestParam String country, @RequestParam String password,
-								 @RequestParam int type) {
+								 @RequestParam String type) {
 		try {
 			if(RegistrantDBModel.exists(name, mail) == true){
 				return false;
@@ -49,7 +49,14 @@ public class RegistrantController {
 		Registrant registrant = new Registrant();
 		registrant.setInfo(name, birthdate, gender, mail, country, password, false);
 		try {
-			if(RegistrantDBModel.saveAccount(registrant, type) == false){
+			int registrantCode;
+			if(type.equals("student")){
+				registrantCode = 0;
+			}
+			else{
+				registrantCode = 1;
+			}
+			if(RegistrantDBModel.saveAccount(registrant, registrantCode) == false){
 				return false;
 			}
 			String activationCode = RegistrantDBModel.getActivationCode(name);
