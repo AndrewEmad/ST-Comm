@@ -1,0 +1,46 @@
+
+#signUp {
+  cursor:pointer;
+}
+body{
+    background: #eee;
+}
+.container{
+    padding: 0;
+    background: white;
+    width:50%;
+    height:100%;
+    margin-top:6%; 
+}
+#signIn{
+    text-align: center;
+    padding: 5% 0;
+}
+#signUp{
+    text-align: center;
+    padding: 5% 0;
+    background: #eee;
+}
+#paragraph{
+    margin: 6% 0;
+    text-align: center;
+}
+form{
+    text-align: center;
+}
+#userName{
+    margin-bottom: 1%;
+    width:60%;
+}
+#password{
+    margin-bottom: 3%;
+    width:60%;
+}
+#SignIn{
+    margin-bottom: 3%;
+}
+hr{
+    margin: 5% auto;
+    height:2%;
+    width:55%;
+}
