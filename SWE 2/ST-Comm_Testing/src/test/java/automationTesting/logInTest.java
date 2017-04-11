@@ -14,25 +14,29 @@ public class logInTest
 {
 	public static void LogIn() throws IOException, InterruptedException
 	{
-		System.setProperty("webdriver.gecko.driver","C:\\Users\\Mariam Ashraf\\Downloads\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///C://Users//Mariam Ashraf//Desktop//AngularJs//WebContent//index.html");
 		driver.findElement(By.id("join")).click();
-		//driver.findElement(By.id("signIn")).click();
+		Thread.sleep(500);
+		driver.findElement(By.id("signIn")).click();
 		String url=driver.getCurrentUrl();
 		
-		FileInputStream fileStream=new FileInputStream(new File("C:\\Users\\Mariam Ashraf\\Documents\\eclipse\\projects\\ST-Comm_Testing\\logInData.xlsx"));
+		FileInputStream fileStream=new FileInputStream(new File("logInData.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
 		XSSFSheet sheet=workBook.getSheetAt(0);
 		int numOfRows=sheet.getLastRowNum();
+		String name,password;
 		for(int row=0;row<=numOfRows;row++)
 		{
-			String name=sheet.getRow(row).getCell(0).getStringCellValue();
-			String password=sheet.getRow(row).getCell(1).getStringCellValue();
-			if(name.equals("'"))
+			if(sheet.getRow(row).getCell(0).getStringCellValue()!=null)
+				name=sheet.getRow(row).getCell(0).getStringCellValue();
+			else
 				name="";
-			if(password.equals("'"))
+			if(sheet.getRow(row).getCell(1).getStringCellValue()!=null)
+				password=sheet.getRow(row).getCell(1).getStringCellValue();
+			else
 				password="";
 			driver.findElement(By.id("userName")).clear();
 			driver.findElement(By.id("password")).clear();
@@ -45,7 +49,8 @@ public class logInTest
 			{
 				driver.findElement(By.id("signOut")).click();
 				driver.findElement(By.id("join")).click();
-			//	driver.findElement(By.id("signIn")).click();
+				Thread.sleep(500);
+				driver.findElement(By.id("signIn")).click();
 			}
 		}
 		fileStream.close();

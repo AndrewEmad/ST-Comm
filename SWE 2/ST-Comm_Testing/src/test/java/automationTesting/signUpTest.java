@@ -19,7 +19,7 @@ public class signUpTest
 {
 	public static void SignUp() throws IOException, InterruptedException
 	{
-		System.setProperty("webdriver.gecko.driver","C:\\Users\\Mariam Ashraf\\Downloads\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///C://Users//Mariam Ashraf//Desktop//AngularJs//WebContent//index.html");
@@ -27,7 +27,7 @@ public class signUpTest
 		Thread.sleep(500);
 		driver.findElement(By.id("signUp")).click();
 		String url=driver.getCurrentUrl();
-		FileInputStream fileStream=new FileInputStream(new File("C:\\Users\\Mariam Ashraf\\Documents\\eclipse\\projects\\ST-Comm_Testing\\signUpData.xlsx"));
+		FileInputStream fileStream=new FileInputStream(new File("signUpData.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
 		XSSFSheet sheet=workBook.getSheetAt(0);
 		int numOfRows=sheet.getLastRowNum();
@@ -109,7 +109,9 @@ public class signUpTest
 			driver.findElement(By.id("password")).clear();
 			driver.findElement(By.id("confirmPassword")).clear();
 			driver.findElement(By.id("student")).click();
-			
+			dropDownListBox = driver.findElement(By.name("country"));
+			clickThis = new Select(dropDownListBox);
+			clickThis.selectByVisibleText("Egypt");
 			((JavascriptExecutor)driver).executeScript 
 			("document.getElementById('date').removeAttribute('readonly',0);");
 			WebElement BirthDate= driver.findElement(By.id("date"));
