@@ -1,0 +1,11 @@
+#createCourse{
+    display: none;
+}
+#createGame{
+    display: none;
+}
+#courseForm{
+    display: none;
+    background: #eee;
+    position: absolute;
+}
