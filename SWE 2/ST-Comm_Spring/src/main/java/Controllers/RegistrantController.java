@@ -103,4 +103,8 @@ public class RegistrantController {
 		javaMailSender.send(message);
 	}
 
+	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/query/registrant-type")
+	public String getRegistrantType(String name){
+		return RegistrantDBModel.getRegistrantType(name);
+	}
 }
