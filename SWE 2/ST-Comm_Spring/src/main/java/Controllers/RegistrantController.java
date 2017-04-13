@@ -106,7 +106,13 @@ public class RegistrantController {
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/query/registrant-type")
 	public String getRegistrantType(String name){
 		String type;
-		int registrantCode =  RegistrantDBModel.getRegistrantType(name);
+		int registrantCode = 0;
+		try {
+			registrantCode = RegistrantDBModel.getRegistrantType(name);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(registrantCode == 0){
 			type = "student";
 		}

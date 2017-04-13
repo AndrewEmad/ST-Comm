@@ -8,6 +8,8 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
+import org.apache.commons.logging.Log;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 

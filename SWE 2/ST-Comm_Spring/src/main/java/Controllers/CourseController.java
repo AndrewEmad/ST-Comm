@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,22 +20,45 @@ public class CourseController {
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/new")
 	public boolean createCourse(String courseName, String teacherName) {
-		return CourseDBModel.saveCourse(courseName, teacherName);
+		try {
+			return CourseDBModel.saveCourse(courseName, teacherName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@RequestMapping("/st-comm.com/courses/list-all")
 	public Vector<String> getCourses() {
-		return CourseDBModel.fetchCourses();
+		try {
+			return CourseDBModel.fetchCourses();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/list-by-registrant")
 	public Vector<String> getCourses(String registrantName) {
-		return CourseDBModel.fetchCourses(registrantName);
+		try {
+			return CourseDBModel.fetchCourses(registrantName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/register")
 	public boolean register(String studentName, String courseName) {
-		return CourseDBModel.enroll(courseName, studentName);
+		try {
+			return CourseDBModel.enroll(courseName, studentName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

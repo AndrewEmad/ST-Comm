@@ -13,6 +13,7 @@ app.controller('ctrl', function($scope, $http) {
 	    	});
 	
 	    $scope.submit = function(){
+	    	
 	    	$http({
     			url: "http://localhost:8090/st-comm.com/courses/new",
     	    	method: "GET",
