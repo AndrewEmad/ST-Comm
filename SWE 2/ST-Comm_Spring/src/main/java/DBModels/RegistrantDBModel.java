@@ -80,4 +80,8 @@ public class RegistrantDBModel {
 			callableSt.executeUpdate();
 			return callableSt.getString(3);
 	}
+	
+	public static int getRegistrantType(String name){
+		return 0;
+	}
 }
