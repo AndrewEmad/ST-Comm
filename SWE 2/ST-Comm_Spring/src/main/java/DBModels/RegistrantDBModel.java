@@ -33,7 +33,7 @@ public class RegistrantDBModel {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call Exist(?, ?, ?)}");
+		CallableStatement callableSt = connection.prepareCall("{call registrantExists(?, ?, ?)}");
 		callableSt.setString(1, name);
 		callableSt.setString(2, mail);
 		callableSt.registerOutParameter(3, Types.BIT);
@@ -45,7 +45,7 @@ public class RegistrantDBModel {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call Exist(?, ?, ?)}");
+		CallableStatement callableSt = connection.prepareCall("{call setConfirmed(?, ?, ?)}");
 		callableSt.setString(1, name);
 		callableSt.setString(2, activationCode);
 		callableSt.registerOutParameter(3, Types.BIT);
@@ -66,7 +66,6 @@ public class RegistrantDBModel {
 		callableSt.setString(5, registrant.getGender());
 		callableSt.setString(6, registrant.getMail());
 		callableSt.setString(7, registrant.getPassword());
-		callableSt.executeUpdate();
 		return callableSt.executeUpdate()==0;
 	}
 
@@ -81,7 +80,14 @@ public class RegistrantDBModel {
 			return callableSt.getString(3);
 	}
 	
-	public static int getRegistrantType(String name){
-		return 0;
+	public static int getRegistrantType(String name) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call getRegistrantType(?, ?)}");
+		callableSt.setString(1, name);
+		callableSt.registerOutParameter(2, Types.INTEGER);
+		callableSt.executeUpdate();
+		return callableSt.getInt(3);
 	}
 }
