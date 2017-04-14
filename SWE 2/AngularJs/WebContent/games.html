@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="main">
 <head>
+	<link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/styleGames.css" />
+	<script src="lib/angular.min.js"></script>
 	<script src="JS/jquery-3.1.1.min.js"></script>
 	<script src="JS/jsGames.js"></script>
     <title>games</title>
@@ -8,11 +11,23 @@
 <body >
 	<div ng-controller="ctrl">
   		<ul>
-    		<li ng-repeat="game in games" name={{game}} onclick="clicked(this);">
+    		<li ng-repeat="game in games" name={{game}} ng-click="playGame(game);">
                 {{game}}
             </li>
     	</ul>
-    	
+    	<div id="playGameForm" >
+    		<form >
+    			<h2 id ="questionNum"></h2>
+    			<h3 id="score"></h3>
+    			<div> {{question}}</div>
+    			<div ng-repeat="choice in choices"><input type="radio" value={{choice}}
+    				 name="choices" checked/>{{choice}}</div>
+    			
+    			<!-- <div id="answer">correct!</div> -->
+    			<input type="button" id="submitAnswer" value ="submit" ng-click="submitAnswer()"/>
+    			<input type="button" id="closeGame" value="Save score then Close game"/>
+    		</form>
+    	</div>
     
 	</div>
 </body>

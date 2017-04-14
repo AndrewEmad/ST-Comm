@@ -3,8 +3,9 @@ var app = angular.module('main',[]);
 app.controller('ctrl', function($scope, $http) {
     	
     	document.getElementById("button").onclick=function(){
-    		alert($scope.num);
-    		var datax = {number1: $scope.num,number2:2};
+    		var arr =[];
+    		var datax = {sum: 1,sub: 2,mul: 3,div: 4,pow: 5};
+    		arr[0] = datax;
     		$http({
     		url: "http://localhost:8090/calculator/",
     	    method: "POST",
@@ -12,8 +13,7 @@ app.controller('ctrl', function($scope, $http) {
    		    }).then(function(response){
     	    	alert("successfull");
     		    });}	
-    	});
-    	//location.href = "home.html";  
+    	});  
     
     
 

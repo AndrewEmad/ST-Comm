@@ -3,6 +3,28 @@ var app = angular.module('main',[]);
 app.controller('ctrl', function($scope, $http) {
         //var data = [{"name" : "course1"},{"name" : "course2"}];
         //$scope.courses = data;
+        var courseName;
+        var gameName;
+        var questions;
+        var question;
+        var numOfQuestions;
+        var questionNum;
+        
+        /*$http({
+    		url: "http://localhost:8090/st-comm.com/query/registrant-type",
+    	    method: "GET",
+    	    params: {name : localStorage.getItem("userName")}
+   		    }).then(function(response){
+	    		if(response.data == "teacher"){
+					document.getElementById("createCourse").style.display = "block";
+        			document.getElementById("createGame").style.display = "block";	    		
+	    		}
+	    	});*/
+    		
+    		if(true){
+        		document.getElementById("createCourse").style.display = "block";
+        		document.getElementById("createGame").style.display = "block";
+    		}
         
         $http({
     		url: "http://localhost:8090/st-comm.com/courses/list-by-registrant",
@@ -12,8 +34,7 @@ app.controller('ctrl', function($scope, $http) {
 	    		$scope.courses = response.data;
 	    	});
 	
-	    $scope.submit = function(){
-	    	
+	    $scope.createCourse = function(){
 	    	$http({
     			url: "http://localhost:8090/st-comm.com/courses/new",
     	    	method: "GET",
@@ -21,45 +42,114 @@ app.controller('ctrl', function($scope, $http) {
     	    			,teacherName : localStorage.getItem("userName")}
    		    }).then(function(response){
    		    	if(response.data){
-   		    		alert($scope.newCourse);
-   		    		$scope.courses = [$scope.newCourse];
+   		    		//alert($scope.newCourse);
+   		    		//$scope.courses = [$scope.newCourse];
         			document.getElementById("courseForm").style.display="none";
+        			location.reload();
    		    	}
    		    	else{
-   		    		
+   		    		// if not unique 
    		    	}
 	    		
 	    		});
 	    }
+	    
+	    $scope.createGame=function(){
+	    	questionNum = 1;
+	    	questions =[];
+	    	
+	    	courseName = document.getElementById("courseName").value;
+	    	gameName = document.getElementById("gameName").value;
+	    	numOfQuestions = document.getElementById("numOfQuestions").value;
+	    	document.getElementById("gameForm").style.display="none";
+	    	document.getElementById("questionForm").style.display="block";
+	    	document.getElementById("questionNum").innerHTML = "Question "+questionNum+
+	    														" Out of "+numOfQuestions;
+	    }
+	    $scope.submitQuestion=function(){
+	    	var choices =[];
+	    	var i =0;
+	    	if($("input[name=Qtype]:checked").val() == "MCQ"){
+	    		if($("#mcq1").val() != ""){
+	    			choices[i] = $("#mcq1").val();
+	    			i++;
+	    		}
+	    		if($("#mcq2").val() != ""){
+	    			choices[i] = $("#mcq2").val();
+	    			i++;
+	    		}
+	    		if($("#mcq3").val() != ""){
+	    			choices[i] = $("#mcq3").val();
+	    			i++;
+	    		}
+	    		if($("#mcq4").val() != ""){
+	    			choices[i] = $("#mcq4").val();
+	    		}
+	    	}
+	    	question = {type: $("input[name=Qtype]:checked").val() , questionStatement: 
+	    	$("#Qstatement").val() , choices : choices ,correctAnswer : $("#answer").val()};
+        	questions[questionNum-1] = question;
+       
+	    	questionNum++;
+	    	if(questionNum == numOfQuestions)
+	    		document.getElementById("submitQuestion").value = "save";
+	    	
+	    	if(questionNum > numOfQuestions){
+	    		/* call service to save questions and gameName and courseName */
+	    		/*for(var x=0;x<questions.length;x++){
+	    			alert(questions[x].type);
+	    			alert(questions[x].questionStatement);
+	    			alert(questions[x].correctAnswer);
+	    			alert(questions[x].choices[0]);
+	    		}*/
+	    		//alert("the game saved successfully");
+	    		document.getElementById("questionForm").style.display = "none";
+	    	}
+	    	
+	    	document.getElementById("questionNum").innerHTML = "Question "+questionNum+
+	    														" Out of "+numOfQuestions;
+	    	$("#mcq1").val("");
+	    	$("#mcq2").val("");
+	    	$("#mcq3").val("");
+	    	$("#mcq4").val("");
+	    	$("#Qstatement").val("");
+	    	$("#answer").val("");
+	    }
         
         $(document).ready(function(){
+        	$('#mcq').change(function () {
+	        	if($(this).is(':checked')) {
+	        		document.getElementById("choices").style.display = "block"
+	            	document.getElementById("mcqChoices").style.display = "block"
+	        	}
+	    	});
+	    
+	    	$('#tf').change(function () {
+	        	if($(this).is(':checked')) {
+	            	document.getElementById("mcqChoices").style.display = "none"
+	            	document.getElementById("choices").style.display = "none"
+	        	}
+	    	});
+        	
         	document.getElementById("signOut").onclick = function(){
         		localStorage.removeItem("userName");
         	}
         	
-        	// first call service to get type
-    
-    		if(/*localStorage("type") == "teacher"*/true){
-        		document.getElementById("createCourse").style.display = "block";
-        		document.getElementById("createGame").style.display = "block";
-    		}
-    		
-    		/*$('#form1').submit(function (event)
-        		{
-            		// call service to check if unique
-            		
-            		
-        		});*/
-        		
     		document.getElementById("createCourse").onclick = function(){
         		document.getElementById("courseForm").style.display="block";
+        		//document.getElementById("test").style.opacity = "0.5";
     		}
-    		document.getElementById("cancel").onclick = function(){
+    		document.getElementById("cancelCreateCourse").onclick = function(){
         		document.getElementById("courseForm").style.display="none";
     		}
     		document.getElementById("createGame").onclick = function(){
-        		// go to form of create game ( div)
+        		document.getElementById("gameForm").style.display = "block";
+        		document.getElementById("questionForm").style.display = "none";
     		}
+    		$(".cancelCreateGame").click (function(){
+        		document.getElementById("gameForm").style.display = "none";
+        		document.getElementById("questionForm").style.display = "none";
+    		})
     
         })
     	});

@@ -14,7 +14,7 @@ app.controller('ctrl', function($scope, $http) {
     	    params: data
    		    }).then(function(response){
    		    	if(response.data){
-   		    		var username = $("#userName").val; 
+   		    		var username = $("#userName").val(); 
    		    		localStorage.setItem("userName",username);
    		    		location.href = "home.html";
    		    	}
