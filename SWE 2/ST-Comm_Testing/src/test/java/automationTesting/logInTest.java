@@ -17,7 +17,7 @@ public class logInTest
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
-		driver.get("http://localhost:8080/AngularJs/");
+		driver.get("file:///C://Users//Mariam Ashraf//Desktop//AngularJs//WebContent//index.html");
 		driver.findElement(By.id("join")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("signIn")).click();
