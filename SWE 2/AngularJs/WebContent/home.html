@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="main">
+<head>
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/styleHome.css" />
+    <script src="lib/angular.min.js"></script>
+    <script src="JS/jquery-3.1.1.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JS/jsHome.js" ></script>
+    
+    <title>home</title>
+</head>
+<body id="test">
+	<div ng-controller="ctrl">
+		<input type="button" id="createCourse" value="createCourse"/>
+    	<input type="button" id="createGame" value="createGame"/>
+        
+        <form action="index.html">
+        	<input type="submit" value="Sign Out" id="signOut" />
+    	</form>
+    	
+        <ul>
+    		<li ng-repeat="course in courses" name={{course}} onclick="clicked(this);">
+                {{course}}
+            </li>
+    	</ul>
+    	
+    	<div id="courseForm">
+        	<form id="form1" ng-submit="createCourse()" >
+            	Course Name<input id="newCourse" ng-model="newCourse" required/>
+            	<input type="submit" id="addCourse" value="Add New Course"/>
+            	<input type="button" id="cancelCreateCourse" value="Cancel" />
+        	</form>
+    	</div>
+    	<div id="gameForm">
+    		<form id="form2" ng-submit="createGame()" >
+    			Course Name <input id="courseName" required/>
+    			Game Name <input id="gameName" required/>
+    			Number Of Questions <input type="number" id="numOfQuestions" 
+    									min="1" max="40" value="1"/>
+    			<input type="submit" id="getQuestionform" value="submit"/>
+    			<input type="button" class="cancelCreateGame" value="cancel"/>
+    		</form> 
+    	</div>
+    	
+    	<div id="questionForm">
+    		<form id="form3" ng-submit="submitQuestion()">
+    			<h2 id="questionNum"></h2>
+    			Question statement <input id="Qstatement" required/>
+    			True/False <input type="radio" id="tf" name="Qtype" value ="TF" checked/>
+    			MCQ <input type="radio" id="mcq" name="Qtype" value ="MCQ"/>
+    			<h4 id="choices">Choices</h4>
+    			<div id="mcqChoices" required>
+    				<input id="mcq1" />
+    				<input id="mcq2" />
+    				<input id="mcq3" />
+    				<input id="mcq4" />
+    			</div>
+
+    			Correct Answer <input id="answer" required/>
+    			<input type="submit" id="submitQuestion" value="submit"/>
+    			<input type="button" class="cancelCreateGame" value="cancel"/>
+    		</form> 
+    	</div>
+        
+    </div>
+    
+
+</body>
+</html>
