@@ -4,18 +4,7 @@
 #createGame{
     display: none;
 }
-#courseForm{
-    display: none;
-    background: #eee;
-    position: absolute;
-}
 #mcqChoices{
-	display:none;
-}
-#gameForm{
-	display:none;
-}
-#questionForm{
 	display:none;
 }
 #choices{

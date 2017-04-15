@@ -28,7 +28,7 @@ app.controller('ctrl', function($scope, $http) {
 		//alert(gameName);
 		
 		
-        document.getElementById("playGameForm").style.display = "block";
+        //document.getElementById("playGameForm").style.display = "block";
         document.getElementById("questionNum").innerHTML = "Question "+questionNum+
         													" Out of "+numOfQuestions;
         document.getElementById("score").innerHTML = "Score 0";
@@ -59,7 +59,7 @@ app.controller('ctrl', function($scope, $http) {
     	
     };
     document.getElementById("closeGame").onclick = function(){
-    	document.getElementById("playGameForm").style.display = "none";
+    	//document.getElementById("playGameForm").style.display = "none";
     	$('#submitAnswer').prop('disabled', false);
     	//call save score service
     }
