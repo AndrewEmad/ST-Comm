@@ -79,7 +79,7 @@ public class RegistrantController {
 	}
 
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
-	public  void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
+	public void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
 		try {
 			if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
 				httpServletResponse.sendRedirect("/accountActivated.html");
@@ -103,4 +103,22 @@ public class RegistrantController {
 		javaMailSender.send(message);
 	}
 
+	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/query/registrant-type")
+	public String getRegistrantType(String name){
+		String type;
+		int registrantCode = 0;
+		try {
+			registrantCode = RegistrantDBModel.getRegistrantType(name);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(registrantCode == 0){
+			type = "student";
+		}
+		else{
+			type = "teacher";
+		}
+		return type;
+	}
 }

@@ -13,19 +13,12 @@ app.controller('ctrl', function($scope, $http) {
     	    method: "POST",
     	    params: data
    		    }).then(function(response){
-   		    	if(response.data)
+   		    	if(response.data){
+   		    		var username = $("#userName").val(); 
+   		    		localStorage.setItem("userName",username);
    		    		location.href = "home.html";
+   		    	}
    		    	else
    		    		location.href = "signIn.html";
     		    });})	})
     	});
-
-
-//$(document).ready(function(){
-//    document.getElementById("signUp").onclick=function(){
-//        location.href = "signUp.html";
-//    }
-//    
-//})
-
-

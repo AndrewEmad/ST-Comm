@@ -22,19 +22,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Downloads/selenium-server-standalone-3.0.0-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/commons-collections4-4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/curvesapi-1.04.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/poi-3.16-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/poi-examples-3.16-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/poi-excelant-3.16-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/poi-ooxml-3.16-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/poi-ooxml-schemas-3.16-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/poi-scratchpad-3.16-beta2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mariam Ashraf/Desktop/lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
