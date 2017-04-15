@@ -1,7 +1,3 @@
-
-#signUp {
-  cursor:pointer;
-}
 body{
     background: #eee;
 }
@@ -20,6 +16,7 @@ body{
     text-align: center;
     padding: 5% 0;
     background: #eee;
+    cursor:pointer;
 }
 #paragraph{
     margin: 6% 0;
@@ -38,6 +35,7 @@ form{
 }
 #SignIn{
     margin-bottom: 3%;
+    background : #02b3e4;
 }
 hr{
     margin: 5% auto;

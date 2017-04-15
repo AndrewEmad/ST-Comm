@@ -1,8 +1,8 @@
 
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
-        //var data = [{"name" : "course1"},{"name" : "course2"}];
-        //$scope.courses = data;
+        /*var data = [{"name" : "course1"},{"name" : "course2"}];
+        $scope.courses = data;*/
         var courseName;
         var gameName;
         var questions;
@@ -10,7 +10,7 @@ app.controller('ctrl', function($scope, $http) {
         var numOfQuestions;
         var questionNum;
         
-        /*$http({
+        $http({
     		url: "http://localhost:8090/st-comm.com/query/registrant-type",
     	    method: "GET",
     	    params: {name : localStorage.getItem("userName")}
@@ -19,12 +19,12 @@ app.controller('ctrl', function($scope, $http) {
 					document.getElementById("createCourse").style.display = "block";
         			document.getElementById("createGame").style.display = "block";	    		
 	    		}
-	    	});*/
+	    	});
     		
-    		if(true){
+    		/*if(true){
         		document.getElementById("createCourse").style.display = "block";
         		document.getElementById("createGame").style.display = "block";
-    		}
+    		}*/
         
         $http({
     		url: "http://localhost:8090/st-comm.com/courses/list-by-registrant",
@@ -42,9 +42,6 @@ app.controller('ctrl', function($scope, $http) {
     	    			,teacherName : localStorage.getItem("userName")}
    		    }).then(function(response){
    		    	if(response.data){
-   		    		//alert($scope.newCourse);
-   		    		//$scope.courses = [$scope.newCourse];
-        			document.getElementById("courseForm").style.display="none";
         			location.reload();
    		    	}
    		    	else{
@@ -61,10 +58,11 @@ app.controller('ctrl', function($scope, $http) {
 	    	courseName = document.getElementById("courseName").value;
 	    	gameName = document.getElementById("gameName").value;
 	    	numOfQuestions = document.getElementById("numOfQuestions").value;
-	    	document.getElementById("gameForm").style.display="none";
-	    	document.getElementById("questionForm").style.display="block";
 	    	document.getElementById("questionNum").innerHTML = "Question "+questionNum+
 	    														" Out of "+numOfQuestions;
+	    	$('#myModal2').modal('hide');
+	    	$('#myModal3').modal('show');
+			
 	    }
 	    $scope.submitQuestion=function(){
 	    	var choices =[];
@@ -86,6 +84,10 @@ app.controller('ctrl', function($scope, $http) {
 	    			choices[i] = $("#mcq4").val();
 	    		}
 	    	}
+	    	else{
+	    		choices[0]="true";
+	    		choices[1]="false";
+	    	}
 	    	question = {type: $("input[name=Qtype]:checked").val() , questionStatement: 
 	    	$("#Qstatement").val() , choices : choices ,correctAnswer : $("#answer").val()};
         	questions[questionNum-1] = question;
@@ -102,8 +104,8 @@ app.controller('ctrl', function($scope, $http) {
 	    			alert(questions[x].correctAnswer);
 	    			alert(questions[x].choices[0]);
 	    		}*/
-	    		//alert("the game saved successfully");
-	    		document.getElementById("questionForm").style.display = "none";
+	    		alert("the game saved successfully");
+	    		$('#myModal3').modal('hide');
 	    	}
 	    	
 	    	document.getElementById("questionNum").innerHTML = "Question "+questionNum+
@@ -115,7 +117,20 @@ app.controller('ctrl', function($scope, $http) {
 	    	$("#Qstatement").val("");
 	    	$("#answer").val("");
 	    }
-        
+	    
+	    $scope.getAllCourses = function(){
+	    	/* call allCourses service*/
+	    	var dataa =["course3","course4","course5"];
+	    	$scope.allCourses = dataa;
+	    }
+	    $scope.register = function(newCourse){
+	    	$http({
+    			url: "http://localhost:8090/st-comm.com/courses/register",
+    	    	method: "GET",
+    	    	params: {studentName : localStorage.getItem("userName")
+    	    			,courseName : newCourse}
+   		    })
+	    }   
         $(document).ready(function(){
         	$('#mcq').change(function () {
 	        	if($(this).is(':checked')) {
@@ -133,23 +148,8 @@ app.controller('ctrl', function($scope, $http) {
         	
         	document.getElementById("signOut").onclick = function(){
         		localStorage.removeItem("userName");
+        		location.href="index.html";
         	}
-        	
-    		document.getElementById("createCourse").onclick = function(){
-        		document.getElementById("courseForm").style.display="block";
-        		//document.getElementById("test").style.opacity = "0.5";
-    		}
-    		document.getElementById("cancelCreateCourse").onclick = function(){
-        		document.getElementById("courseForm").style.display="none";
-    		}
-    		document.getElementById("createGame").onclick = function(){
-        		document.getElementById("gameForm").style.display = "block";
-        		document.getElementById("questionForm").style.display = "none";
-    		}
-    		$(".cancelCreateGame").click (function(){
-        		document.getElementById("gameForm").style.display = "none";
-        		document.getElementById("questionForm").style.display = "none";
-    		})
     
         })
     	});
@@ -159,3 +159,6 @@ function clicked(id){
         localStorage.setItem("CourseName",courseName);
         location.href = "games.html";
     }
+function disable(id){
+	$(id).attr("disabled","true");
+}
