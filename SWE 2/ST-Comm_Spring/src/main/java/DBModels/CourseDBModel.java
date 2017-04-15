@@ -59,7 +59,7 @@ public class CourseDBModel {
 		Vector<String>courses=new Vector<String>();
 		ResultSet resultCourses = callableSt.executeQuery();
 		while(resultCourses.next()){
-			courses.add(resultCourses.getString(0));
+			courses.add(resultCourses.getString(2));
 		}
 		return courses;
 	}
@@ -73,7 +73,7 @@ public class CourseDBModel {
 		Vector<String>courses=new Vector<String>();
 		ResultSet resultCourses = callableSt.executeQuery();
 		while(resultCourses.next()){
-			courses.add(resultCourses.getString(0));
+			courses.add(resultCourses.getString(1));
 		}
 		return courses;
 	}
