@@ -12,10 +12,19 @@
 <body >
     <div class="container">
         <div ng-controller="ctrl">
-                <button type="button" ng-repeat="game in games" name={{game}} ng-click="playGame(game);" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-                    {{game}}
-                </button>
-            
+            <div class="row">
+                <div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="game in games">
+                    <center><div class="thumbnail">
+                        <img src="">
+                        <div class="caption">
+                            <center><h3>{{game}}</h3></center>
+                            <center>
+                                <input type="button"  name={{game}} ng-click="playGame(game);" class="btn btn-default" data-toggle="modal" data-target="#myModal" value="let's play"/> 
+                            </center>
+                        </div>
+                    </div></center>
+                </div>
+            </div>
             <div id="playGameForm" >
                 <form>
                     <div class="modal fade" id="myModal" role="dialog">

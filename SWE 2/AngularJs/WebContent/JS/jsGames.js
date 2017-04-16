@@ -15,7 +15,7 @@ app.controller('ctrl', function($scope, $http) {
 	
 	/*var name =localStorage.getItem("CourseName");
 	alert(name);*/
-	$scope.games = ["subway","taken"];
+	$scope.games = ["game1","game2","game3"];
 	
 	$scope.playGame =function(gameName) {
 		questionNum=1;
