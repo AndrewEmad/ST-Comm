@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.sql.SQLException;
+
 import java.util.Vector;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,10 +29,20 @@ public class CourseController {
 		return false;
 	}
 
-	@RequestMapping("/st-comm.com/courses/list-all")
-	public Vector<String> getCourses() {
+	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/list-all")
+	public Vector<String> getOtherCourses(String registrantName) {
 		try {
-			return CourseDBModel.fetchCourses();
+			String course;
+			Vector<String> registeredIn = CourseDBModel.fetchCourses(registrantName); 
+			Vector<String> allCourses = CourseDBModel.fetchCourses();
+			Vector<String> otherCourses = new Vector<String>();
+			for(int i=0; i<allCourses.size(); i++){
+				course = allCourses.get(i);
+				if(registeredIn.contains(course) == false){
+					otherCourses.add(course);
+				}
+			}
+			return otherCourses;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

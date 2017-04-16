@@ -51,12 +51,13 @@ public class RegistrantController {
 		try {
 			int registrantCode;
 			if(type.equals("student")){
-				registrantCode = 0;
-			}
-			else{
 				registrantCode = 1;
 			}
+			else{
+				registrantCode = 2;
+			}
 			if(RegistrantDBModel.saveAccount(registrant, registrantCode) == false){
+				System.out.println("Here1");
 				return false;
 			}
 			String activationCode = RegistrantDBModel.getActivationCode(name);
@@ -113,7 +114,7 @@ public class RegistrantController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(registrantCode == 0){
+		if(registrantCode == 1){
 			type = "student";
 		}
 		else{
