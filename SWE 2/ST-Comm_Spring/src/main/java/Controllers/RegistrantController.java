@@ -57,7 +57,6 @@ public class RegistrantController {
 				registrantCode = 2;
 			}
 			if(RegistrantDBModel.saveAccount(registrant, registrantCode) == false){
-				System.out.println("Here1");
 				return false;
 			}
 			String activationCode = RegistrantDBModel.getActivationCode(name);
