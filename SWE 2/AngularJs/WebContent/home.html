@@ -8,50 +8,70 @@
     <script src="JS/bootstrap.min.js"></script>
     <script type="text/javascript" src="JS/jsHome.js" ></script>
     
-    
+    <link rel="icon" href="logo.png" type="image/x-icon">
     <title>home</title>
 </head>
 <body id="test">
     <div class="container">
     
         <div ng-controller="ctrl">
-        	<input type="button" id="allCourses" value="allCourses" ng-click="getAllCourses()"/>
+        	<nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">ST-Comm</a>
+                  <a class="navbar-brand" href="#"><img src="logo.png" id="img1"/></a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li id="home" ><a href="home.html">Home</a></li>
+                  <li id="allCourses" ng-click="getAllCourses()"><a href="#" >All Courses</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">{{username}}</a></li>
+                  <li id="signOut"><a href="#">Sign out</a></li>
+                </ul>
+              </div>
+            </nav>
+        	<!--<input type="button" id="allCourses" value="allCourses" ng-click="getAllCourses()"/>-->
         	
         	
         	<div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6 col-md-6 col-xs-12">
                     <center>
                         <input type="button" id="createCourse" value="createCourse" class="btn btn-default" data-toggle="modal" data-target="#myModal"/>
                     </center>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6 col-md-6 col-xs-12">
                     <center>
                         <input type="button" id="createGame" value="createGame" class="btn btn-default" data-toggle="modal" data-target="#myModal2"/>
                     </center>
                 </div>
-                <div class="col-lg-4">
+                <!--<div class="col-lg-4">
                     <center><input type="submit" value="Sign Out" id="signOut" class="btn btn-default"/></center>
-                </div>
+                </div>-->
             </div>
-            
+            <br>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="course in courses">
-                    <div class="thumbnail">
-                    <img src="">
-                    <div class="caption">
-                        <center><h3>{{course.name}}</h3></center>
-                        <center><input type="button" value="Open" class="btn btn-default" name={{course.name}} onclick="clicked(this);"/> </center>
-                    </div>
-                    </div>
+                    <center>
+                    	<div class="thumbnail">
+                    		<img src="logo.png">
+                    		<div class="caption">
+                        		<center><h3>{{course.name}}</h3></center>
+                        		<center><input type="button" value="Open" class="btn btn-default" name={{course.name}} onclick="clicked(this);"/> </center>
+                    		</div>
+                    	</div>
+                    </center>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6" ng-repeat="newCourse in allCourses">
-                    <div class="thumbnail">
-                    <img src="">
-                    <div class="caption">
-                        <center><h3>{{newCourse}}</h3></center>
-                        <center><input type="button" value="Register" class="btn btn-default" id={{newCourse}} name={{newCourse}} ng-click="register(newCourse);" onclick="disable(this)"/> </center>
-                    </div>
-                    </div>
+                    <center>
+                    	<div class="thumbnail">
+                    		<img src="logo.png">
+                    		<div class="caption">
+                        		<center><h3>{{newCourse}}</h3></center>
+                        		<center><input type="button" value="Register" class="btn btn-default" id={{newCourse}} name={{newCourse}} ng-click="register(newCourse);" onclick="disable(this)"/> </center>
+                    		</div>
+                    	</div>
+                    </center>
                 </div>
             </div>
             

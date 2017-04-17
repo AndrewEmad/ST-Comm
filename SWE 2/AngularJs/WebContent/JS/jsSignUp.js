@@ -8,7 +8,7 @@ app.controller('ctrl', function($scope, $http) {
 		
 	    $('#teacher').change(function () {
 	        if($(this).is(':checked')) {
-	            $("#email").attr("pattern","/^[A-Za-z0-9._]+@[a-z0-9.-]+\.edu+\.eg$/");
+	            $("#email").attr("pattern","[A-Za-z0-9._]+@[a-z0-9.-]+\.edu.eg$");
 	            $("#email").attr("title","An Academic Email Required. e.g. .edu.eg");
 	        }
 	    });
@@ -29,7 +29,10 @@ app.controller('ctrl', function($scope, $http) {
     				country:$scope.country,
     				password:$scope.password ,type:$scope.type};
     		
-    		$http({
+    		alert($scope.type);
+    		alert($scope.gender);
+    		
+    		/*$http({
     		url: "http://localhost:8090/st-comm.com/signup/",
     	    method: "POST",
     	    params: data
@@ -41,7 +44,7 @@ app.controller('ctrl', function($scope, $http) {
     	    		location.href = "signUp.html";
     	    	}
     	    	
-    		    });
+    		    });*/
     		})
 	    
 	    function checkPasswordMatch() {

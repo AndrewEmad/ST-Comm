@@ -51,10 +51,10 @@ public class RegistrantController {
 		try {
 			int registrantCode;
 			if(type.equals("student")){
-				registrantCode = 0;
+				registrantCode = 1;
 			}
 			else{
-				registrantCode = 1;
+				registrantCode = 2;
 			}
 			if(RegistrantDBModel.saveAccount(registrant, registrantCode) == false){
 				return false;
@@ -104,7 +104,7 @@ public class RegistrantController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/query/registrant-type")
-	public String getRegistrantType(String name){
+	public String getRegistrantType(@RequestParam String name){
 		String type;
 		int registrantCode = 0;
 		try {
@@ -113,7 +113,7 @@ public class RegistrantController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(registrantCode == 0){
+		if(registrantCode == 1){
 			type = "student";
 		}
 		else{
