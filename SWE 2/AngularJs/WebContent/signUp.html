@@ -7,6 +7,8 @@
     <script src="JS/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="JS/jsSignUp.js" ></script>
     <script src="JS/bootstrap.min.js"></script>
+    
+    <link rel="icon" href="logo.png" type="image/x-icon">
     <title>Sign Up</title>
 </head>
 <body>
@@ -44,7 +46,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     Male <input type="radio" name = "gender" value="male" id="male" 
-                    	ng-model="gender" checked/>
+                    	ng-model="gender"/>
                 </div>
                 <div class="col-lg-6">
                     Female <input type="radio" name="gender" value="female" id="female" ng-model="gender"/>
@@ -66,11 +68,10 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    Teacher <input type="radio" name ="type" value="teacher" id="teacher" 
-                    ng-model="type"/>
+                    Teacher <input type="radio" name ="type" value="teacher" id="teacher" ng-model="type"/>
                 </div>
                 <div class="col-lg-6">
-                    Student <input type="radio" name="type" value="student" id="student" ng-model="type" checked />
+                    Student <input type="radio" name="type" value="student" id="student" ng-model="type"/>
                 </div>
             </div>
             
@@ -337,7 +338,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <input type="submit" value="SIGN UP" id="SignUp" />
+                    <input type="submit" value="SIGN UP" id="SignUp" class="btn btn-default"/>
                 </div>
             </div>
             

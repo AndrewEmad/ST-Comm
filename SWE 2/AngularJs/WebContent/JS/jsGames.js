@@ -1,34 +1,49 @@
 
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
+	var gameName;
 	var questions;
 	var numOfQuestions;
 	var questionNum;
 	var score;
-	/*$http({
-		url: "http://localhost:8090/st-comm.com/getgames",
+	
+	$scope.username = localStorage.getItem("userName");
+	
+	$http({
+		url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
 	    method: "GET",
-	    params: {registrantName : localStorage.getItem("userName")}
+	    params: {courseName : localStorage.getItem("courseName")}
 		}).then(function(response){
-    		$scope.courses = response.data;
-		})*/
+    		$scope.games = response.data;
+		})
 	
-	/*var name =localStorage.getItem("CourseName");
+	/*var name =localStorage.getItem("courseName");
 	alert(name);*/
-	$scope.games = ["game1","game2","game3"];
+	/*$scope.games = ["game1","game2","game3"];*/
 	
-	$scope.playGame =function(gameName) {
+	$scope.playGame =function(GameName) {
+		gameName = GameName;
 		questionNum=1;
-		numOfQuestions =2;
+		//numOfQuestions =2;
 		score = 0;
-		// call getgame service and numOfquestions
-		questions = [{questionStatement: "how are you?" , correctAnswer: "fine" ,
+		
+		$http({
+			url: "http://localhost:8090/st-comm.com/games/play",
+		    method: "GET",
+		    params: {gameName : gameName}
+			}).then(function(response){
+				numOfQuestions = response.data.numOfQuestions;
+				questions = response.data.questions;
+			})
+		
+		
+		/*questions = [{questionStatement: "how are you?" , correctAnswer: "fine" ,
 			choices : ["fine","bad"]},{questionStatement: "what's your name?" , 
-				correctAnswer: "ahmed" , choices : ["ahmed","omar"]}];
+				correctAnswer: "ahmed" , choices : ["ahmed","omar"]}];*/
 		//alert(gameName);
+			
+		$scope.gameName = gameName;
 		
-		
-        //document.getElementById("playGameForm").style.display = "block";
         document.getElementById("questionNum").innerHTML = "Question "+questionNum+
         													" Out of "+numOfQuestions;
         document.getElementById("score").innerHTML = "Score 0";
@@ -42,12 +57,10 @@ app.controller('ctrl', function($scope, $http) {
     		document.getElementById("score").innerHTML = "Score "+ score;
     	}
     	else{
-    		//document.getElementById("answer").innerHTML = "correct answer is " 
-    				//						+ questions[0].correctAnswer; 
+    		 
     	}
     	if(questionNum == numOfQuestions){
     		$('#submitAnswer').prop('disabled', true);
-    		//document.getElementById("playGameForm").style.display = "none";
     	}
     	else{
     		questionNum++;
@@ -59,8 +72,26 @@ app.controller('ctrl', function($scope, $http) {
     	
     };
     document.getElementById("closeGame").onclick = function(){
-    	//document.getElementById("playGameForm").style.display = "none";
     	$('#submitAnswer').prop('disabled', false);
-    	//call save score service
+    	
+    	/* save score only if user is a student*/
+    	$http({ 
+    		url: "http://localhost:8090/st-comm.com/query/registrant-type",
+    	    method: "GET",
+    	    params: {name : localStorage.getItem("userName")}
+   		    }).then(function(response){
+	    		if(response.data == "student"){
+	    			$http({
+	    				url: "http://localhost:8090/st-comm.com/games/scores/save",
+	    			    method: "GET",
+	    			    params: {name : localStorage.getItem("userName"),
+	    			    	score : score , gameName : gameName}
+	    			})
+	    		}   		
+	    	})
     }
+    document.getElementById("signOut").onclick = function(){
+		localStorage.removeItem("userName");
+		location.href="index.html";
+	}
 });

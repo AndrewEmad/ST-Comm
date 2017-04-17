@@ -29,7 +29,10 @@ app.controller('ctrl', function($scope, $http) {
     				country:$scope.country,
     				password:$scope.password ,type:$scope.type};
     		
-    		$http({
+    		alert($scope.type);
+    		alert($scope.gender);
+    		
+    		/*$http({
     		url: "http://localhost:8090/st-comm.com/signup/",
     	    method: "POST",
     	    params: data
@@ -41,7 +44,7 @@ app.controller('ctrl', function($scope, $http) {
     	    		location.href = "signUp.html";
     	    	}
     	    	
-    		    });
+    		    });*/
     		})
 	    
 	    function checkPasswordMatch() {

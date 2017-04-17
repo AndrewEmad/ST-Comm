@@ -17,3 +17,31 @@
 .thumbnail .caption{
     padding-top: 0%;
 }
+.container{
+    margin: 0%;
+    padding: 0%;
+    width :100%;
+}
+#img1{    
+    height:100%;
+    border-radius: 20%;
+}
+#newCourse {
+    width:40%;
+    text-align:center;
+}
+#courseName{
+	width:40%;
+	text-align:center;
+}
+#gameName{
+	width:40%;
+	text-align:center;
+}
+#Qstatement{
+	width:90%;
+}
+
+/*.navbar{
+    background: #eee;
+}*/

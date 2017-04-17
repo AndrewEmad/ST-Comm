@@ -3,12 +3,15 @@ var app = angular.module('main',[]);
 app.controller('ctrl', function($scope, $http) {
         /*var data = [{"name" : "course1"},{"name" : "course2"}];
         $scope.courses = data;*/
+        
         var courseName;
         var gameName;
         var questions;
         var question;
         var numOfQuestions;
         var questionNum;
+        
+        $scope.username = localStorage.getItem("userName");
         
         $http({
     		url: "http://localhost:8090/st-comm.com/query/registrant-type",
@@ -88,8 +91,9 @@ app.controller('ctrl', function($scope, $http) {
 	    		choices[0]="true";
 	    		choices[1]="false";
 	    	}
-	    	question = {type: $("input[name=Qtype]:checked").val() , questionStatement: 
-	    	$("#Qstatement").val() , choices : choices ,correctAnswer : $("#answer").val()};
+	    	question = { choices : choices , correctAnswer : $("#answer").val() ,
+	    				 questionStatement: $("#Qstatement").val() };
+        	
         	questions[questionNum-1] = question;
        
 	    	questionNum++;
@@ -97,7 +101,15 @@ app.controller('ctrl', function($scope, $http) {
 	    		document.getElementById("submitQuestion").value = "save";
 	    	
 	    	if(questionNum > numOfQuestions){
-	    		/* call service to save questions and gameName and courseName */
+	    		
+	    		$http({
+    				url: "http://localhost:8090/st-comm.com/games/new",
+    	    		method: "GET",
+    	    		params: {gameName : gameName , courseName : courseName
+    	    				,teacherName : localStorage.getItem("userName") , 
+    	    				questions : questions }
+   		    	})
+	  
 	    		/*for(var x=0;x<questions.length;x++){
 	    			alert(questions[x].type);
 	    			alert(questions[x].questionStatement);
@@ -119,7 +131,14 @@ app.controller('ctrl', function($scope, $http) {
 	    }
 	    
 	    $scope.getAllCourses = function(){
-	    	/* call allCourses service*/
+	    	$http({
+    			url: "http://localhost:8090/st-comm.com/courses/list-all",
+    	    	method: "GET",
+    	    	params: {registrantName : localStorage.getItem("userName")}
+   		    }).then(function(response){
+					$scope.allCourses = response.data;
+	    		});
+	    	
 	    	var dataa =["course3","course4","course5"];
 	    	$scope.allCourses = dataa;
 	    }
@@ -127,7 +146,7 @@ app.controller('ctrl', function($scope, $http) {
 	    	$http({
     			url: "http://localhost:8090/st-comm.com/courses/register",
     	    	method: "GET",
-    	    	params: {studentName : localStorage.getItem("userName")
+    	    	params: {registrantName : localStorage.getItem("userName")
     	    			,courseName : newCourse}
    		    })
 	    }   
@@ -149,14 +168,13 @@ app.controller('ctrl', function($scope, $http) {
         	document.getElementById("signOut").onclick = function(){
         		localStorage.removeItem("userName");
         		location.href="index.html";
-        	}
-    
+        	}   
         })
-    	});
+    });
 
 function clicked(id){
         var courseName = $(id).attr("name");
-        localStorage.setItem("CourseName",courseName);
+        localStorage.setItem("courseName",courseName);
         location.href = "games.html";
     }
 function disable(id){
