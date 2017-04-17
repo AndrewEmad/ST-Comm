@@ -104,7 +104,7 @@ public class RegistrantController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/query/registrant-type")
-	public String getRegistrantType(String name){
+	public String getRegistrantType(@RequestParam String name){
 		String type;
 		int registrantCode = 0;
 		try {
