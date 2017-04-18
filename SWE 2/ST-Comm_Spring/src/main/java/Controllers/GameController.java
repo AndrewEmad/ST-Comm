@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,39 +14,57 @@ import DBModels.QuestionDBModel;
 import Entities.Game;
 import Entities.Question;
 
-@CrossOrigin(origins = "*") //allow services of this RestController to share data to 
-							//any client side request
+@CrossOrigin(origins = "*") // allow services of this RestController to share
+							// data to
+// any client side request
 @RestController
 public class GameController {
 
-	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/games/play")
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/play")
 	public Game playGame(@RequestParam String gameName) {
-		Game game = GameDBModel.fetchGame(gameName);
-		Vector<Question> questions = QuestionDBModel.fetchQuestions(gameName);
-		game.setQuestions(questions);
+		Game game = null;
+		try {
+			game = GameDBModel.fetchGame(gameName);
+			Vector<Question> questions = QuestionDBModel.fetchQuestions(gameName);
+			game.setQuestions(questions);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return game;
 	}
 
-	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/games/new")
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/new")
 	public boolean createGame(@RequestParam String gameName, @RequestParam Vector<Question> questions,
-							  @RequestParam String teacherName){
+			@RequestParam String teacherName) {
 		Game game = new Game();
 		game.setInfo(gameName, questions, teacherName);
-		if(GameDBModel.saveGame(game) == false){
-			return false;
-		}
-		for(int i=0; i < questions.size(); i++){
-			if(QuestionDBModel.saveQuestion(questions.get(i), gameName) == false){
+		try {
+			if (GameDBModel.saveGame(game) == false) {
 				return false;
 			}
+			for (int i = 0; i < questions.size(); i++) {
+				if (QuestionDBModel.saveQuestion(questions.get(i), gameName) == false) {
+					return false;
+				}
+			}
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/games/scores/save")
-	public boolean saveScore(@RequestParam String name, @RequestParam int score,
-							 @RequestParam String gameName) {
-		return GameDBModel.saveScore(name, score, gameName);
+
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/scores/save")
+	public boolean saveScore(@RequestParam String name, @RequestParam int score, @RequestParam String gameName) {
+		try {
+			return GameDBModel.saveScore(name, score, gameName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }
