@@ -18,7 +18,7 @@ public class RegisterCourseTest
 		System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
-		driver.get("file:///C://Users//Mariam Ashraf//Desktop//AngularJs//WebContent//index.html");
+		driver.get("http://localhost:8080/AngularJs/");
 		
 		FileInputStream fileStream=new FileInputStream(new File("RegisterCourse.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
@@ -28,7 +28,7 @@ public class RegisterCourseTest
 		for(int row=0;row<numOfRows;row++)
 		{
 			driver.findElement(By.id("join")).click();
-			Thread.sleep(500);
+			Thread.sleep(2000);
 			driver.findElement(By.id("signIn")).click();
 			String url=driver.getCurrentUrl();
 			name=sheet.getRow(row).getCell(0).getStringCellValue();
@@ -38,7 +38,7 @@ public class RegisterCourseTest
 			driver.findElement(By.id("userName")).sendKeys(name);
 			driver.findElement(By.id("password")).sendKeys(password);
 			driver.findElement(By.id("SignIn")).click();
-			Thread.sleep(500);
+			Thread.sleep(2000);
 			driver.findElement(By.id("allCourses")).click();
 			int numColumns=sheet.getRow(row).getLastCellNum();
 			for(int column=2;column<numColumns;column++)
@@ -55,7 +55,7 @@ public class RegisterCourseTest
 				}
 			}
 		    driver.findElement(By.id("signOut")).click();
-		    Thread.sleep(500);
+		    Thread.sleep(2000);
 		}
 		fileStream.close();
 		workBook.close();

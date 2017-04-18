@@ -22,7 +22,7 @@ public class signUpTest
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
-		driver.get("file:///C://Users//Mariam Ashraf//Desktop//AngularJs//WebContent//index.html");
+		driver.get("http://localhost:8080/AngularJs/");
 		driver.findElement(By.id("join")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("signUp")).click();

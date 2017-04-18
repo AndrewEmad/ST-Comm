@@ -17,7 +17,7 @@ public class createCourseTest
 		System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
-		driver.get("file:///C://Users//Mariam Ashraf//Desktop//AngularJs//WebContent//index.html");
+		driver.get("http://localhost:8080/AngularJs/");
 		
 		FileInputStream fileStream=new FileInputStream(new File("logInDataAndCreateCourse.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
@@ -25,7 +25,7 @@ public class createCourseTest
 		int numOfRows=sheet.getLastRowNum();
 		String name,password,courseName;
 		
-		for(int row=0;row<numOfRows;row++)
+		for(int row=0;row<=numOfRows;row++)
 		{
 			driver.findElement(By.id("join")).click();
 			Thread.sleep(500);
@@ -38,10 +38,10 @@ public class createCourseTest
 			driver.findElement(By.id("userName")).sendKeys(name);
 			driver.findElement(By.id("password")).sendKeys(password);
 			driver.findElement(By.id("SignIn")).click();
-			Thread.sleep(500);
-	
+			Thread.sleep(2000);
+			
 			int numColumns=sheet.getRow(row).getLastCellNum();
-			System.out.println(numColumns);
+			driver.findElement(By.id("createCourse")).click();
 			for(int column=2;column<numColumns;column++)
 			{
 				if(sheet.getRow(row).getCell(column).getStringCellValue()!=null)
@@ -52,20 +52,18 @@ public class createCourseTest
 				{
 					courseName="";
 				}
-				String url=driver.getCurrentUrl();
-				driver.findElement(By.id("createCourse")).click();
+				Thread.sleep(1000);
 				driver.findElement(By.id("newCourse")).clear();
 				driver.findElement(By.id("newCourse")).sendKeys(courseName);
 				driver.findElement(By.id("addCourse")).click();
 				Thread.sleep(2000);
-				String currentUrl=driver.getCurrentUrl();
-				if(!currentUrl.equals(url))
-				{
-					driver.navigate().back();
-				}
 			}
-			driver.findElement(By.id("signOut")).click();
-			Thread.sleep(500);
+			driver.findElement(By.id("cancelCreateCourse")).click();
+			driver.navigate().back();
+			driver.navigate().back();
+
+			//driver.findElement(By.id("signOut")).click();
+			Thread.sleep(2000);
 		}
 		fileStream.close();
 		workBook.close();
