@@ -67,3 +67,23 @@ hr{
 select{
     margin: 3% 0%;
 }
+#userName{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#email{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#password{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#confirmPassword{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#errorMsg{
+	display : none;
+	color:red;
+}

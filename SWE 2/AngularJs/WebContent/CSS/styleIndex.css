@@ -1,3 +1,6 @@
+#t{
+    color: #607D8B;
+}
 .container{
     margin: 0%;
     padding: 0%;
@@ -6,4 +9,48 @@
 #img1{    
     height:100%;
     border-radius: 20%;
+}
+#pic1{
+    width:40%;
+    float:right;
+}
+#headline1{
+    font-size: 160%;
+    font-weight: bold;
+    color: #607D8B;
+}
+#paragraph1{
+    font-size: 110%;
+    font-weight: bold;
+}
+#pic2{
+    width:40%;
+}
+#headline2{
+    font-size: 160%;
+    font-weight: bold;
+    float: right;
+    color: #607D8B;
+}
+#paragraph2{
+    font-size: 110%;
+    font-weight: bold;
+    float: right;
+}
+#contact{
+    font-size: 140%;
+    font-weight: bold;
+    color: #607D8B;
+}
+#paragraph3{
+    font-size: 120%;
+}
+#contactButton{
+    background: #26C6DA;
+    color: aliceblue;
+    width: 20%;
+    font-size: 110%;
+}
+#footer{
+    background: #EEEEEE;
 }

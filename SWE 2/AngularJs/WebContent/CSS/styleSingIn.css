@@ -41,3 +41,15 @@ hr{
     height:2%;
     width:55%;
 }
+#userName{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#password{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#errorMsg{
+	display : none;
+	color:red;
+}

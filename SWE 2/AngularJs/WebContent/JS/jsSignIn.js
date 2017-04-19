@@ -1,7 +1,9 @@
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
 	$(document).ready(function(){
-	    
+		$("#password, #userName").keyup(function(){
+			document.getElementById("errorMsg").style.display ="none";
+		});
 		document.getElementById("signUp").onclick=function(){
 	        location.href = "signUp.html";
 	    } 
@@ -18,7 +20,9 @@ app.controller('ctrl', function($scope, $http) {
    		    		localStorage.setItem("userName",username);
    		    		location.href = "home.html";
    		    	}
-   		    	else
-   		    		location.href = "signIn.html";
+   		    	else{
+   		    		document.getElementById("errorMsg").style.display ="block";
+   		    	}
+   		    		
     		    });})	})
     	});

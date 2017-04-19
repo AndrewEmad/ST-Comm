@@ -13,6 +13,22 @@ app.controller('ctrl', function($scope, $http) {
         
         $scope.username = localStorage.getItem("userName");
         
+        $("#newCourse").keyup(function(){
+			document.getElementById("nameExists").style.display ="none";
+		});
+		
+		$("#mcq1, #mcq2, #mcq3, #mcq4, #answer").keyup(function(){
+			document.getElementById("invalidAnswer").style.display ="none";
+		});
+		
+		$("#courseName").keyup(function(){
+			document.getElementById("invalidCourseName").style.display ="none";
+		});
+		
+		$("#gameName").keyup(function(){
+			document.getElementById("invalidGameName").style.display ="none";
+		});
+        
         $http({
     		url: "http://localhost:8090/st-comm.com/query/registrant-type",
     	    method: "GET",
@@ -48,9 +64,8 @@ app.controller('ctrl', function($scope, $http) {
         			location.reload();
    		    	}
    		    	else{
-   		    		// if not unique 
+   		    		document.getElementById("nameExists").style.display ="block";
    		    	}
-	    		
 	    		});
 	    }
 	    
@@ -60,25 +75,47 @@ app.controller('ctrl', function($scope, $http) {
 	    	
 	    	courseName = document.getElementById("courseName").value;
 	    	gameName = document.getElementById("gameName").value;
-	    	numOfQuestions = document.getElementById("numOfQuestions").value;
-	    	document.getElementById("questionNum").innerHTML = "Question "+questionNum+
+	    	
+	    	$http({
+    			url: "http://localhost:8090/st-comm.com/courses/exists",
+    	    	method: "GET",
+    	    	params: {courseName : courseName}
+   		    }).then(function(response){
+   		    	if(response.data){
+        			$http({
+    					url: "http://localhost:8090/st-comm.com/games/exists",
+    	    			method: "GET",
+    	    			params: {gameName : gameName}
+   		    		}).then(function(response){
+   		    			if(response.data){
+   		    				numOfQuestions = document.getElementById("numOfQuestions").value;
+	    					document.getElementById("questionNum").innerHTML = "Question "+questionNum+
 	    														" Out of "+numOfQuestions;
-	    	$('#myModal2').modal('hide');
-	    	$('#myModal3').modal('show');
-			
+	    					$('#myModal2').modal('hide');
+	    					$('#myModal3').modal('show');
+   		    			}
+   		    			else{
+   		    				document.getElementById("invalidGameName").style.display ="block";
+   		    			}
+   		    		})
+   		    	}
+   		    	else{
+   		    		document.getElementById("invalidCourseName").style.display ="block";
+   		    	}
+	    		});
 	    }
 	    $scope.submitQuestion=function(){
 	    	var choices =[];
-	    	var i =0;
+	    	var answerIndex;
+	    	var matched;
+	    	
+	    	choices[0] = $("#mcq1").val();
+	    	choices[1] = $("#mcq2").val();
+	    	
 	    	if($("input[name=Qtype]:checked").val() == "MCQ"){
-	    		if($("#mcq1").val() != ""){
-	    			choices[i] = $("#mcq1").val();
-	    			i++;
-	    		}
-	    		if($("#mcq2").val() != ""){
-	    			choices[i] = $("#mcq2").val();
-	    			i++;
-	    		}
+					    	
+	    		var i =2;
+	    		
 	    		if($("#mcq3").val() != ""){
 	    			choices[i] = $("#mcq3").val();
 	    			i++;
@@ -87,11 +124,20 @@ app.controller('ctrl', function($scope, $http) {
 	    			choices[i] = $("#mcq4").val();
 	    		}
 	    	}
-	    	else{
-	    		choices[0]="true";
-	    		choices[1]="false";
-	    	}
-	    	question = { choices : choices , correctAnswer : $("#answer").val() ,
+	    	
+	    	for ( var x=0;x<choices.length;x++){
+					if(choices[x] == $("#answer").val()){
+						matched= "true";
+						answerIndex = x;
+						break;
+					}
+				}
+			if(matched != "true"){
+				document.getElementById("invalidAnswer").style.display="block";
+				return;
+			}
+				
+	    	question = { choices : choices , correctAnswer : answerIndex ,
 	    				 questionStatement: $("#Qstatement").val() };
         	
         	questions[questionNum-1] = question;
@@ -116,8 +162,9 @@ app.controller('ctrl', function($scope, $http) {
 	    			alert(questions[x].correctAnswer);
 	    			alert(questions[x].choices[0]);
 	    		}*/
-	    		alert("the game saved successfully");
+	    		//alert("the game saved successfully");
 	    		$('#myModal3').modal('hide');
+	    		document.getElementById("submitQuestion").value = "submit";
 	    	}
 	    	
 	    	document.getElementById("questionNum").innerHTML = "Question "+questionNum+
@@ -139,8 +186,8 @@ app.controller('ctrl', function($scope, $http) {
 					$scope.allCourses = response.data;
 	    		});
 	    	
-	    	var dataa =["course3","course4","course5"];
-	    	$scope.allCourses = dataa;
+	    	/*var dataa =["course3","course4","course5"];
+	    	$scope.allCourses = dataa;*/
 	    }
 	    $scope.register = function(newCourse){
 	    	$http({
@@ -151,24 +198,28 @@ app.controller('ctrl', function($scope, $http) {
    		    })
 	    }   
         $(document).ready(function(){
+      
         	$('#mcq').change(function () {
 	        	if($(this).is(':checked')) {
-	        		document.getElementById("choices").style.display = "block"
-	            	document.getElementById("mcqChoices").style.display = "block"
+	            	document.getElementById("mcq3").style.display = "block";
+	            	document.getElementById("mcq4").style.display = "block";
 	        	}
 	    	});
 	    
 	    	$('#tf').change(function () {
 	        	if($(this).is(':checked')) {
-	            	document.getElementById("mcqChoices").style.display = "none"
-	            	document.getElementById("choices").style.display = "none"
+	            	document.getElementById("mcq3").style.display = "none";
+	            	document.getElementById("mcq4").style.display = "none";
 	        	}
 	    	});
         	
         	document.getElementById("signOut").onclick = function(){
         		localStorage.removeItem("userName");
         		location.href="index.html";
-        	}   
+        	}
+        	document.getElementById("cancelCreateGame").onclick = function(){
+        		document.getElementById("submitQuestion").value = "submit";
+        	}
         })
     });
 
