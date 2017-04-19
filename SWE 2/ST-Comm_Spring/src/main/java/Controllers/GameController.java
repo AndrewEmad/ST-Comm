@@ -36,10 +36,10 @@ public class GameController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/new")
-	public boolean createGame(@RequestParam String gameName, @RequestParam Vector<Question> questions,
-			@RequestParam String teacherName) {
+	public boolean createGame(@RequestParam String gameName, @RequestParam String courseName,
+							  @RequestParam String teacherName, @RequestParam Vector<Question> questions) {
 		Game game = new Game();
-		game.setInfo(gameName, questions, teacherName);
+		game.setInfo(gameName, courseName, teacherName, questions);
 		try {
 			if (GameDBModel.saveGame(game) == false) {
 				return false;
@@ -66,5 +66,9 @@ public class GameController {
 		}
 		return false;
 	}
-
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/exists")
+	public boolean exists(@RequestParam String gameName){
+		return GameDBModel.exists(gameName);
+	}
 }

@@ -4,10 +4,10 @@
 #createGame{
     display: none;
 }
-#mcqChoices{
+#mcq3{
 	display:none;
 }
-#choices{
+#mcq4{
 	display:none;
 }
 .thumbnail{
@@ -29,19 +29,59 @@
 #newCourse {
     width:40%;
     text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
 }
 #courseName{
 	width:40%;
 	text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
 }
 #gameName{
 	width:40%;
 	text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
 }
 #Qstatement{
 	width:90%;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
 }
-
-/*.navbar{
-    background: #eee;
-}*/
+#mcq1{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq2{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq3{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq4{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#answer{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#nameExists{
+	display : none;
+	color:red;
+}
+#invalidAnswer{
+	display : none;
+	color:red;
+}
+#invalidGameName{
+	display : none;
+	color:red;
+}
+#invalidCourseName{
+	display : none;
+	color:red;
+}

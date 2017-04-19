@@ -41,13 +41,13 @@ public class CourseDBModel {
 		return callableSt.executeUpdate()==0;
 	}
 
-	public static boolean enroll(String courseName, String studentName) throws SQLException {
+	public static boolean enroll(String courseName, String registrantName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call Enroll(?, ?)}");
 		callableSt.setString(1, courseName);
-		callableSt.setString(2, studentName);
+		callableSt.setString(2, registrantName);
 		return callableSt.executeUpdate()==0;
 	}
 

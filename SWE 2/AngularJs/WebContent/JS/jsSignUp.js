@@ -4,6 +4,9 @@ app.controller('ctrl', function($scope, $http) {
 
 	$(document).ready(function(){
 		var passwordMatch =false;
+		$("#userName").keyup(function(){
+			document.getElementById("errorMsg").style.display ="none";
+		});
 		$("#password, #confirmPassword").keyup(checkPasswordMatch);
 		
 	    $('#teacher').change(function () {
@@ -29,10 +32,7 @@ app.controller('ctrl', function($scope, $http) {
     				country:$scope.country,
     				password:$scope.password ,type:$scope.type};
     		
-    		alert($scope.type);
-    		alert($scope.gender);
-    		
-    		/*$http({
+    		$http({
     		url: "http://localhost:8090/st-comm.com/signup/",
     	    method: "POST",
     	    params: data
@@ -41,10 +41,9 @@ app.controller('ctrl', function($scope, $http) {
    		    		location.href = "congratulation.html";
     	    	}
     	    	else{
-    	    		location.href = "signUp.html";
-    	    	}
-    	    	
-    		    });*/
+    	    		document.getElementById("errorMsg").style.display ="block";
+    	    	} 	
+    		    });
     		})
 	    
 	    function checkPasswordMatch() {
@@ -60,16 +59,10 @@ app.controller('ctrl', function($scope, $http) {
 	            $("#passwordMatching").html("Passwords match.");
 	            document.getElementById("passwordMatching").style.color='green';
 	            passwordMatch = true;
-	        }
-	            
-	    }
-	    
-	    
+	        }       
+	    }  
 	})
-
-	
-    		
-    	});
+});
 
 
 

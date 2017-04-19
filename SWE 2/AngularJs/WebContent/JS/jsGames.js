@@ -1,4 +1,3 @@
-
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
 	var gameName;
@@ -17,8 +16,6 @@ app.controller('ctrl', function($scope, $http) {
     		$scope.games = response.data;
 		})
 	
-	/*var name =localStorage.getItem("courseName");
-	alert(name);*/
 	/*$scope.games = ["game1","game2","game3"];*/
 	
 	$scope.playGame =function(GameName) {
@@ -37,10 +34,9 @@ app.controller('ctrl', function($scope, $http) {
 			})
 		
 		
-		/*questions = [{questionStatement: "how are you?" , correctAnswer: "fine" ,
+		/*questions = [{questionStatement: "how are you?" , correctAnswer: 0 ,
 			choices : ["fine","bad"]},{questionStatement: "what's your name?" , 
-				correctAnswer: "ahmed" , choices : ["ahmed","omar"]}];*/
-		//alert(gameName);
+				correctAnswer: 1 , choices : ["ahmed","omar"]}];*/
 			
 		$scope.gameName = gameName;
 		
@@ -52,7 +48,8 @@ app.controller('ctrl', function($scope, $http) {
         $scope.choices = questions[questionNum-1].choices;
     };
     $scope.submitAnswer =function(){
-    	if($("input[name=choices]:checked").val() == questions[questionNum-1].correctAnswer){
+    	if($("input[name=choices]:checked").val() == 
+    		questions[questionNum-1].choices[questions[questionNum-1].correctAnswer]){
     		score++;
     		document.getElementById("score").innerHTML = "Score "+ score;
     	}

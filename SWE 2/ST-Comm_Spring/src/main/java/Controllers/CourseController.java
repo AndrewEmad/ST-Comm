@@ -70,14 +70,24 @@ public class CourseController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/register")
-	public boolean register(@RequestParam String studentName, @RequestParam String courseName) {
+	public boolean register(@RequestParam String registrantName, @RequestParam String courseName) {
 		try {
-			return CourseDBModel.enroll(courseName, studentName);
+			return CourseDBModel.enroll(courseName, registrantName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
-
+	
+	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/exists")
+	public boolean exists(@RequestParam String courseName){
+		try {
+			return CourseDBModel.exists(courseName);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

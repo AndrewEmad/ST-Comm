@@ -39,7 +39,9 @@ public class GameDBModel {
 		callableSt.setString(1, gameName);
 		ResultSet resultGame= callableSt.executeQuery();
 		Game game=new Game();
+		/*Commented By Ahmed Hussein
 		game.setInfo(resultGame.getString(1),QuestionDBModel.fetchQuestions(gameName),resultGame.getString(4) );
+		*/
 		return game;
 	}
 
@@ -52,5 +54,9 @@ public class GameDBModel {
 		callableSt.setInt(2, score);
 		callableSt.setString(3, gameName);
 		return callableSt.executeUpdate()==0;
+	}
+	
+	public static boolean exists(String gameName){
+		return false;
 	}
 }
