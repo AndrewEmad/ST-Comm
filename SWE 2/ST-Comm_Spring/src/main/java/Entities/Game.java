@@ -5,17 +5,14 @@ import java.util.Vector;
 public class Game {
 
 	private String name;
-	private String courseName;
 	private int numOfQuestions;
 	private String teacherName;
 	private Vector<Question> questions;
 
-	public void setInfo(String name, String courseName, String teacherName,
-						Vector<Question> questions) {
+	public void setInfo(String name, Vector<Question> questions, String teacherName) {
 		this.name = name;
-		this.courseName = courseName;
-		this.teacherName = teacherName;
 		this.questions = questions;
+		this.teacherName = teacherName;
 	}
 
 	public int getNumOfQuestions() {
@@ -48,13 +45,5 @@ public class Game {
 
 	public void setQuestions(Vector<Question> questions) {
 		this.questions = questions;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
 	}
 }

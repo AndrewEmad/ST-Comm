@@ -21,20 +21,18 @@ public class CourseController {
 		try {
 			return CourseDBModel.fetchGames(courseName);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/new")
 	public boolean createCourse(@RequestParam String courseName, @RequestParam String teacherName) {
 		try {
-			return CourseDBModel.saveCourse(courseName, teacherName);
+			CourseDBModel.saveCourse(courseName, teacherName);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/list-all")
@@ -52,10 +50,8 @@ public class CourseController {
 			}
 			return otherCourses;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/list-by-registrant")
@@ -63,31 +59,18 @@ public class CourseController {
 		try {
 			return CourseDBModel.fetchCourses(registrantName);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/register")
-	public boolean register(@RequestParam String registrantName, @RequestParam String courseName) {
+	public boolean register(@RequestParam String studentName, @RequestParam String courseName) {
 		try {
-			return CourseDBModel.enroll(courseName, registrantName);
+			CourseDBModel.enroll(courseName, studentName);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/exists")
-	public boolean exists(@RequestParam String courseName){
-		try {
-			return CourseDBModel.exists(courseName);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
+
 }

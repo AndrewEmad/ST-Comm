@@ -53,7 +53,7 @@ public class RegistrantDBModel {
 		return callableSt.getBoolean(3);
 	}
 
-	public static boolean saveAccount(Registrant registrant, int type) throws SQLException {
+	public static void saveAccount(Registrant registrant, int type) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -66,7 +66,7 @@ public class RegistrantDBModel {
 		callableSt.setString(5, registrant.getGender());
 		callableSt.setString(6, registrant.getMail());
 		callableSt.setString(7, registrant.getPassword());
-		return callableSt.executeUpdate()==0;
+		callableSt.executeUpdate();
 	}
 
 	public static String getActivationCode(String name)throws SQLException {
@@ -77,7 +77,7 @@ public class RegistrantDBModel {
 			callableSt.setString(1, name);
 			callableSt.registerOutParameter(2, Types.NCHAR);
 			callableSt.executeUpdate();
-			return callableSt.getString(3);
+			return callableSt.getString(2);
 	}
 	
 	public static int getRegistrantType(String name) throws SQLException{
@@ -88,6 +88,6 @@ public class RegistrantDBModel {
 		callableSt.setString(1, name);
 		callableSt.registerOutParameter(2, Types.INTEGER);
 		callableSt.executeUpdate();
-		return callableSt.getInt(3);
+		return callableSt.getInt(2);
 	}
 }
