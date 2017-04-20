@@ -36,39 +36,30 @@ public class GameController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/new")
-	public boolean createGame(@RequestParam String gameName, @RequestParam String courseName,
-							  @RequestParam String teacherName, @RequestParam Vector<Question> questions) {
+	public boolean createGame(@RequestParam String gameName, @RequestParam Vector<Question> questions,
+			@RequestParam String teacherName) {
 		Game game = new Game();
-		game.setInfo(gameName, courseName, teacherName, questions);
+		game.setInfo(gameName, questions, teacherName);
 		try {
-			if (GameDBModel.saveGame(game) == false) {
-				return false;
-			}
+			GameDBModel.saveGame(game);
 			for (int i = 0; i < questions.size(); i++) {
-				if (QuestionDBModel.saveQuestion(questions.get(i), gameName) == false) {
-					return false;
-				}
+				QuestionDBModel.saveQuestion(questions.get(i), gameName) ;
+				
 			}
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/scores/save")
 	public boolean saveScore(@RequestParam String name, @RequestParam int score, @RequestParam String gameName) {
 		try {
-			return GameDBModel.saveScore(name, score, gameName);
+			GameDBModel.saveScore(name, score, gameName);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/exists")
-	public boolean exists(@RequestParam String gameName){
-		return GameDBModel.exists(gameName);
-	}
+
 }

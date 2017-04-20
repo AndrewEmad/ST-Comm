@@ -16,7 +16,7 @@ import Entities.Question;
 
 public class GameDBModel {
 
-	public static boolean saveGame(Game game) throws SQLException {
+	public static void saveGame(Game game) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -24,11 +24,10 @@ public class GameDBModel {
 		callableSt.setString(1, game.getName());
 		callableSt.setInt(2, game.getNumOfQuestions());
 		callableSt.setString(3, game.getTeacherName());
-		boolean success=callableSt.executeUpdate()==0;
-		for(int i=0;i<game.getNumOfQuestions()&&success;++i){
-			success=QuestionDBModel.saveQuestion(game.getQuestions().get(i), game.getName());
+		callableSt.executeUpdate();
+		for(int i=0;i<game.getNumOfQuestions();++i){
+			QuestionDBModel.saveQuestion(game.getQuestions().get(i), game.getName());
 		}
-		return success;
 	}
 
 	public static Game fetchGame(String gameName) throws SQLException {
@@ -39,13 +38,11 @@ public class GameDBModel {
 		callableSt.setString(1, gameName);
 		ResultSet resultGame= callableSt.executeQuery();
 		Game game=new Game();
-		/*Commented By Ahmed Hussein
 		game.setInfo(resultGame.getString(1),QuestionDBModel.fetchQuestions(gameName),resultGame.getString(4) );
-		*/
 		return game;
 	}
 
-	public static boolean saveScore(String name, int score, String gameName) throws SQLException {
+	public static void saveScore(String name, int score, String gameName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -53,10 +50,6 @@ public class GameDBModel {
 		callableSt.setString(1, name);
 		callableSt.setInt(2, score);
 		callableSt.setString(3, gameName);
-		return callableSt.executeUpdate()==0;
-	}
-	
-	public static boolean exists(String gameName){
-		return false;
+		callableSt.executeUpdate();
 	}
 }

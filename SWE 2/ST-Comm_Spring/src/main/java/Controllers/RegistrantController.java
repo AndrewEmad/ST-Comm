@@ -42,9 +42,8 @@ public class RegistrantController {
 			if(RegistrantDBModel.exists(name, mail) == true){
 				return false;
 			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (SQLException e1) { 
+			return false;
 		}
 		Registrant registrant = new Registrant();
 		registrant.setInfo(name, birthdate, gender, mail, country, password, false);
@@ -56,11 +55,9 @@ public class RegistrantController {
 			else{
 				registrantCode = 2;
 			}
-			if(RegistrantDBModel.saveAccount(registrant, registrantCode) == false){
-				return false;
-			}
+			RegistrantDBModel.saveAccount(registrant, registrantCode);
 			String activationCode = RegistrantDBModel.getActivationCode(name);
-			sendConfirmationMail(activationCode, registrant);
+			//sendConfirmationMail(activationCode, registrant);
 		} catch (Exception e) {
 			return false;
 		}
@@ -72,10 +69,8 @@ public class RegistrantController {
 		try {
 			return RegistrantDBModel.authenticate(name, password);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
@@ -88,8 +83,7 @@ public class RegistrantController {
 				httpServletResponse.sendRedirect("/accountActivationError.html");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			httpServletResponse.sendRedirect("/accountActivationError.html");
 		}
 	}
 
@@ -110,8 +104,7 @@ public class RegistrantController {
 		try {
 			registrantCode = RegistrantDBModel.getRegistrantType(name);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		if(registrantCode == 1){
 			type = "student";

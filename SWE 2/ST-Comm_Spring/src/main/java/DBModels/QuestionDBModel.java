@@ -33,7 +33,7 @@ public class QuestionDBModel {
 		return questions;
 	}
 
-	public static boolean saveQuestion(Question question, String gameName) throws SQLException {
+	public static void saveQuestion(Question question, String gameName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -41,7 +41,8 @@ public class QuestionDBModel {
 		callableSt.setString(1, question.getQuestionStatement());
 		callableSt.setTime(2, question.getTime());
 		callableSt.registerOutParameter(3, Types.INTEGER);
-		return callableSt.executeUpdate()==0&&saveChoices(callableSt.getInt(3),question.getChoices());
+		callableSt.executeUpdate();
+		saveChoices(callableSt.getInt(3),question.getChoices());
 	}
 
 	private static Vector<String> getChoices(int questionID) throws SQLException {
@@ -58,18 +59,16 @@ public class QuestionDBModel {
 		return choices;
 	}
 	
-	private static boolean saveChoices(int questionID,Vector<String>choices) throws SQLException {
+	private static void saveChoices(int questionID,Vector<String>choices) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		boolean success=true;
-		for(int i=0;i<choices.size()&&success;++i){
+		for(int i=0;i<choices.size();++i){
 			CallableStatement callableSt = connection.prepareCall("{call saveChoices(?,?)}");
 			callableSt.setInt(1, questionID);
 			callableSt.setString(2, choices.get(i));
-			success=callableSt.executeUpdate()==0;
+			callableSt.executeUpdate();
 		}
-		return success;
 	}
 
 

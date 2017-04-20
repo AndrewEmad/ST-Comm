@@ -31,24 +31,24 @@ public class CourseDBModel {
 		return games;
 	}
 
-	public static boolean saveCourse(String courseName, String teacherName) throws SQLException {
+	public static void saveCourse(String courseName, String teacherName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call saveCourse(?, ?)}");
 		callableSt.setString(1, courseName);
 		callableSt.setString(2, teacherName);
-		return callableSt.executeUpdate()==0;
+		callableSt.executeUpdate();
 	}
 
-	public static boolean enroll(String courseName, String registrantName) throws SQLException {
+	public static void enroll(String courseName, String studentName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call Enroll(?, ?)}");
 		callableSt.setString(1, courseName);
-		callableSt.setString(2, registrantName);
-		return callableSt.executeUpdate()==0;
+		callableSt.setString(2, studentName);
+		callableSt.executeUpdate();
 	}
 
 	public static Vector<String> fetchCourses() throws SQLException {

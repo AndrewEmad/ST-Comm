@@ -10,7 +10,7 @@ public class DBConfig {
 	   public JdbcTemplate initJdbcTemplate(){
 	      DataSource dataSource = new DataSource();
 	      dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-	      dataSource.setUrl("jdbc:sqlserver://localhost;databaseName=ST-Comm;integratedSecurity=true;");
+	      dataSource.setUrl("jdbc:sqlserver://MARIAM\\SQL1;databaseName=ST-Comm;integratedSecurity=true;");
 	      return new JdbcTemplate(dataSource);
 	   }
 }
