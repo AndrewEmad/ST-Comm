@@ -57,7 +57,7 @@ public class RegistrantController {
 			}
 			RegistrantDBModel.saveAccount(registrant, registrantCode);
 			String activationCode = RegistrantDBModel.getActivationCode(name);
-			//sendConfirmationMail(activationCode, registrant);
+			sendConfirmationMail(activationCode, registrant);
 		} catch (Exception e) {
 			return false;
 		}
@@ -76,12 +76,8 @@ public class RegistrantController {
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
 	public void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
 		try {
-			if(RegistrantDBModel.setConfirmed(name, activationCode) == true){
-				httpServletResponse.sendRedirect("/accountActivated.html");
-			}
-			else{
-				httpServletResponse.sendRedirect("/accountActivationError.html");
-			}
+			RegistrantDBModel.setConfirmed(name, activationCode);
+			httpServletResponse.sendRedirect("/accountActivated.html");
 		} catch (SQLException e) {
 			httpServletResponse.sendRedirect("/accountActivationError.html");
 		}
