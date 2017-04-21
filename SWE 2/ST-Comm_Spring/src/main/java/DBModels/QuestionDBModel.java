@@ -27,7 +27,9 @@ public class QuestionDBModel {
 			Question question = new Question();
 			Vector<String>choices=getChoices(resultQuestions.getInt(1));
 			int correctAnswer=choices.indexOf(resultQuestions.getString(3));
+			/*Commented by Ahmed Hussein
 			question.setInfo(choices, correctAnswer, resultQuestions.getString(2),resultQuestions.getTime(4));
+			*/
 			questions.add(question);
 		}
 		return questions;
@@ -39,7 +41,9 @@ public class QuestionDBModel {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call saveQuestion(?, ?, ?)}");
 		callableSt.setString(1, question.getQuestionStatement());
-		callableSt.setTime(2, question.getTime());
+		/* Commented By Ahmed Hussein
+		 * callableSt.setTime(2, question.getTime());
+		 */
 		callableSt.registerOutParameter(3, Types.INTEGER);
 		callableSt.executeUpdate();
 		saveChoices(callableSt.getInt(3),question.getChoices());

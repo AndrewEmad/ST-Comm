@@ -1,55 +1,55 @@
 package Entities;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Vector;
 
 public class Question {
 
-  private Vector<String> choices;
-  private int correctAnswer;
-  private String questionStatement;
-  private Time time;
-  
+	private Vector<String> choices;
+	private int correctAnswer;
+	private String questionStatement;
+	private LocalTime time;
 
-public void Question() {
-  }
-  
-  public void setInfo(Vector<String> choices, int correctAnswer, String questionStatement, Time time) {
-	  this.choices = choices;
-	  this.correctAnswer = correctAnswer;
-	  this.questionStatement = questionStatement;
-	  this.time=time;
-  }
+	public void Question() {
+	}
 
-  public Vector<String> getChoices() {
-	  return choices;
-  }
+	public void setInfo(Vector<String> choices, int correctAnswer, String questionStatement,
+						LocalTime time) {
+		this.choices = choices;
+		this.correctAnswer = correctAnswer;
+		this.questionStatement = questionStatement;
+		this.time = time;
+	}
 
-  public int getCorrectAnswer() {
-	  return correctAnswer;
-  }
+	public Vector<String> getChoices() {
+		return choices;
+	}
 
-  public String getQuestionStatement() {
-	  return questionStatement;
-  }
+	public int getCorrectAnswer() {
+		return correctAnswer;
+	}
 
-  public void setChoices(Vector<String> choices) {
-	  this.choices = choices;
-  }
-  
-  public Time getTime() {
+	public String getQuestionStatement() {
+		return questionStatement;
+	}
+
+	public void setChoices(Vector<String> choices) {
+		this.choices = choices;
+	}
+
+	public LocalTime getTime() {
 		return time;
-	  }
+	}
 
-  public void setTime(Time time) {
-	this.time = time;
-  }
+	public void setTime(LocalTime time) {
+		this.time = time;
+	}
 
-  public void setCorrectAnswer(int correctAnswer) {
-	  this.correctAnswer = correctAnswer;
-  }
+	public void setCorrectAnswer(int correctAnswer) {
+		this.correctAnswer = correctAnswer;
+	}
 
-  public void setQuestionStatement(String questionStatement) {
-	  this.questionStatement = questionStatement;
-  }
+	public void setQuestionStatement(String questionStatement) {
+		this.questionStatement = questionStatement;
+	}
 }

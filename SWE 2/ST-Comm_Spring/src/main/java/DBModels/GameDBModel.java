@@ -38,7 +38,9 @@ public class GameDBModel {
 		callableSt.setString(1, gameName);
 		ResultSet resultGame= callableSt.executeQuery();
 		Game game=new Game();
+		/*Commented by Ahmed Hussein
 		game.setInfo(resultGame.getString(1),QuestionDBModel.fetchQuestions(gameName),resultGame.getString(4) );
+		*/
 		return game;
 	}
 
@@ -51,5 +53,9 @@ public class GameDBModel {
 		callableSt.setInt(2, score);
 		callableSt.setString(3, gameName);
 		callableSt.executeUpdate();
+	}
+	
+	public static boolean exists(String gameName) throws SQLException{
+		throw new SQLException();
 	}
 }
