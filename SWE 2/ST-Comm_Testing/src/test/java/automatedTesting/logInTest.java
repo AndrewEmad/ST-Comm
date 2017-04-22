@@ -1,4 +1,4 @@
-package automationTesting;
+package automatedTesting;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,8 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
-public class logInTest
+public class logInTest 
 {
 	public static void LogIn() throws IOException, InterruptedException
 	{
@@ -19,8 +18,9 @@ public class logInTest
 		driver.manage().window().maximize();
 		driver.get("http://localhost:8080/AngularJs/");
 		driver.findElement(By.id("join")).click();
-		Thread.sleep(500);
+		Thread.sleep(2000);
 		driver.findElement(By.id("signIn")).click();
+		Thread.sleep(2000);
 		String url=driver.getCurrentUrl();
 		
 		FileInputStream fileStream=new FileInputStream(new File("logInData.xlsx"));
@@ -44,12 +44,12 @@ public class logInTest
 			driver.findElement(By.id("password")).sendKeys(password);
 			driver.findElement(By.id("SignIn")).click();
 			String currentUrl=driver.getCurrentUrl();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			if(!currentUrl.equals(url))
 			{
 				driver.findElement(By.id("signOut")).click();
 				driver.findElement(By.id("join")).click();
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				driver.findElement(By.id("signIn")).click();
 			}
 		}
@@ -61,5 +61,4 @@ public class logInTest
 	{
 		LogIn();
 	}
-
 }

@@ -1,4 +1,4 @@
-package automationTesting;
+package automatedTesting;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,12 +25,11 @@ public class RegisterCourseTest
 		XSSFSheet sheet=workBook.getSheetAt(0);
 		int numOfRows=sheet.getLastRowNum();
 		String name,password,courseName;
-		for(int row=0;row<numOfRows;row++)
+		for(int row=0;row<=numOfRows;row++)
 		{
 			driver.findElement(By.id("join")).click();
 			Thread.sleep(2000);
 			driver.findElement(By.id("signIn")).click();
-			String url=driver.getCurrentUrl();
 			name=sheet.getRow(row).getCell(0).getStringCellValue();
 			password=sheet.getRow(row).getCell(1).getStringCellValue();
 			driver.findElement(By.id("userName")).clear();
@@ -38,7 +37,7 @@ public class RegisterCourseTest
 			driver.findElement(By.id("userName")).sendKeys(name);
 			driver.findElement(By.id("password")).sendKeys(password);
 			driver.findElement(By.id("SignIn")).click();
-			Thread.sleep(2000);
+			Thread.sleep(9000);
 			driver.findElement(By.id("allCourses")).click();
 			int numColumns=sheet.getRow(row).getLastCellNum();
 			for(int column=2;column<numColumns;column++)
@@ -46,14 +45,11 @@ public class RegisterCourseTest
 				if(sheet.getRow(row).getCell(column).getStringCellValue()!="")
 				{
 					courseName=sheet.getRow(row).getCell(column).getStringCellValue();
-					driver.findElement(By.name(courseName)).click();
-				}
-				String currentUrl=driver.getCurrentUrl();
-				if(!currentUrl.equals(url))
-				{
-					driver.navigate().back();
+					Thread.sleep(2000);
+					driver.findElement(By.id(courseName)).click();
 				}
 			}
+			Thread.sleep(5000);
 		    driver.findElement(By.id("signOut")).click();
 		    Thread.sleep(2000);
 		}
