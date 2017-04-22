@@ -76,8 +76,10 @@ public class RegistrantController {
 	@RequestMapping("/st-comm.com/confirm/{activationCode}")
 	public void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
 		try {
-			RegistrantDBModel.setConfirmed(name, activationCode);
-			httpServletResponse.sendRedirect("/accountActivated.html");
+			if(RegistrantDBModel.setConfirmed(name, activationCode))
+				httpServletResponse.sendRedirect("/accountActivated.html");
+			else
+				httpServletResponse.sendRedirect("/accountActivationError.html");
 		} catch (SQLException e) {
 			httpServletResponse.sendRedirect("/accountActivationError.html");
 		}
