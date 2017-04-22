@@ -38,9 +38,7 @@ public class GameDBModel {
 		callableSt.setString(1, gameName);
 		ResultSet resultGame= callableSt.executeQuery();
 		Game game=new Game();
-		/*Commented by Ahmed Hussein
-		game.setInfo(resultGame.getString(1),QuestionDBModel.fetchQuestions(gameName),resultGame.getString(4) );
-		*/
+		game.setInfo(resultGame.getString(1),resultGame.getString(3),resultGame.getString(4),QuestionDBModel.fetchQuestions(gameName) );
 		return game;
 	}
 
@@ -56,6 +54,13 @@ public class GameDBModel {
 	}
 	
 	public static boolean exists(String gameName) throws SQLException{
-		throw new SQLException();
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call gameExists(?, ?)}");
+		callableSt.setString(1, gameName);
+		callableSt.registerOutParameter(2, Types.BIT);
+		callableSt.executeUpdate();
+		return callableSt.getBoolean(2);
 	}
 }

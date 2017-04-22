@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Types;
 import java.util.Vector;
 
@@ -27,9 +28,7 @@ public class QuestionDBModel {
 			Question question = new Question();
 			Vector<String>choices=getChoices(resultQuestions.getInt(1));
 			int correctAnswer=choices.indexOf(resultQuestions.getString(3));
-			/*Commented by Ahmed Hussein
-			question.setInfo(choices, correctAnswer, resultQuestions.getString(2),resultQuestions.getTime(4));
-			*/
+			question.setInfo(choices, correctAnswer, resultQuestions.getString(2),resultQuestions.getTime(4).toLocalTime());
 			questions.add(question);
 		}
 		return questions;
@@ -41,9 +40,7 @@ public class QuestionDBModel {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call saveQuestion(?, ?, ?)}");
 		callableSt.setString(1, question.getQuestionStatement());
-		/* Commented By Ahmed Hussein
-		 * callableSt.setTime(2, question.getTime());
-		 */
+		 callableSt.setTime(2, Time.valueOf(question.getTime()));
 		callableSt.registerOutParameter(3, Types.INTEGER);
 		callableSt.executeUpdate();
 		saveChoices(callableSt.getInt(3),question.getChoices());
