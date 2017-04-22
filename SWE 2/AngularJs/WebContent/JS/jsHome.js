@@ -1,8 +1,6 @@
 
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
-        /*var data = [{"name" : "course1"},{"name" : "course2"}];
-        $scope.courses = data;*/
         
         var courseName;
         var gameName;
@@ -155,14 +153,7 @@ app.controller('ctrl', function($scope, $http) {
     	    				,teacherName : localStorage.getItem("userName") , 
     	    				questions : questions }
    		    	})
-	  
-	    		/*for(var x=0;x<questions.length;x++){
-	    			alert(questions[x].type);
-	    			alert(questions[x].questionStatement);
-	    			alert(questions[x].correctAnswer);
-	    			alert(questions[x].choices[0]);
-	    		}*/
-	    		//alert("the game saved successfully");
+
 	    		$('#myModal3').modal('hide');
 	    		document.getElementById("submitQuestion").value = "submit";
 	    	}
@@ -181,13 +172,10 @@ app.controller('ctrl', function($scope, $http) {
 	    	$http({
     			url: "http://localhost:8090/st-comm.com/courses/list-all",
     	    	method: "GET",
-    	    	params: {registrantName : "asa"}
+    	    	params: {registrantName : localStorage.getItem("userName") }
    		    }).then(function(response){
 					$scope.allCourses = response.data;
 	    		});
-	    	
-	    	/*var dataa =["course3","course4","course5"];
-	    	$scope.allCourses = dataa;*/
 	    }
 	    $scope.register = function(newCourse){
 	    	$http({
