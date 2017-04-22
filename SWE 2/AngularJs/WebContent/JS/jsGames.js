@@ -7,7 +7,6 @@ app.controller('ctrl', function($scope, $http) {
 	var score;
 	
 	$scope.username = localStorage.getItem("userName");
-	
 	$http({
 		url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
 	    method: "GET",

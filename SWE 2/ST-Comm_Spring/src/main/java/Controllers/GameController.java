@@ -35,10 +35,9 @@ public class GameController {
 			game = GameDBModel.fetchGame(gameName);
 			Vector<Question> questions = QuestionDBModel.fetchQuestions(gameName);
 			game.setQuestions(questions);
-
+			game.setNumOfQuestions(questions.size());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		return game;
 	}
@@ -49,6 +48,7 @@ public class GameController {
 		Game game = new Game();
 		Vector<Question> questions = wrapper.getQuestions();
 		game.setInfo(gameName, courseName, teacherName, questions);
+		game.setNumOfQuestions(questions.size());
 		try {
 			GameDBModel.saveGame(game);
 			for (int i = 0; i < questions.size(); i++) {
