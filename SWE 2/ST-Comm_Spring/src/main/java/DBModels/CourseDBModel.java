@@ -17,6 +17,12 @@ import Config.DBConfig;
 
 public class CourseDBModel {
 
+	/**
+	 * Returns the games that is created in the given course
+	 * @param courseName
+	 * @return Vector<String>
+	 * @throws SQLException
+	 */
 	public static Vector<String> fetchGames(String courseName) throws SQLException {
 
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
@@ -32,6 +38,12 @@ public class CourseDBModel {
 		return games;
 	}
 
+	/**
+	 * Saves new course in the database
+	 * @param courseName
+	 * @param teacherName
+	 * @throws SQLException
+	 */
 	public static void saveCourse(String courseName, String teacherName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -42,6 +54,12 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 	}
 
+	/**
+	 * Register user in course
+	 * @param courseName
+	 * @param registrantName
+	 * @throws SQLException
+	 */
 	public static void enroll(String courseName, String registrantName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -52,6 +70,11 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 	}
 
+	/**
+	 * Returns all courses in the database
+	 * @return Vector<String>
+	 * @throws SQLException
+	 */
 	public static Vector<String> fetchCourses() throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -64,7 +87,14 @@ public class CourseDBModel {
 		}
 		return courses;
 	}
-
+	
+	
+	/**
+	 * Returns courses for specific user
+	 * @param registrantName
+	 * @return Vector<String>
+	 * @throws SQLException
+	 */
 	public static Vector<String> fetchCourses(String registrantName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -79,6 +109,14 @@ public class CourseDBModel {
 		return courses;
 	}
 	
+	
+	
+	/**
+	 * Checks if the course name already exists
+	 * @param courseName
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean exists(String courseName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);

@@ -1,4 +1,5 @@
-package automationTesting;
+package automatedTesting;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class signUpTest
+public class signUpTest 
 {
 	public static void SignUp() throws IOException, InterruptedException
 	{
@@ -23,8 +24,9 @@ public class signUpTest
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("http://localhost:8080/AngularJs/");
+		Thread.sleep(2000);
 		driver.findElement(By.id("join")).click();
-		Thread.sleep(500);
+		Thread.sleep(5000);
 		driver.findElement(By.id("signUp")).click();
 		String url=driver.getCurrentUrl();
 		FileInputStream fileStream=new FileInputStream(new File("signUpData.xlsx"));
@@ -102,7 +104,7 @@ public class signUpTest
 			{
 				birthdate=null;
 			}
-			
+			Thread.sleep(5000);
 			driver.findElement(By.id("userName")).clear();
 			driver.findElement(By.id("email")).clear();
 			driver.findElement(By.id("male")).click();
@@ -154,12 +156,14 @@ public class signUpTest
 				BirthDate.sendKeys("");
 			}
 			driver.findElement(By.id("SignUp")).click();
+			Thread.sleep(6000);
 			String currentUrl=driver.getCurrentUrl();
-			Thread.sleep(5000);
 			if(!currentUrl.equals(url))
 			{
 				driver.navigate().back();
+				driver.findElement(By.id("signUp")).click();
 			}
+			Thread.sleep(2000);
 		}
 		fileStream.close();
 		workBook.close();
@@ -169,5 +173,4 @@ public class signUpTest
 	{
 		SignUp();
 	}
-
 }

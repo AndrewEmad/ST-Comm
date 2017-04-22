@@ -16,6 +16,11 @@ import Entities.Question;
 
 public class GameDBModel {
 
+	/**
+	 * Saves new Game in the Database
+	 * @param game
+	 * @throws SQLException
+	 */
 	public static void saveGame(Game game) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -27,6 +32,12 @@ public class GameDBModel {
 		callableSt.executeUpdate();
 	}
 
+	/**
+	 * Retrieve specific game from database
+	 * @param gameName
+	 * @return Game
+	 * @throws SQLException
+	 */
 	public static Game fetchGame(String gameName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -40,6 +51,13 @@ public class GameDBModel {
 		return game;
 	}
 
+	/**
+	 * Saves student score in specific game
+	 * @param name
+	 * @param score
+	 * @param gameName
+	 * @throws SQLException
+	 */
 	public static void saveScore(String name, int score, String gameName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -51,6 +69,12 @@ public class GameDBModel {
 		callableSt.executeUpdate();
 	}
 	
+	/**
+	 * Checks if game name already exists in the database
+	 * @param gameName
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean exists(String gameName) throws SQLException{
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
