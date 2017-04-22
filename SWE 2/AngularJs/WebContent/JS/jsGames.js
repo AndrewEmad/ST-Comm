@@ -77,7 +77,7 @@ app.controller('ctrl', function($scope, $http) {
     	    method: "GET",
     	    params: {name : localStorage.getItem("userName")}
    		    }).then(function(response){
-	    		if(response.data == "student"){
+	    		if(response.data == 1){
 	    			$http({
 	    				url: "http://localhost:8090/st-comm.com/games/scores/save",
 	    			    method: "GET",
