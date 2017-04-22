@@ -74,7 +74,6 @@ public class CourseDBModel {
 		ResultSet resultCourses = callableSt.executeQuery();
 		while(resultCourses.next()){
 			courses.add(resultCourses.getString(1));
-			System.out.println(resultCourses.getString(1));
 
 		}
 		return courses;
