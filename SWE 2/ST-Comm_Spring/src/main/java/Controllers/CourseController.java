@@ -13,9 +13,19 @@ import DBModels.CourseDBModel;
 
 @CrossOrigin(origins = "*") //allow services of this RestController to share data to 
 							//any client side request
+/**
+ * 
+ * @author Ahmed Hussein
+ *
+ */
 @RestController
 public class CourseController {
 
+	/**
+	 * 
+	 * @param courseName: the name of the course for which game names are to be given
+	 * @return vector of game names that exists in a specific course
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/games/courses/list-by-course")
 	public Vector<String> getGames(@RequestParam String courseName) {
 		try {
@@ -25,6 +35,12 @@ public class CourseController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param courseName: the name of the course to be created
+	 * @param teacherName: the creator of the game
+	 * @return true if the course was created successfully, and false otherwise
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/new")
 	public boolean createCourse(@RequestParam String courseName, @RequestParam String teacherName) {
 		try {
@@ -35,6 +51,11 @@ public class CourseController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param registrantName
+	 * @return vector of the names of the courses that the registrant did not enroll in yet
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/list-all")
 	public Vector<String> getOtherCourses(@RequestParam String registrantName) {
 		try {
@@ -54,6 +75,11 @@ public class CourseController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param registrantName
+	 * @return vector of the names of the courses that the registrant has enrolled in
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/list-by-registrant")
 	public Vector<String> getCourses(@RequestParam String registrantName) {
 		try {
@@ -63,6 +89,12 @@ public class CourseController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param registrantName
+	 * @param courseName: the course in which the registrant wishes to enroll
+	 * @return true if the registrant was enrolled successfully, and false otherwise
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/register")
 	public boolean register(@RequestParam String registrantName, @RequestParam String courseName) {
 		try {
@@ -73,6 +105,11 @@ public class CourseController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param courseName: the course being checked whether it exists in the system or not
+	 * @return true if the course exists, and false otherwise
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/courses/exists")
 	public boolean exists(@RequestParam String courseName){
 		try {

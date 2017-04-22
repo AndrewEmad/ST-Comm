@@ -19,14 +19,31 @@ import Entities.QuestionJSONWrapper;
 
 @CrossOrigin(origins = "*") // allow services of this RestController to share
 							// data to any client side request
+/**
+ * 
+ * @author Ahmed Hussein
+ *
+ */
 @RestController
 public class GameController {
 
+	/**
+	 * 
+	 * @param binder binds an object form the {@link Entities.QuestionJSONWrapper} class 
+	 * 		  according to the JSON data delivered to the service
+	 * 		  {@link Controllers.GameController#createGame(String, String, String, QuestionJSONWrapper)}}
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 	    binder.registerCustomEditor(QuestionJSONWrapper.class, new QuestionJSONWrapper());
 	}
 	
+	/**
+	 * 
+	 * @param gameName: the game to be played
+	 * @return and object of the class {@link Entities.Game} instantiated from the database
+	 * 		   models
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/play")
 	public Game playGame(@RequestParam String gameName) {
 		Game game = null;
@@ -41,6 +58,14 @@ public class GameController {
 		return game;
 	}
 
+	/**
+	 * 
+	 * @param gameName: the name of the game to be created
+	 * @param courseName: the course in which the game will be saved
+	 * @param teacherName: the creator of the course
+	 * @param wrapper: an object that wraps up the questions of the game
+	 * @return true if the game was created successfully, and false otherwise
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/new")
 	public boolean createGame(@RequestParam String gameName, @RequestParam String courseName,
 			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper) {
@@ -60,6 +85,13 @@ public class GameController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param name: the name of the registrant for whom the score will be saved
+	 * @param score
+	 * @param gameName
+	 * @return true if the scored was saved successfully, and false otherwise
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/scores/save")
 	public boolean saveScore(@RequestParam String name, @RequestParam int score,
 							 @RequestParam String gameName) {
@@ -71,6 +103,11 @@ public class GameController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param gameName: the game being checked whether or not it exists in the system
+	 * @return true if the game exists, and false otherwise
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/exists")
 	public boolean exists(@RequestParam String gameName){
 		try {

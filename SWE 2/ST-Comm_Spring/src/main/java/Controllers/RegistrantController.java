@@ -24,6 +24,11 @@ import Entities.Registrant;
 
 @CrossOrigin(origins = "*") //allow services of this RestController to share data to 
 							//any client side request
+/**
+ * 
+ * @author Ahmed Hussein
+ *
+ */
 @RestController
 public class RegistrantController {
 
@@ -33,6 +38,17 @@ public class RegistrantController {
 	@Autowired
 	HttpServletResponse httpServletResponse;
 	
+	/**
+	 * 
+	 * @param name
+	 * @param birthdate
+	 * @param gender
+	 * @param mail
+	 * @param country
+	 * @param password
+	 * @param type
+	 * @return true if the account was created successfully and false otherwise
+	 */
 	@RequestMapping(method=RequestMethod.POST, value="/st-comm.com/signup")
 	public boolean createAccount(@RequestParam String name, @RequestParam("birthdate") @DateTimeFormat(pattern="yyyy-MM-dd") Date birthdate,
 								 @RequestParam String gender, @RequestParam String mail,
@@ -64,6 +80,13 @@ public class RegistrantController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param password
+	 * @return true if there is an existing account with the same name and password as provided
+	 * 		   to the service, and false otherwise
+	 */
 	@RequestMapping(method=RequestMethod.POST, value="/st-comm.com/login")
 	public boolean authenticate(@RequestParam String name, @RequestParam String password) {
 		try {
@@ -96,6 +119,11 @@ public class RegistrantController {
 		javaMailSender.send(message);
 	}
 
+	/**
+	 * 
+	 * @param name: the name of the registrant whose type is being checked
+	 * @return an integer indicating whether that name is a student name or a teacher name
+	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/query/registrant-type")
 	public int getRegistrantType(@RequestParam String name){
 		int registrantCode = 0;
