@@ -37,7 +37,12 @@ app.controller('ctrl', function($scope, $http) {
         			document.getElementById("createGame").style.display = "block";	    		
 	    		}
 	    	});
-
+    		
+    		/*if(true){
+        		document.getElementById("createCourse").style.display = "block";
+        		document.getElementById("createGame").style.display = "block";
+    		}*/
+        
         $http({
     		url: "http://localhost:8090/st-comm.com/courses/list-by-registrant",
     	    method: "GET",

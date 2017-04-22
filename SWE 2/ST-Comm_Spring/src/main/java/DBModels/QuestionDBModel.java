@@ -16,6 +16,12 @@ import Entities.Question;
 
 public class QuestionDBModel {
 
+	/**
+	 * Returns the questions that is related to given game name
+	 * @param gameName
+	 * @return Vector<Question>
+	 * @throws SQLException
+	 */
 	public static Vector<Question> fetchQuestions(String gameName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -34,6 +40,13 @@ public class QuestionDBModel {
 		return questions;
 	}
 
+	
+	/**
+	 * Saves a question for specific game
+	 * @param question
+	 * @param gameName
+	 * @throws SQLException
+	 */
 	public static void saveQuestion(Question question, String gameName) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -46,6 +59,12 @@ public class QuestionDBModel {
 		saveChoices(callableSt.getInt(3),question.getChoices());
 	}
 
+	/**
+	 * Returns the choices for given questionID
+	 * @param questionID
+	 * @return Vector<String>
+	 * @throws SQLException
+	 */
 	private static Vector<String> getChoices(int questionID) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -60,6 +79,12 @@ public class QuestionDBModel {
 		return choices;
 	}
 	
+	/**
+	 * Saves Choices of specific question
+	 * @param questionID
+	 * @param choices
+	 * @throws SQLException
+	 */
 	private static void saveChoices(int questionID,Vector<String>choices) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);

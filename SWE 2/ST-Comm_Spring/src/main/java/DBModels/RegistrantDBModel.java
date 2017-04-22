@@ -17,6 +17,13 @@ import Entities.Registrant;
 public class RegistrantDBModel {
 	
 	
+	/**
+	 * Checks if the user name and password are valid 
+	 * @param name
+	 * @param password
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean authenticate(String name, String password) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -29,6 +36,13 @@ public class RegistrantDBModel {
 		return callableSt.getBoolean(3);
 	}
 
+	/**
+	 * Checks if username or email already exists in the database
+	 * @param name
+	 * @param mail
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean exists(String name, String mail) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -41,6 +55,13 @@ public class RegistrantDBModel {
 		return callableSt.getBoolean(3);
 	}
 
+	/**
+	 * Sets the user as confirmed user
+	 * @param name
+	 * @param activationCode
+	 * @return boolean
+	 * @throws SQLException
+	 */
 	public static boolean setConfirmed(String name, String activationCode) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -53,6 +74,12 @@ public class RegistrantDBModel {
 		return callableSt.getBoolean(3);
 	}
 
+	/**
+	 * Saves new Registrant Account in the database
+	 * @param registrant
+	 * @param type
+	 * @throws SQLException
+	 */
 	public static void saveAccount(Registrant registrant, int type) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -69,6 +96,12 @@ public class RegistrantDBModel {
 		callableSt.executeUpdate();
 	}
 
+	/**
+	 * Returns the activation code for given registrant name
+	 * @param name
+	 * @return String
+	 * @throws SQLException
+	 */
 	public static String getActivationCode(String name)throws SQLException {
 			AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
@@ -80,6 +113,12 @@ public class RegistrantDBModel {
 			return callableSt.getString(2);
 	}
 	
+	/**
+	 * Returns the type of given registrant name
+	 * @param name
+	 * @return int
+	 * @throws SQLException
+	 */
 	public static int getRegistrantType(String name) throws SQLException{
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
