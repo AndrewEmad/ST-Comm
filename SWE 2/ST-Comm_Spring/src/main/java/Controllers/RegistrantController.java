@@ -102,7 +102,7 @@ public class RegistrantController {
 		try {
 			registrantCode = RegistrantDBModel.getRegistrantType(name);
 		} catch (SQLException e) {
-			return null;
+			return 0;
 		}
 		return registrantCode;
 	}

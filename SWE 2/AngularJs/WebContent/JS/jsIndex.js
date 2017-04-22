@@ -7,6 +7,7 @@ app.controller('ctrl', function($scope, $http) {
 	   		method: "POST",
 	    	params: {subject : $scope.subject , from : $scope.email , bodyHTML : $scope.msg}
 			}).then(function(response){
+				alert("as");
     			$('#myModal').modal('hide');
 			})	
 	
