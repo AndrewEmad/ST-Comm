@@ -16,7 +16,7 @@ app.controller('ctrl', function($scope, $http) {
     		$scope.games = response.data;
 		})
 	
-	/*$scope.games = ["game1","game2","game3"];*/
+	$scope.games = ["game1","game2","game3"];
 	
 	$scope.playGame =function(GameName) {
 		gameName = GameName;

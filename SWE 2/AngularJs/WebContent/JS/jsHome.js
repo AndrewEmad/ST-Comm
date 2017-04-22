@@ -34,7 +34,7 @@ app.controller('ctrl', function($scope, $http) {
     	    method: "GET",
     	    params: {name : localStorage.getItem("userName")}
    		    }).then(function(response){
-	    		if(response.data == "teacher"){
+	    		if(response.data != 1){
 					document.getElementById("createCourse").style.display = "block";
         			document.getElementById("createGame").style.display = "block";	    		
 	    		}
@@ -181,13 +181,13 @@ app.controller('ctrl', function($scope, $http) {
 	    	$http({
     			url: "http://localhost:8090/st-comm.com/courses/list-all",
     	    	method: "GET",
-    	    	params: {registrantName : localStorage.getItem("userName")}
+    	    	params: {registrantName : "asa"}
    		    }).then(function(response){
 					$scope.allCourses = response.data;
 	    		});
 	    	
-	    	var dataa =["course3","course4","course5"];
-	    	$scope.allCourses = dataa;
+	    	/*var dataa =["course3","course4","course5"];
+	    	$scope.allCourses = dataa;*/
 	    }
 	    $scope.register = function(newCourse){
 	    	$http({

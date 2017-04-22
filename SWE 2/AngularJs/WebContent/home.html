@@ -23,7 +23,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                   <li id="home" ><a href="home.html">Home</a></li>
-                  <li id="allCourses" ng-click="getAllCourses()"><a href="#" >All Courses</a></li>
+                  <li id="allCourses" ng-click="getAllCourses()"><a href="#" id="allCourses">All Courses</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li><a href="#">{{username}}</a></li>
@@ -52,7 +52,7 @@
                     	<div class="thumbnail">
                     		<img src="logo.png">
                     		<div class="caption">
-                        		<center><h3>{{course.name}}</h3></center>
+                        		<center><h3>{{course}}</h3></center>
                         		<center><input type="button" value="Open" class="btn btn-default" name={{course.name}} onclick="clicked(this);"/> </center>
                     		</div>
                     	</div>
