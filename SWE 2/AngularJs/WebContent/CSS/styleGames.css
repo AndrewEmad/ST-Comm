@@ -14,3 +14,6 @@
     height:100%;
     border-radius: 20%;
 }
+body{
+    overflow-x: hidden;
+}

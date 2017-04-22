@@ -4,7 +4,7 @@ app.controller('ctrl', function($scope, $http) {
 
 	$(document).ready(function(){
 		var passwordMatch =false;
-		$("#userName").keyup(function(){
+		$("#userName , #email").keyup(function(){
 			document.getElementById("errorMsg").style.display ="none";
 		});
 		$("#password, #confirmPassword").keyup(checkPasswordMatch);

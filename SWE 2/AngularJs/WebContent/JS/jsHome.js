@@ -138,7 +138,7 @@ app.controller('ctrl', function($scope, $http) {
 			}
 				
 	    	question = { choices : choices , correctAnswer : answerIndex ,
-	    				 questionStatement: $("#Qstatement").val() };
+	    				 questionStatement: $("#Qstatement").val(),time: "00:00:00" };
         	
         	questions[questionNum-1] = question;
        

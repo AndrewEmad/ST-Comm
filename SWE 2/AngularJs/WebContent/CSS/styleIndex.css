@@ -54,3 +54,24 @@
 #footer{
     background: #EEEEEE;
 }
+#subject{
+	text-align : center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#email{
+	width:50%;
+	text-align : center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#message{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+.modal-title{
+	color :#82B1FF;
+}
+body{
+    overflow-x: hidden;
+}
