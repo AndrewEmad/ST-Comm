@@ -34,23 +34,23 @@ public class createCourseTest
 		XSSFSheet sheet = workBook.getSheetAt(0);
 		int numOfRows = sheet.getLastRowNum();
 		String name, password, courseName;
-
-		for (int row = 0; row <=numOfRows; row++) {
-			Thread.sleep(2000);
-			driver.findElement(By.id("join")).click();
-			Thread.sleep(2000);
-			driver.findElement(By.id("signIn")).click();
-			Thread.sleep(1000);
-			name = sheet.getRow(row).getCell(0).getStringCellValue();
-			password = sheet.getRow(row).getCell(1).getStringCellValue();
-			driver.findElement(By.id("userName")).clear();
-			driver.findElement(By.id("password")).clear();
-			driver.findElement(By.id("userName")).sendKeys(name);
-			driver.findElement(By.id("password")).sendKeys(password);
-			driver.findElement(By.id("SignIn")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.id("join")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.id("signIn")).click();
+		Thread.sleep(1000);
+		name = sheet.getRow(0).getCell(0).getStringCellValue();
+		password = sheet.getRow(0).getCell(1).getStringCellValue();
+		driver.findElement(By.id("userName")).clear();
+		driver.findElement(By.id("password")).clear();
+		driver.findElement(By.id("userName")).sendKeys(name);
+		driver.findElement(By.id("password")).sendKeys(password);
+		driver.findElement(By.id("SignIn")).click();
+		for (int row = 1; row <=numOfRows; row++) {
+			
 			int numColumns = sheet.getRow(row).getLastCellNum();
 			Thread.sleep(9000);
-			for (int column = 2; column < numColumns; column++) {
+			for (int column = 0; column < numColumns; column++) {
 				Thread.sleep(1000);
 				driver.findElement(By.id("createCourse")).click();
 				if (sheet.getRow(row).getCell(column).getStringCellValue() != null) 
