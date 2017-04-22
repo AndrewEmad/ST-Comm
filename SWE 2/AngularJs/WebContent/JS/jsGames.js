@@ -30,6 +30,14 @@ app.controller('ctrl', function($scope, $http) {
 			}).then(function(response){
 				numOfQuestions = response.data.numOfQuestions;
 				questions = response.data.questions;
+				$scope.gameName = gameName;
+				
+		        document.getElementById("questionNum").innerHTML = "Question "+questionNum+
+		        													" Out of "+numOfQuestions;
+		        document.getElementById("score").innerHTML = "Score 0";
+		        
+		        $scope.question = questions[questionNum-1].questionStatement;
+		        $scope.choices = questions[questionNum-1].choices;
 			})
 		
 		
@@ -37,14 +45,7 @@ app.controller('ctrl', function($scope, $http) {
 			choices : ["fine","bad"]},{questionStatement: "what's your name?" , 
 				correctAnswer: 1 , choices : ["ahmed","omar"]}];*/
 			
-		$scope.gameName = gameName;
 		
-        document.getElementById("questionNum").innerHTML = "Question "+questionNum+
-        													" Out of "+numOfQuestions;
-        document.getElementById("score").innerHTML = "Score 0";
-        
-        $scope.question = questions[questionNum-1].questionStatement;
-        $scope.choices = questions[questionNum-1].choices;
     };
     $scope.submitAnswer =function(){
     	if($("input[name=choices]:checked").val() == 
