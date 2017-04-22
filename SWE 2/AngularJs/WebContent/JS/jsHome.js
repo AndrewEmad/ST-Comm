@@ -186,8 +186,8 @@ app.controller('ctrl', function($scope, $http) {
 					$scope.allCourses = response.data;
 	    		});
 	    	
-	    	/*var dataa =["course3","course4","course5"];
-	    	$scope.allCourses = dataa;*/
+	    	var dataa =["course3","course4","course5"];
+	    	$scope.allCourses = dataa;
 	    }
 	    $scope.register = function(newCourse){
 	    	$http({
