@@ -82,7 +82,7 @@ public class CourseDBModel {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call courseExists(?, ?, ?)}");
+		CallableStatement callableSt = connection.prepareCall("{call courseExists(?, ?)}");
 		callableSt.setString(1, courseName);
 		callableSt.registerOutParameter(2, Types.BIT);
 		callableSt.executeUpdate();
