@@ -16,12 +16,10 @@ app.controller('ctrl', function($scope, $http) {
     		$scope.games = response.data;
 		})
 	
-	/*$scope.games = ["game1","game2","game3"];*/
 	
 	$scope.playGame =function(GameName) {
 		gameName = GameName;
 		questionNum=1;
-		//numOfQuestions =2;
 		score = 0;
 		
 		$http({
@@ -31,21 +29,15 @@ app.controller('ctrl', function($scope, $http) {
 			}).then(function(response){
 				numOfQuestions = response.data.numOfQuestions;
 				questions = response.data.questions;
+				$scope.gameName = gameName;
+				
+		        document.getElementById("questionNum").innerHTML = "Question "+questionNum+
+		        													" Out of "+numOfQuestions;
+		        document.getElementById("score").innerHTML = "Score 0";
+		        
+		        $scope.question = questions[questionNum-1].questionStatement;
+		        $scope.choices = questions[questionNum-1].choices;
 			})
-		
-		
-		/*questions = [{questionStatement: "how are you?" , correctAnswer: 0 ,
-			choices : ["fine","bad"]},{questionStatement: "what's your name?" , 
-				correctAnswer: 1 , choices : ["ahmed","omar"]}];*/
-			
-		$scope.gameName = gameName;
-		
-        document.getElementById("questionNum").innerHTML = "Question "+questionNum+
-        													" Out of "+numOfQuestions;
-        document.getElementById("score").innerHTML = "Score 0";
-        
-        $scope.question = questions[questionNum-1].questionStatement;
-        $scope.choices = questions[questionNum-1].choices;
     };
     $scope.submitAnswer =function(){
     	if($("input[name=choices]:checked").val() == 
@@ -77,7 +69,7 @@ app.controller('ctrl', function($scope, $http) {
     	    method: "GET",
     	    params: {name : localStorage.getItem("userName")}
    		    }).then(function(response){
-	    		if(response.data == "student"){
+	    		if(response.data == 1){
 	    			$http({
 	    				url: "http://localhost:8090/st-comm.com/games/scores/save",
 	    			    method: "GET",

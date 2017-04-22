@@ -18,6 +18,7 @@ import Config.DBConfig;
 public class CourseDBModel {
 
 	public static Vector<String> fetchGames(String courseName) throws SQLException {
+
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -26,7 +27,7 @@ public class CourseDBModel {
 		Vector<String>games=new Vector<String>();
 		ResultSet resultGames = callableSt.executeQuery();
 		while(resultGames.next()){
-			games.add(resultGames.getString(0));
+			games.add(resultGames.getString(1));
 		}
 		return games;
 	}
@@ -74,7 +75,6 @@ public class CourseDBModel {
 		ResultSet resultCourses = callableSt.executeQuery();
 		while(resultCourses.next()){
 			courses.add(resultCourses.getString(1));
-
 		}
 		return courses;
 	}

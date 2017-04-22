@@ -25,9 +25,6 @@ public class GameDBModel {
 		callableSt.setInt(2, game.getNumOfQuestions());
 		callableSt.setString(3, game.getTeacherName());
 		callableSt.executeUpdate();
-		for(int i=0;i<game.getNumOfQuestions();++i){
-			QuestionDBModel.saveQuestion(game.getQuestions().get(i), game.getName());
-		}
 	}
 
 	public static Game fetchGame(String gameName) throws SQLException {
@@ -38,7 +35,8 @@ public class GameDBModel {
 		callableSt.setString(1, gameName);
 		ResultSet resultGame= callableSt.executeQuery();
 		Game game=new Game();
-		game.setInfo(resultGame.getString(1),resultGame.getString(3),resultGame.getString(4),QuestionDBModel.fetchQuestions(gameName) );
+		if(resultGame.next())
+			game.setInfo(resultGame.getString(1),resultGame.getString(3),resultGame.getString(4),null );
 		return game;
 	}
 
