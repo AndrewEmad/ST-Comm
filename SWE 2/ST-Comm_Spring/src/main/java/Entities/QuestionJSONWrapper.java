@@ -10,6 +10,11 @@ import java.util.regex.Pattern;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 
+ * @author Ahmed Hussein
+ *
+ */
 public class QuestionJSONWrapper extends PropertyEditorSupport{
 
 	private Vector<Question> questions;
@@ -27,6 +32,9 @@ public class QuestionJSONWrapper extends PropertyEditorSupport{
 	}
 
 
+	/**
+	 * JSONString to be parsed and mapped to an object of {@link Entities.QuestionJSONWrapper}
+	 */
 	@Override
 	public void setAsText(String JSONString) throws IllegalArgumentException {
 		ObjectMapper mapper = new ObjectMapper();
