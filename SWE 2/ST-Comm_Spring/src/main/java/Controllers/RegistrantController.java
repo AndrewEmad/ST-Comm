@@ -73,8 +73,8 @@ public class RegistrantController {
 		}
 	}
 
-	@RequestMapping("/st-comm.com/confirm/{activationCode}")
-	public void setConfirmed(String name, @PathVariable String activationCode) throws IOException {
+	@RequestMapping("/st-comm.com/confirm/{name}/{activationCode}")
+	public void setConfirmed(@PathVariable String name, @PathVariable String activationCode) throws IOException {
 		try {
 			if(RegistrantDBModel.setConfirmed(name, activationCode))
 				httpServletResponse.sendRedirect("/accountActivated.html");
@@ -86,12 +86,13 @@ public class RegistrantController {
 	}
 
 	public void sendConfirmationMail(String activationCode, Registrant registrant) throws MessagingException {
+		String name = registrant.getName();
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper;
 		helper = new MimeMessageHelper(message, true);
 		helper.setTo(registrant.getMail());
 		helper.setSubject("ST-Comm account confirmation");
-		helper.setText("<b>Hey "+registrant.getName()+",</b><br/>We're ready to activate your account. All we need to do is make sure this is your email address.<br/><a href=\"http://localhost:8090/st-comm.com/confirm/"+activationCode+"\">Click here to activate your account</a><br/>If you didn't create a ST-Comm account, just delete this email and everything will go back to the way it was.", true);
+		helper.setText("<b>Hey "+name+",</b><br/>We're ready to activate your account. All we need to do is make sure this is your email address.<br/><a href=\"http://localhost:8090/st-comm.com/confirm/"+name+"/"+activationCode+"\">Click here to activate your account</a><br/>If you didn't create a ST-Comm account, just delete this email and everything will go back to the way it was.", true);
 		javaMailSender.send(message);
 	}
 
