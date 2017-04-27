@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="main">
+<head>
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/styleSingIn.css" />
+    
+    <script type="text/javascript" src="lib/angular.min.js" ></script>
+    <script src="JS/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="JS/jsSignIn.js" ></script>
+    <script src="JS/bootstrap.min.js"></script>
+    
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <title>Sign In</title>
+</head>
+<body>
+    <div class="container" ng-controller="ctrl">
+        <div class="row">
+            <div class="col-lg-6 ">
+                <div id="signIn">SIGN IN</div>
+            </div>
+            <div class="col-lg-6 ">
+                <div id="signUp">SIGN Up</div>
+            </div>
+        </div>
+        
+        <div id="paragraph">
+            <h2>Sign Into Your Account</h2><br>
+            <p>Your account is your portal to all things 
+                <br>in ST-Comm : your courses and games
+            </p>
+        </div>
+        
+        <form id="form1">
+            <div class="row">
+                <div class="col-lg-12">
+                    <input id="userName" placeholder="UserName"  
+                    	ng-model="userName" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-xs-12">
+                    <input type="password" id="password" 
+                    	placeholder="Password" ng-model="password" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-xs-12">
+                    <p id="errorMsg">Invailed password or username</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="submit" value="SIGN IN" id="SignIn" class="btn btn-default"/>
+                </div>
+            </div>
+        </form>
+        
+        <hr>
+    </div>
+</body>
+</html>

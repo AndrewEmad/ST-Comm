@@ -1,0 +1,92 @@
+body{
+    background: #eee;
+}
+.container{
+    padding: 0;
+    background: white;
+    width:50%;
+    height:100%;
+    margin-top:4%; 
+}
+#signIn{
+    text-align: center;
+    padding: 5% 0;
+    background: #eee;
+    cursor:pointer;
+}
+#signUp{
+    text-align: center;
+    padding: 5% 0;
+}
+#paragraph{
+    margin: 6% 0;
+    text-align: center;
+}
+form{
+    text-align: center;
+}
+#userName{
+    margin-bottom: 1%;
+    width:60%;
+}
+#email{
+    margin-bottom: 1%;
+    width:60%;
+}
+#password{
+    margin-bottom: 3%;
+    margin-top: 2%;
+    width: 58.4%;
+    float: right;
+}
+#confirmPassword{
+    margin-bottom: 3%;
+    margin-top: 2%;
+    width:58.4%;
+    float: left;
+}
+#SignUp{
+    margin: 3% 0%;
+}
+hr{
+    margin: 3% auto;
+    height:2%;
+    width:55%;
+    
+}
+#teacher{
+    text-align: center;
+    margin: 1% 0%;
+}
+#student{
+    margin: 1% 0%;
+}
+#male{
+    text-align: center;
+}
+select{
+    margin: 3% 0%;
+}
+#userName{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#email{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#password{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#confirmPassword{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#errorMsg{
+	display : none;
+	color:red;
+}
+body{
+    overflow-x: hidden;
+}

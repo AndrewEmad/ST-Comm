@@ -1,0 +1,19 @@
+.thumbnail{
+    width:40%;
+    height:60%;
+}
+.thumbnail .caption{
+    padding-top: 0%;
+}
+.container{
+    margin: 0%;
+    padding: 0%;
+    width :100%;
+}
+#img1{    
+    height:100%;
+    border-radius: 20%;
+}
+body{
+    overflow-x: hidden;
+}

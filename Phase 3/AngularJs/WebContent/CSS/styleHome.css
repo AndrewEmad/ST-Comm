@@ -1,0 +1,90 @@
+#createCourse{
+    display: none;
+}
+#createGame{
+    display: none;
+}
+#mcq3{
+	display:none;
+}
+#mcq4{
+	display:none;
+}
+.thumbnail{
+    width:40%;
+    height:60%;
+}
+.thumbnail .caption{
+    padding-top: 0%;
+}
+.container{
+    margin: 0%;
+    padding: 0%;
+    width :100%;
+}
+#img1{    
+    height:100%;
+    border-radius: 20%;
+}
+#newCourse {
+    width:40%;
+    text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#courseName{
+	width:40%;
+	text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#gameName{
+	width:40%;
+	text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#Qstatement{
+	width:90%;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq1{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq2{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq3{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#mcq4{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#answer{
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}
+#nameExists{
+	display : none;
+	color:red;
+}
+#invalidAnswer{
+	display : none;
+	color:red;
+}
+#invalidGameName{
+	display : none;
+	color:red;
+}
+#invalidCourseName{
+	display : none;
+	color:red;
+}
+body{
+    overflow-x: hidden;
+}
