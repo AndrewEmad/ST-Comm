@@ -5,8 +5,10 @@ app.controller('ctrl', function($scope, $http) {
 	var numOfQuestions;
 	var questionNum;
 	var score;
+	var time;
 	
 	$scope.username = localStorage.getItem("userName");
+	
 	$http({
 		url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
 	    method: "GET",
@@ -15,12 +17,9 @@ app.controller('ctrl', function($scope, $http) {
     		$scope.games = response.data;
 		})
 	
-	/*$scope.games = ["game1","game2","game3"];*/
-	
 	$scope.playGame =function(GameName) {
 		gameName = GameName;
 		questionNum=1;
-		//numOfQuestions =2;
 		score = 0;
 		
 		$http({
@@ -38,14 +37,19 @@ app.controller('ctrl', function($scope, $http) {
 		        
 		        $scope.question = questions[questionNum-1].questionStatement;
 		        $scope.choices = questions[questionNum-1].choices;
+		        
+		        time = questions[questionNum-1].time;
+		        
+		        var counter = setInterval(function(){ 
+		            time--;
+		            document.getElementById("time").innerHTML = time + " left";
+		          if(time == 0){
+		            clearInterval(counter);
+		            $scope.submitAnswer();
+		           }
+		        }, 1000);
+		        
 			})
-		
-		
-		/*questions = [{questionStatement: "how are you?" , correctAnswer: 0 ,
-			choices : ["fine","bad"]},{questionStatement: "what's your name?" , 
-				correctAnswer: 1 , choices : ["ahmed","omar"]}];*/
-			
-		
     };
     $scope.submitAnswer =function(){
     	if($("input[name=choices]:checked").val() == 
@@ -53,9 +57,7 @@ app.controller('ctrl', function($scope, $http) {
     		score++;
     		document.getElementById("score").innerHTML = "Score "+ score;
     	}
-    	else{
-    		 
-    	}
+
     	if(questionNum == numOfQuestions){
     		$('#submitAnswer').prop('disabled', true);
     	}
@@ -65,6 +67,17 @@ app.controller('ctrl', function($scope, $http) {
     															" Out of "+numOfQuestions;
     		$scope.question = questions[questionNum-1].questionStatement;
             $scope.choices = questions[questionNum-1].choices;
+            
+            time = questions[questionNum-1].time;
+	        
+	        var counter = setInterval(function(){ 
+	            time--;
+	            document.getElementById("time").innerHTML = time + " left";
+	          if(time == 0){
+	            clearInterval(counter);
+	            $scope.submitAnswer();
+	           }
+	        }, 1000);
     	}
     	
     };
@@ -92,3 +105,7 @@ app.controller('ctrl', function($scope, $http) {
 		location.href="index.html";
 	}
 });
+function check(){
+	if ( null == localStorage.getItem("userName"))
+		location.href = "index.html";
+}

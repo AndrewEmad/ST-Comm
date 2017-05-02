@@ -17,3 +17,7 @@
 body{
     overflow-x: hidden;
 }
+#time{
+	float:right;
+	color : #82B1FF;
+}

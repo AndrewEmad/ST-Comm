@@ -9,18 +9,25 @@
     <script type="text/javascript" src="JS/jsHome.js" ></script>
     
     <link rel="icon" href="logo.png" type="image/x-icon">
-    <title>home</title>
+    <title>Home</title>
 </head>
-<body id="test">
+<body id="test" onload="check()">
     <div class="container">
     
         <div ng-controller="ctrl">
         	<nav class="navbar navbar-inverse">
               <div class="container-fluid">
                 <div class="navbar-header">
+                	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		                <span class="sr-only">Toggle navigation</span>
+		                <span class="icon-bar"></span>
+		                <span class="icon-bar"></span>
+		                <span class="icon-bar"></span>
+		              </button>
                     <a class="navbar-brand" href="#">ST-Comm</a>
                   <a class="navbar-brand" href="#"><img src="logo.png" id="img1"/></a>
                 </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li id="home" ><a href="home.html">Home</a></li>
                   <li id="allCourses" ng-click="getAllCourses()"><a href="#" id="allCourses">All Courses</a></li>
@@ -29,6 +36,7 @@
                   <li><a href="#">{{username}}</a></li>
                   <li id="signOut"><a href="#">Sign out</a></li>
                 </ul>
+                </div>
               </div>
             </nav>
         	
@@ -53,7 +61,7 @@
                     		<img src="logo.png">
                     		<div class="caption">
                         		<center><h3>{{course}}</h3></center>
-                        		<center><input type="button" name={{course}} value="Open" class="btn btn-default" name={{course}} onclick="clicked(this);"/> </center>
+                        		<center><input type="button" value="Open" class="btn btn-default" name={{course}} id={{course}} onclick="clicked(this);"/> </center>
                     		</div>
                     	</div>
                     </center>
@@ -234,6 +242,14 @@
                                     <div class="col-lg-12">
                                         <center>
                                             <input id="answer" required placeholder="Correct Answer*"/>
+                                        </center>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <center>
+                                            Time : <input type="number" id="time" min="2" value="2"/> secs
                                         </center>
                                     </div>
                                 </div>

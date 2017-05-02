@@ -88,3 +88,7 @@
 body{
     overflow-x: hidden;
 }
+#time{
+	width:7%;
+	text-align:center;
+}

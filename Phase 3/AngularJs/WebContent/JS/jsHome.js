@@ -37,12 +37,7 @@ app.controller('ctrl', function($scope, $http) {
         			document.getElementById("createGame").style.display = "block";	    		
 	    		}
 	    	});
-    		
-    		/*if(true){
-        		document.getElementById("createCourse").style.display = "block";
-        		document.getElementById("createGame").style.display = "block";
-    		}*/
-        
+
         $http({
     		url: "http://localhost:8090/st-comm.com/courses/list-by-registrant",
     	    method: "GET",
@@ -85,7 +80,7 @@ app.controller('ctrl', function($scope, $http) {
     	    			method: "GET",
     	    			params: {gameName : gameName}
    		    		}).then(function(response){
-   		    			if(response.data){
+   		    			if(!response.data){
    		    				numOfQuestions = document.getElementById("numOfQuestions").value;
 	    					document.getElementById("questionNum").innerHTML = "Question "+questionNum+
 	    														" Out of "+numOfQuestions;
@@ -105,8 +100,10 @@ app.controller('ctrl', function($scope, $http) {
 	    $scope.submitQuestion=function(){
 	    	var choices =[];
 	    	var answerIndex;
+	    	var time;
 	    	var matched;
 	    	
+	    	time = document.getElementById("time").value;
 	    	choices[0] = $("#mcq1").val();
 	    	choices[1] = $("#mcq2").val();
 	    	
@@ -136,7 +133,7 @@ app.controller('ctrl', function($scope, $http) {
 			}
 				
 	    	question = { choices : choices , correctAnswer : answerIndex ,
-	    				 questionStatement: $("#Qstatement").val(),time: "00:00:00" };
+	    				 questionStatement: $("#Qstatement").val(),time: time };
         	
         	questions[questionNum-1] = question;
        
@@ -151,7 +148,7 @@ app.controller('ctrl', function($scope, $http) {
     	    		method: "GET",
     	    		params: {gameName : gameName , courseName : courseName
     	    				,teacherName : localStorage.getItem("userName") , 
-    	    				wrapper	 : questions }
+    	    				wrapper : questions }
    		    	})
 
 	    		$('#myModal3').modal('hide');
@@ -218,4 +215,8 @@ function clicked(id){
     }
 function disable(id){
 	$(id).attr("disabled","true");
+}
+function check(){
+	if ( null == localStorage.getItem("userName"))
+		location.href = "index.html";
 }
