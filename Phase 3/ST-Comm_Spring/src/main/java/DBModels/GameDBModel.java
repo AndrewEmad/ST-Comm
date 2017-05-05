@@ -5,14 +5,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Vector;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import Config.DBConfig;
 import Entities.Game;
-import Entities.Question;
 
 public class GameDBModel {
 
@@ -21,7 +19,7 @@ public class GameDBModel {
 	 * @param game
 	 * @throws SQLException
 	 */
-	public static void saveGame(Game game) throws SQLException {
+	public static void saveGameVersion(Game game) throws SQLException {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -40,16 +38,19 @@ public class GameDBModel {
 	 * @throws SQLException
 	 */
 	public static Game fetchGame(String gameName) throws SQLException {
-		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+		/* commented by Ahmed Hussein
+		 AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call fetchGame(?)}");
 		callableSt.setString(1, gameName);
 		ResultSet resultGame= callableSt.executeQuery();
-		Game game=new Game();
+		Game game = null;
 		if(resultGame.next())
-			game.setInfo(resultGame.getString(1),resultGame.getString(3),resultGame.getString(4),null );
+			game = new Game(resultGame.getString(1),resultGame.getString(3),0,resultGame.getString(4),null );
 		return game;
+		*/
+		return null;
 	}
 
 	/**
@@ -85,5 +86,15 @@ public class GameDBModel {
 		callableSt.registerOutParameter(2, Types.BIT);
 		callableSt.executeUpdate();
 		return callableSt.getBoolean(2);
+	}
+	
+	public static void cancelGame(String gameName){
+		/*
+		 * 
+		 */
+	}
+	
+	public static Game uncancelGame(String gameName){
+		return null;
 	}
 }

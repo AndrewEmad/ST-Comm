@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import DBModels.GameDBModel;
 import DBModels.QuestionDBModel;
 import Entities.Game;
+import Entities.GameOriginator;
 import Entities.Question;
 import Entities.QuestionJSONWrapper;
 
@@ -48,10 +49,12 @@ public class GameController {
 	public Game playGame(@RequestParam String gameName) {
 		Game game = null;
 		try {
-			game = GameDBModel.fetchGame(gameName);
+			GameOriginator gameOriginator = new GameOriginator();
+			gameOriginator.saveStateToGame(GameDBModel.fetchGame(gameName));
 			Vector<Question> questions = QuestionDBModel.fetchQuestions(gameName);
-			game.setQuestions(questions);
-			game.setNumOfQuestions(questions.size());
+			gameOriginator.setQuestions(questions);
+			gameOriginator.setNumOfQuestions(questions.size());
+			game = gameOriginator.produceGame();
 		} catch (SQLException e) {
 			return null;
 		}
@@ -69,12 +72,14 @@ public class GameController {
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/new")
 	public boolean createGame(@RequestParam String gameName, @RequestParam String courseName,
 			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper) {
-		Game game = new Game();
+		GameOriginator gameOriginator = new GameOriginator();
 		Vector<Question> questions = wrapper.getQuestions();
-		game.setInfo(gameName, courseName, teacherName, questions);
-		game.setNumOfQuestions(questions.size());
+		gameOriginator.setInfo(gameName, courseName, questions.size(), teacherName, questions, false, 1);
+		Game game = gameOriginator.produceGame();
 		try {
-			GameDBModel.saveGame(game);
+			if(saveGame(game) == false){
+				return false;
+			}
 			for (int i = 0; i < questions.size(); i++) {
 				QuestionDBModel.saveQuestion(questions.get(i), gameName) ;
 				
@@ -115,6 +120,31 @@ public class GameController {
 		} catch (SQLException e) {
 			return false;
 		}
+		return true;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/save")
+	public static boolean saveGame(Game game){
+		GameCache.addToCache(game);
+		try {
+			GameDBModel.saveGameVersion(game);
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/cancel")
+	public boolean cancelGame(String gameName){
+		GameCache.removeFromCache(gameName);
+		GameDBModel.cancelGame(gameName);
+		return true;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/uncancel")
+	public boolean uncancelGame(String gameName){
+		Game game = GameDBModel.uncancelGame(gameName);
+		GameCache.addToCache(game);
 		return true;
 	}
 }

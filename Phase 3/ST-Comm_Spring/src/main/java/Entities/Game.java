@@ -2,20 +2,25 @@ package Entities;
 
 import java.util.Vector;
 
-public class Game {
+public class Game implements Cloneable{
 
 	private String name;
 	private String courseName;
 	private int numOfQuestions;
 	private String teacherName;
 	private Vector<Question> questions;
+	boolean isCancelled;
+	private int version;
 
-	public void setInfo(String name, String courseName, String teacherName,
-						Vector<Question> questions){
+	public Game(String name, String courseName, int numOfQuestions, String teacherName,
+						Vector<Question> questions, boolean isCancelled, int version){
 		this.name = name;
 		this.courseName = courseName;
+		this.numOfQuestions = numOfQuestions;
 		this.teacherName = teacherName;
 		this.questions = questions;
+		this.isCancelled = isCancelled;
+		this.version = version;
 	}
 
 	public int getNumOfQuestions() {
@@ -26,35 +31,29 @@ public class Game {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setNumOfQuestions(int numOfQuestions) {
-		this.numOfQuestions = numOfQuestions;
-	}
-
 	public String getTeacherName() {
 		return teacherName;
-	}
-
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
 	}
 
 	public Vector<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(Vector<Question> questions) {
-		this.questions = questions;
-	}
-	
 	public String getCourseName() {
 		return courseName;
 	}
 
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public boolean isCancelled() {
+		return isCancelled;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+	
+	public Game clone() throws CloneNotSupportedException{
+		Object clone = null;
+		clone = super.clone();
+		return (Game)clone;
 	}
 }

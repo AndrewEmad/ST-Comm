@@ -29,7 +29,7 @@ public class CourseController {
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/games/courses/list-by-course")
 	public Vector<String> getGames(@RequestParam String courseName) {
 		try {
-			return CourseDBModel.fetchGames(courseName);
+			return GameCache.loadCache(courseName);
 		} catch (SQLException e) {
 			return null;
 		}
