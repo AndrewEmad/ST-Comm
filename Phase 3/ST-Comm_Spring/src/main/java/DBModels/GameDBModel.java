@@ -37,20 +37,21 @@ public class GameDBModel {
 	 * @return Game
 	 * @throws SQLException
 	 */
-	public static Game fetchGame(String gameName) throws SQLException {
-		/* commented by Ahmed Hussein
+	public static Game fetchGame(String gameName,String courseName) throws SQLException {
+		
 		 AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call fetchGame(?)}");
+		CallableStatement callableSt = connection.prepareCall("{call fetchGame(?,?)}");
 		callableSt.setString(1, gameName);
+		callableSt.setString(2, courseName);
 		ResultSet resultGame= callableSt.executeQuery();
 		Game game = null;
 		if(resultGame.next())
-			game = new Game(resultGame.getString(1),resultGame.getString(3),0,resultGame.getString(4),null );
+			game = new Game(resultGame.getString("GameName"),resultGame.getString("CourseName"),
+					resultGame.getInt("NumberOfQuestions"),resultGame.getString("TeacherName"),null,
+					resultGame.getBoolean("Canceled"),resultGame.getInt("Version") );
 		return game;
-		*/
-		return null;
 	}
 
 	/**
@@ -88,13 +89,23 @@ public class GameDBModel {
 		return callableSt.getBoolean(2);
 	}
 	
-	public static void cancelGame(String gameName){
-		/*
-		 * 
-		 */
+	public static void cancelGame(String gameName,String courseName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call cancelGame(?,?)}");
+		callableSt.setString(1, gameName);
+		callableSt.setString(2, courseName);
+		callableSt.executeUpdate();
 	}
 	
-	public static Game uncancelGame(String gameName){
-		return null;
+	public static void uncancelGame(String gameName,String courseName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call uncancelGame(?,?)}");
+		callableSt.setString(1, gameName);
+		callableSt.setString(2, courseName);
+		callableSt.executeUpdate();
 	}
 }
