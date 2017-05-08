@@ -6,8 +6,13 @@ app.controller('ctrl', function($scope, $http) {
 	var questionNum;
 	var score;
 	var time;
+	var copiedGameName;
 	
 	$scope.username = localStorage.getItem("userName");
+	
+	$("#newCourseName , #newGameName").keyup(function(){
+		document.getElementById("errorCopy").style.display ="none";
+	});
 	
 	$http({
 		url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
@@ -81,6 +86,7 @@ app.controller('ctrl', function($scope, $http) {
     	}
     	
     };
+    
     document.getElementById("closeGame").onclick = function(){
     	$('#submitAnswer').prop('disabled', false);
     	
@@ -100,11 +106,64 @@ app.controller('ctrl', function($scope, $http) {
 	    		}   		
 	    	})
     }
+    
+    $scope.openMenu = function(gameName){
+    	document.getElementById(gameName).classList.toggle("show");
+    }
+    
+    $scope.cancelGame = function(gameName){
+    	$http({ 
+    		url: "http://localhost:8090/st-comm.com/games/cancel",
+    	    method: "GET",
+    	    params: {gameName : gameName}
+   		    }).then(function(response){
+   		    	location.reload();   		
+	    	})
+    }
+    
+    $scope.rememberGame = function(gameName){
+    	copiedGameName = gameName;
+    	//localStorage.setItem("gameName",courseName);
+    }
+    
+    $scope.copyGame = function(){
+    
+    	/*$http({ 
+    		url: "http://localhost:8090/st-comm.com/games/copy",
+    	    method: "GET",
+    	    params: {oldGameName : copiedGameName , 
+    	    	oldCourseName : localStorage.getItem("courseName") ,
+    	    	newGameName : $scope.newGameName , 
+    	    	newCourseName : $scope.newCourseName}
+   		    }).then(function(response){
+   		    	if(response)
+   		    		$('#myModal2').modal('hide');
+   		    	else{
+   		    		document.getElementById("errorCopy").style.display ="block";
+   		    	}
+	    	})*/
+    }
+    
+    
     document.getElementById("signOut").onclick = function(){
 		localStorage.removeItem("userName");
 		location.href="index.html";
 	}
 });
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 function check(){
 	if ( null == localStorage.getItem("userName"))
 		location.href = "index.html";
