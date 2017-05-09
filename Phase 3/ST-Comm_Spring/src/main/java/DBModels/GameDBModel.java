@@ -61,7 +61,10 @@ public class GameDBModel {
 	 * @param gameName
 	 * @throws SQLException
 	 */
-	public static void saveScore(String name, int score, String gameName) throws SQLException {
+	public static void saveScore(String name, int score, String gameName, String courseName) throws SQLException {
+		/*
+		 * /*AHMED HUSSEIN ==>> added courseName parameter
+		 */
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -78,7 +81,10 @@ public class GameDBModel {
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public static boolean exists(String gameName) throws SQLException{
+	public static boolean exists(String gameName, String courseName) throws SQLException{
+		/*
+		 * /*AHMED HUSSEIN ==>> added courseName parameter
+		 */
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();

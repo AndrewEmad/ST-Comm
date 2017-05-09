@@ -1,6 +1,5 @@
 package Entities;
 
-import java.time.LocalTime;
 import java.util.Vector;
 
 public class Question {
@@ -8,13 +7,13 @@ public class Question {
 	private Vector<String> choices;
 	private int correctAnswer;
 	private String questionStatement;
-	private LocalTime time;
+	private int time;
 
 	public void Question() {
 	}
 
 	public void setInfo(Vector<String> choices, int correctAnswer, String questionStatement,
-						LocalTime time) {
+						int time) {
 		this.choices = choices;
 		this.correctAnswer = correctAnswer;
 		this.questionStatement = questionStatement;
@@ -37,11 +36,11 @@ public class Question {
 		this.choices = choices;
 	}
 
-	public LocalTime getTime() {
+	public int getTime() {
 		return time;
 	}
 
-	public void setTime(LocalTime time) {
+	public void setTime(int time) {
 		this.time = time;
 	}
 

@@ -22,7 +22,11 @@ public class QuestionDBModel {
 	 * @return Vector<Question>
 	 * @throws SQLException
 	 */
-	public static Vector<Question> fetchQuestions(String gameName) throws SQLException {
+	public static Vector<Question> fetchQuestions(String gameName, String courseName) throws SQLException {
+		/*
+		 * /*AHMED HUSSEIN ==>> added courseName parameter
+		 * 				   ==>> time datatype became integer
+		 */
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
@@ -34,7 +38,9 @@ public class QuestionDBModel {
 			Question question = new Question();
 			Vector<String>choices=getChoices(resultQuestions.getInt(1));
 			int correctAnswer=choices.indexOf(resultQuestions.getString(3));
-			question.setInfo(choices, correctAnswer, resultQuestions.getString(2),resultQuestions.getTime(4).toLocalTime());
+			/*
+			 * question.setInfo(choices, correctAnswer, resultQuestions.getString(2),resultQuestions.getTime(4).toLocalTime());
+			 */
 			questions.add(question);
 		}
 		return questions;
@@ -48,12 +54,17 @@ public class QuestionDBModel {
 	 * @throws SQLException
 	 */
 	public static void saveQuestion(Question question, String gameName) throws SQLException {
+		/*
+		 * /*AHMED HUSSEIN ==>> time datatype became integer
+		 */
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call saveQuestion(?, ?, ?)}");
 		callableSt.setString(1, question.getQuestionStatement());
-		 callableSt.setTime(2, Time.valueOf(question.getTime()));
+		 /*
+		  * callableSt.setTime(2, Time.valueOf(question.getTime()));
+		  */
 		callableSt.registerOutParameter(3, Types.INTEGER);
 		callableSt.executeUpdate();
 		saveChoices(callableSt.getInt(3),question.getChoices());

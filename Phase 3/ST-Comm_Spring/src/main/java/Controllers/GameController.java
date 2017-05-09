@@ -46,12 +46,12 @@ public class GameController {
 	 * 		   models
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/play")
-	public Game playGame(@RequestParam String gameName) {
+	public Game playGame(@RequestParam String gameName, @RequestParam String courseName) {
 		Game game = null;
 		try {
 			GameOriginator gameOriginator = new GameOriginator();
-			gameOriginator.saveStateToGame(GameDBModel.fetchGame(gameName));
-			Vector<Question> questions = QuestionDBModel.fetchQuestions(gameName);
+			gameOriginator.saveStateToGame(GameDBModel.fetchGame(gameName, courseName));
+			Vector<Question> questions = QuestionDBModel.fetchQuestions(gameName, courseName);
 			gameOriginator.setQuestions(questions);
 			gameOriginator.setNumOfQuestions(questions.size());
 			game = gameOriginator.produceGame();
@@ -72,14 +72,11 @@ public class GameController {
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/new")
 	public boolean createGame(@RequestParam String gameName, @RequestParam String courseName,
 			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper) {
-		GameOriginator gameOriginator = new GameOriginator();
-		Vector<Question> questions = wrapper.getQuestions();
-		gameOriginator.setInfo(gameName, courseName, questions.size(), teacherName, questions, false, 1);
-		Game game = gameOriginator.produceGame();
 		try {
-			if(saveGame(game) == false){
+			if(saveGame(gameName, courseName, teacherName, wrapper, false, 1) == false){
 				return false;
 			}
+			Vector<Question> questions = wrapper.getQuestions();
 			for (int i = 0; i < questions.size(); i++) {
 				QuestionDBModel.saveQuestion(questions.get(i), gameName) ;
 				
@@ -99,9 +96,9 @@ public class GameController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/scores/save")
 	public boolean saveScore(@RequestParam String name, @RequestParam int score,
-							 @RequestParam String gameName) {
+							 @RequestParam String gameName, @RequestParam String courseName) {
 		try {
-			GameDBModel.saveScore(name, score, gameName);
+			GameDBModel.saveScore(name, score, gameName, courseName);
 		} catch (SQLException e) {
 			return false;
 		}
@@ -114,9 +111,9 @@ public class GameController {
 	 * @return true if the game exists, and false otherwise
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/exists")
-	public boolean exists(@RequestParam String gameName){
+	public boolean exists(@RequestParam String gameName, @RequestParam String courseName){
 		try {
-			GameDBModel.exists(gameName);
+			GameDBModel.exists(gameName, courseName);
 		} catch (SQLException e) {
 			return false;
 		}
@@ -124,7 +121,13 @@ public class GameController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/save")
-	public static boolean saveGame(Game game){
+	public static boolean saveGame(@RequestParam String gameName, @RequestParam String courseName,
+			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper,
+			  @RequestParam boolean isCancelled, @RequestParam int version){
+		GameOriginator gameOriginator = new GameOriginator();
+		Vector<Question> questions = wrapper.getQuestions();
+		gameOriginator.setInfo(gameName, courseName, questions.size(), teacherName, questions, isCancelled, version);
+		Game game = gameOriginator.produceGame();
 		GameCache.addToCache(game);
 		try {
 			GameDBModel.saveGameVersion(game);
@@ -135,16 +138,30 @@ public class GameController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/cancel")
-	public boolean cancelGame(String gameName){
+	public boolean cancelGame(@RequestParam String gameName, @RequestParam String courseName){
 		GameCache.removeFromCache(gameName);
-		GameDBModel.cancelGame(gameName);
+		try {
+			GameDBModel.cancelGame(gameName, courseName);
+		} catch (SQLException e) {
+			return false;
+		}
 		return true;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/uncancel")
-	public boolean uncancelGame(String gameName){
-		Game game = GameDBModel.uncancelGame(gameName);
-		GameCache.addToCache(game);
+	public boolean uncancelGame(@RequestParam String gameName, @RequestParam String courseName){
+		try {
+			GameDBModel.uncancelGame(gameName, courseName);
+		} catch (SQLException e) {
+			return false;
+		}
+		try {
+			Game game;
+			game = GameDBModel.fetchGame(gameName, courseName);
+			GameCache.addToCache(game);
+		} catch (SQLException e) {
+			e.printStackTrace(); // do not return false because the game has been cancelled above
+		}
 		return true;
 	}
 }

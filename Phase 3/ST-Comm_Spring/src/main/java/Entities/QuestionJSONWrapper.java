@@ -58,7 +58,7 @@ public class QuestionJSONWrapper extends PropertyEditorSupport{
                 JsonNode root = mapper.readTree(JSONQuestions.get(i));
                 question.setCorrectAnswer(root.path("correctAnswer").asInt(-1)); //-1 is a default value
                 question.setQuestionStatement(root.path("questionStatement").asText(""));
-                question.setTime(LocalTime.parse(root.path("time").asText("")));
+                question.setTime(Integer.parseInt(root.path("time").asText("")));
                 JSONChoices = root.path("choices");
                 for(int j=0; j<JSONChoices.size(); j++){
                 	choices.add(JSONChoices.get(j).textValue());
