@@ -15,6 +15,16 @@ app.controller('ctrl', function($scope, $http) {
 	});
 	
 	$http({
+		url: "http://localhost:8090/st-comm.com/query/registrant-type",
+	    method: "GET",
+	    params: {name : localStorage.getItem("userName")}
+		    }).then(function(response){
+    		if(response.data != 1){
+				document.getElementById("Menu").style.display = "block";	    		
+    		}
+    	});
+	
+	$http({
 		url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
 	    method: "GET",
 	    params: {courseName : localStorage.getItem("courseName")}
@@ -123,25 +133,25 @@ app.controller('ctrl', function($scope, $http) {
     
     $scope.rememberGame = function(gameName){
     	copiedGameName = gameName;
-    	//localStorage.setItem("gameName",courseName);
     }
     
     $scope.copyGame = function(){
     
-    	/*$http({ 
+    	$http({ 
     		url: "http://localhost:8090/st-comm.com/games/copy",
     	    method: "GET",
     	    params: {oldGameName : copiedGameName , 
-    	    	oldCourseName : localStorage.getItem("courseName") ,
-    	    	newGameName : $scope.newGameName , 
-    	    	newCourseName : $scope.newCourseName}
+    	    	newGameName : $scope.newGameName,
+    	    	sourceCourse : localStorage.getItem("courseName") ,
+    	    	destinationCourse : $scope.newCourseName , 
+    	    	newTeacherName : localStorage.getItem("userName")}
    		    }).then(function(response){
    		    	if(response)
    		    		$('#myModal2').modal('hide');
    		    	else{
    		    		document.getElementById("errorCopy").style.display ="block";
    		    	}
-	    	})*/
+	    	})
     }
     
     
