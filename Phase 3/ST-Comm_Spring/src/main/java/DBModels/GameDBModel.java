@@ -62,16 +62,15 @@ public class GameDBModel {
 	 * @throws SQLException
 	 */
 	public static void saveScore(String name, int score, String gameName, String courseName) throws SQLException {
-		/*
-		 * /*AHMED HUSSEIN ==>> added courseName parameter
-		 */
+		
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call saveScore(?, ?, ?)}");
+		CallableStatement callableSt = connection.prepareCall("{call saveScore(?, ?, ?, ?)}");
 		callableSt.setString(1, name);
 		callableSt.setInt(2, score);
 		callableSt.setString(3, gameName);
+		callableSt.setString(4, courseName);
 		callableSt.executeUpdate();
 	}
 	
@@ -82,17 +81,16 @@ public class GameDBModel {
 	 * @throws SQLException
 	 */
 	public static boolean exists(String gameName, String courseName) throws SQLException{
-		/*
-		 * /*AHMED HUSSEIN ==>> added courseName parameter
-		 */
+		
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call gameExists(?, ?)}");
+		CallableStatement callableSt = connection.prepareCall("{call gameExists(?,?, ?)}");
 		callableSt.setString(1, gameName);
-		callableSt.registerOutParameter(2, Types.BIT);
+		callableSt.setString(2, courseName);
+		callableSt.registerOutParameter(3, Types.BIT);
 		callableSt.executeUpdate();
-		return callableSt.getBoolean(2);
+		return callableSt.getBoolean(3);
 	}
 	
 	public static void cancelGame(String gameName,String courseName) throws SQLException{

@@ -78,7 +78,7 @@ public class GameController {
 			}
 			Vector<Question> questions = wrapper.getQuestions();
 			for (int i = 0; i < questions.size(); i++) {
-				QuestionDBModel.saveQuestion(questions.get(i), gameName) ;
+				QuestionDBModel.saveQuestion(questions.get(i), gameName,courseName) ;
 				
 			}
 		} catch (SQLException e) {
