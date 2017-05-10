@@ -38,17 +38,19 @@ public class GameCache {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/copy")
-	public static boolean copyGame(@RequestParam String gameName, @RequestParam String sourceCourse,
-								   @RequestParam String destinationCourse) {
+	public static boolean copyGame(@RequestParam String oldGameName, @RequestParam String newGameName, @RequestParam String sourceCourse,
+								   @RequestParam String destinationCourse, @RequestParam String newTeacherName) {
 		try {
 			GameOriginator gameOriginator = new GameOriginator();
-			gameOriginator.saveStateToGame(cache.get(gameName).clone());
+			gameOriginator.saveStateToGame(cache.get(oldGameName).clone());
 			Game game = gameOriginator.produceGame();
 			if(game.getCourseName() != sourceCourse){
-				gameOriginator.saveStateToGame(GameDBModel.fetchGame(gameName, sourceCourse));
+				gameOriginator.saveStateToGame(GameDBModel.fetchGame(oldGameName, sourceCourse));
 			}
 			gameOriginator.setVersion(1);
+			gameOriginator.setGameName(newGameName);
 			gameOriginator.setCourseName(destinationCourse);
+			gameOriginator.setTeacherName(newTeacherName);
 			game = gameOriginator.produceGame();
 			GameDBModel.saveGameVersion(game);
 		} catch (Exception e) {
