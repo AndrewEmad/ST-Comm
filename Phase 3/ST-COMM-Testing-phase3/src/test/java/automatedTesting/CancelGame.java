@@ -25,38 +25,38 @@ public class CancelGame
 		for(int row=0;row<numOfRows;row++)
 		{
 			driver.findElement(By.id("join"));
-			Thread.sleep(2000);
+			Thread.sleep(15000);
 			driver.findElement(By.id("signIn")).click();
-			Thread.sleep(2000);
+			Thread.sleep(15000);
 			name=sheet.getRow(row).getCell(0).getStringCellValue();
 			password=sheet.getRow(row).getCell(1).getStringCellValue();
 			driver.findElement(By.id("userName")).sendKeys(name);
 			driver.findElement(By.id("password")).sendKeys(password);
 			driver.findElement(By.id("SignIn")).click();
 			
-			Thread.sleep(5000);
-			courseName=sheet.getRow(row).getCell(3).getStringCellValue();
+			Thread.sleep(15000);
+			courseName=sheet.getRow(row).getCell(2).getStringCellValue();
 			
 			driver.findElement(By.id(courseName)).click();
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 			
-			cancelGame=sheet.getRow(row).getCell(2).getStringCellValue();
+			cancelGame=sheet.getRow(row).getCell(3).getStringCellValue();
 			
 			if(cancelGame.equals("cancel"))
 			{
 				gameName=sheet.getRow(row).getCell(4).getStringCellValue();
 				
 				driver.findElement(By.name(gameName)).click();
-				Thread.sleep(5000);
+				Thread.sleep(15000);
 				driver.findElement(By.id("Menu")).click();
-				Thread.sleep(2000);
+				Thread.sleep(15000);
 				driver.findElement(By.id("cancelGame")).click();
-				Thread.sleep(1000);
+				Thread.sleep(15000);
 			}
 			
-			Thread.sleep(3000);
+			Thread.sleep(15000);
 			driver.findElement(By.id("signOut")).click();
-			Thread.sleep(3000);
+			Thread.sleep(15000);
 		}
 		
 		fileStream.close();

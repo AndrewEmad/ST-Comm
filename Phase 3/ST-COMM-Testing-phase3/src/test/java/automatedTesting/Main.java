@@ -1,10 +1,14 @@
 package automatedTesting;
 
-public class Main {
+import java.io.IOException;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+public class Main
+{
+	public static void main(String[] args) throws IOException, InterruptedException 
+	{
+		CopyGame copyGame=new CopyGame();
+		copyGame.copyGame();
+		CancelGame cancelGame=new CancelGame();
+		cancelGame.cancelGame();
 	}
-
 }
