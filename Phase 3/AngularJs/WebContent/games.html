@@ -176,10 +176,60 @@
                     </div>
                 </form>
             </div>
+            <div id="gameForm">
+                <form ng-submit="editGameInfo()" >
+                    <div class="modal fade" id="myModal3" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" >Edit Game</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <center><input id="gameName2"  placeholder="Game Name*" required/></center>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <center><p id="invalidGameName2">Game name is already exist</p></center>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <center>
+                                                Number Of Questions <input type="number" id="numOfQuestions2" 
+                                                min="1" max="40" required/>
+                                            </center>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <center>
+                                                <input type="submit" class="btn btn-default" id="editQuestionform" value="Edit"/>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" id="cancelEditingGame" class="btn btn-default" value="cancel" data-dismiss="modal"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form> 
+            </div>
+            
             <div id="editForm">
                 <form ng-submit="editQuestions()">
                     
-                    <div class="modal fade" id="myModal3" role="dialog">
+                    <div class="modal fade" id="myModal4" role="dialog">
                         <div class="modal-dialog">
 
                           <!-- Modal content-->
@@ -213,10 +263,10 @@
                                     <div class="row">
                                         <center>
                                             <div class="col-lg-6 col-xs-6 col-md-6">
-                                                <input id="mcq12" placeholder="choice1*"/>
+                                                <input id="mcq12" placeholder="choice1*" required/>
                                             </div>
                                             <div class="col-lg-6 col-xs-6 col-md-6">
-                                                <input id="mcq22" placeholder="choice2*"/>
+                                                <input id="mcq22" placeholder="choice2*" required/>
                                             </div>
                                         </center>
                                     </div>
@@ -244,7 +294,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <center>
-                                            Time : <input type="number" id="time2" min="2" value="2"/> secs
+                                            Time : <input type="number" id="time2" min="2" required/> secs
                                         </center>
                                     </div>
                                 </div>

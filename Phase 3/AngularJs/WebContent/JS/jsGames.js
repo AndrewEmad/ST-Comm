@@ -1,8 +1,10 @@
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
 	var gameName;
+	var newGameName;
 	var questions = [];
 	var numOfQuestions;
+	var newNumOfQ;
 	var questionNum;
 	var score;
 	var time;
@@ -29,7 +31,7 @@ app.controller('ctrl', function($scope, $http) {
                 $scope.games = response.data;
             })
             
-            $scope.games=["game"];  
+            //$scope.games=["game"];  
             
     $(document).ready(function(){
 		
@@ -41,6 +43,10 @@ app.controller('ctrl', function($scope, $http) {
         
         $("#mcq12, #mcq22, #mcq32, #mcq42, #answer2").keyup(function(){
 			document.getElementById("invalidAnswer2").style.display ="none";
+		});
+        
+        $("#gameName2").keyup(function(){
+			document.getElementById("invalidGameName2").style.display ="none";
 		});
         
         $('#mcq2').change(function () {
@@ -65,7 +71,7 @@ app.controller('ctrl', function($scope, $http) {
             $http({
                 url: "http://localhost:8090/st-comm.com/games/play",
                 method: "GET",
-                params: {gameName : gameName}
+                params: {gameName : gameName , courseName : localStorage.getItem("courseName")}
                 }).then(function(response){
                     numOfQuestions = response.data.numOfQuestions;
                     questions = response.data.questions;
@@ -132,22 +138,56 @@ app.controller('ctrl', function($scope, $http) {
                 	questionNum = 1;
                 	numOfQuestions = response.data.numOfQuestions;
                     questions = response.data.questions;
-                    gameVersion = response.version + 1;
+                    gameVersion = response.version;
                     $('#myModal3').modal('show');
-                    $scope.editQuestions();
+                    $("#gameName2").val(gameName);
+                    $("#numOfQuestions2").val(numOfQuestions);
                 })
-        	/*$('#myModal3').modal('show');
-        	
-        	questionNum = 1;
+                
+            /*questionNum = 1;
         	numOfQuestions = 1;
-        	/*question = { choices : ["Ahmed","Ayman"] , correctAnswer : 0 ,
+        	question = { choices : ["Ahmed","Ayman"] , correctAnswer : 0 ,
    				 questionStatement: "what's your name ?",time: 5 };
         	questions[0] = question; 
         	question = { choices : ["choice1","not Good","fine"] , correctAnswer : 2 ,
       				 questionStatement: "how are you ?",time: 6 };
-            questions[0] = question; 
-            $scope.editQuestions();*/
+            questions[0] = question;
+            
+            $('#myModal3').modal('show');
+            
+            $("#gameName2").val(gameName);
+            $("#numOfQuestions2").val(numOfQuestions);*/
         };
+        
+        $scope.editGameInfo = function(){
+        	
+        	/*newGameName = $("#gameName2").val();
+        	newNumOfQ = $("#numOfQuestions2").val();
+        	alert(newGameName);
+        	alert(newNumOfQ);
+        	
+        	$('#myModal3').modal('hide');
+			$('#myModal4').modal('show');
+			 
+            $scope.editQuestions();*/
+				
+        	$http({
+				url: "http://localhost:8090/st-comm.com/games/exists",
+    			method: "GET",
+    			params: {gameName : newGameName , courseName : localStorage.getItem("courseName")}
+	    		}).then(function(response){
+	    			if(!response.data){
+	    				newGameName = $("#gameName2").val();
+	    	        	newNumOfQ = $("#numOfQuestions2").val();
+						$('#myModal3').modal('hide');
+						$('#myModal4').modal('show');
+						$scope.editQuestions();
+	    			}
+	    			else{
+	    				document.getElementById("invalidGameName2").style.display ="block";
+	    			}
+	    		})
+        }
         
         $scope.editQuestions = function(){
         	
@@ -190,54 +230,66 @@ app.controller('ctrl', function($scope, $http) {
        	
 				questions[questionNum-2] = question;
 				
-				alert(questions[0].choices[0]);
+				/*alert(questions[0].choices[0]);
 				alert(questions[0].choices[1]);
 				alert(questions[0].correctAnswer);
 				alert(questions[0].questionStatement);
 				alert(questions[0].choices[2]);
-				alert(questions[0].choices.length);
+				alert(questions[0].choices.length);*/
 	    	}
 
-        	if(questionNum > numOfQuestions){
+        	if(questionNum > newNumOfQ){
         		$http({
-                    url: "http://localhost:8090/st-comm.com/games/save",
+                    url: "http://localhost:8090/st-comm.com/games/edit",
                     method: "GET",
-                    params: {gameName : gameName , 
+                    params: {newGameName : gameName ,
+                    	oldGameName : newGameName,
                     	courseName : localStorage.getItem("courseName"),
                     	teacherName : localStorage.getItem("userName"),
                     	wrapper : questions,
                     	version : gameVersion
                     }
                     }).then(function(response){
-                    	$('#myModal3').modal('hide');
+                    	$('#myModal4').modal('hide');
         	    		document.getElementById("editQuestion").value = "Edit";
         	    		return;
                     })
         	}
-        	if(questionNum == numOfQuestions){
+        	if(questionNum == newNumOfQ){
 	    		$("#editQuestion").val("Finish editing");
         	}
         	
         	document.getElementById("questionNum2").innerHTML = "Question "+questionNum+
-			" Out of "+numOfQuestions;
+			" Out of "+newNumOfQ;
         	
-        	$("#Qstatement2").val(questions[questionNum-1].questionStatement);
-        	
-        	$("#mcq12").val(questions[questionNum-1].choices[0]);
-        	$("#mcq22").val(questions[questionNum-1].choices[1]);
-        	
-        	if(questions[questionNum-1].choices.length > 2){
-        		$("#mcq2").attr('checked', 'checked');
-        		document.getElementById("mcq32").style.display = "block";
-            	document.getElementById("mcq42").style.display = "block";
-            	$("#mcq32").val(questions[questionNum-1].choices[2]);
-            	$("#mcq42").val(questions[questionNum-1].choices[3]);
+        	if(questionNum <= numOfQuestions){
+        		$("#Qstatement2").val(questions[questionNum-1].questionStatement);
+            	
+            	$("#mcq12").val(questions[questionNum-1].choices[0]);
+            	$("#mcq22").val(questions[questionNum-1].choices[1]);
+            	
+            	if(questions[questionNum-1].choices.length > 2){
+            		$("#mcq2").attr('checked', 'checked');
+            		document.getElementById("mcq32").style.display = "block";
+                	document.getElementById("mcq42").style.display = "block";
+                	$("#mcq32").val(questions[questionNum-1].choices[2]);
+                	$("#mcq42").val(questions[questionNum-1].choices[3]);
+            	}
+            	
+            	$("#answer2").val(questions[questionNum-1].choices
+            			[questions[questionNum-1].correctAnswer]);
+            	$("#time2").val(questions[questionNum-1].time);
+        	}
+        	else{
+        		$("#Qstatement2").val("");
+            	$("#mcq12").val("");
+            	$("#mcq22").val("");
+            	$("#mcq32").val("");
+            	$("#mcq42").val("");
+            	$("#answer2").val("");
+            	$("#time2").val("1");
         	}
         	
-        	$("#answer2").val(questions[questionNum-1].choices
-        			[questions[questionNum-1].correctAnswer]);
-        	$("#time2").val(questions[questionNum-1].time);
-        		
         	questionNum++;
         }
 
@@ -269,7 +321,9 @@ app.controller('ctrl', function($scope, $http) {
             $http({ 
                 url: "http://localhost:8090/st-comm.com/games/cancel",
                 method: "GET",
-                params: {gameName : gameName}
+                params: {gameName : gameName , 
+                	courseName : localStorage.getItem("courseName"),
+                	teacherName : localStorage.getItem("userName")}
                 }).then(function(response){
                     location.reload();   		
                 })
@@ -322,6 +376,6 @@ window.onclick = function(event) {
   }
 }
 function check(){
-	if ( null == localStorage.getItem("userName"))
-		location.href = "index.html";
+	/*if ( null == localStorage.getItem("userName"))
+		location.href = "index.html";*/
 }

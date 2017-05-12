@@ -78,7 +78,7 @@ app.controller('ctrl', function($scope, $http) {
         			$http({
     					url: "http://localhost:8090/st-comm.com/games/exists",
     	    			method: "GET",
-    	    			params: {gameName : gameName}
+    	    			params: {gameName : gameName , courseName : courseName}
    		    		}).then(function(response){
    		    			if(!response.data){
    		    				numOfQuestions = document.getElementById("numOfQuestions").value;
