@@ -73,7 +73,7 @@ public class GameController {
 	public boolean createGame(@RequestParam String gameName, @RequestParam String courseName,
 			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper) {
 		try {
-			if(saveGame(gameName, courseName, teacherName, wrapper, false, 1) == false){
+			if(saveGame(gameName, courseName, teacherName, wrapper, 1) == false){
 				return false;
 			}
 			Vector<Question> questions = wrapper.getQuestions();
@@ -123,10 +123,10 @@ public class GameController {
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/save")
 	public static boolean saveGame(@RequestParam String gameName, @RequestParam String courseName,
 			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper,
-			  @RequestParam boolean isCancelled, @RequestParam int version){
+			  @RequestParam int version){
 		GameOriginator gameOriginator = new GameOriginator();
 		Vector<Question> questions = wrapper.getQuestions();
-		gameOriginator.setInfo(gameName, courseName, questions.size(), teacherName, questions, isCancelled, version);
+		gameOriginator.setInfo(gameName, courseName, questions.size(), teacherName, questions, false, version);
 		Game game = gameOriginator.produceGame();
 		GameCache.addToCache(game);
 		try {
