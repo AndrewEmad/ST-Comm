@@ -4,7 +4,7 @@ app.controller('ctrl', function($scope, $http) {
         
         var courseName;
         var gameName;
-        var questions;
+        var questions = [];
         var question;
         var numOfQuestions;
         var questionNum;

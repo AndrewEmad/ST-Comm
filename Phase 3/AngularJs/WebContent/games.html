@@ -40,7 +40,6 @@
             <div class="row">
                 <div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="game in games">
                 	
-                	
                     <center><div class="thumbnail">
                         <img src="logo.png">
                         
@@ -50,9 +49,9 @@
 						    <div class="smallMenu" ></div>
 						
 						    <div id={{game}} class="dropdown-content">
-						        <a href="#" id="editGame">Edit</a>
+						        <a href="#" id="editGame" ng-click="editGame(game)">Edit</a>
 						        <a href="#" id="copyGame" data-toggle="modal" data-target="#myModal2" ng-click="rememberGame(game)">Copy</a>
-						        <a href="#" id="cancelGame" value ="Cancel" ng-click="cancelGame(game)">Cancel</a>
+						        <a href="#" id="cancelGame" ng-click="cancelGame(game)">Cancel</a>
 						    </div>
 						</div>
 						
@@ -177,6 +176,104 @@
                     </div>
                 </form>
             </div>
+            <div id="editForm">
+                <form ng-submit="editQuestions()">
+                    
+                    <div class="modal fade" id="myModal3" role="dialog">
+                        <div class="modal-dialog">
+
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <center><h4 class="modal-title" id="questionNum2"></h4></center>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <center><input id="Qstatement2" required placeholder="Question statement*"/></center>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <center>True/False <input type="radio" id="tf2" name="Qtype" value ="TF" checked/></center>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <center>MCQ <input type="radio" id="mcq2" name="Qtype" value ="MCQ"/></center>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h4 id="choices2">Choices</h4>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <center>
+                                            <div class="col-lg-6 col-xs-6 col-md-6">
+                                                <input id="mcq12" placeholder="choice1*"/>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-6 col-md-6">
+                                                <input id="mcq22" placeholder="choice2*"/>
+                                            </div>
+                                        </center>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <center>
+                                            <div class="col-lg-6 col-xs-6 col-md-6">
+                                                <input id="mcq32" placeholder="choice3"/>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-6 col-md-6">
+                                                <input id="mcq42" placeholder="choice4"/>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br>
+                                    <div class="col-lg-12">
+                                        <center>
+                                            <input id="answer2" required placeholder="Correct Answer*"/>
+                                        </center>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <center>
+                                            Time : <input type="number" id="time2" min="2" value="2"/> secs
+                                        </center>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <center><p id="invalidAnswer2">answer doesn"t match any choice !</p></center>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br>
+                                    <div class="col-lg-12">
+                                        <center><input type="submit" id="editQuestion" value="Edit" 
+                                               class="btn btn-default" /></center>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancelEditing" class=" btn btn-default" data-dismiss="modal" >Cancel</button>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                </form> 
+            </div>
+            
             
 
         </div>

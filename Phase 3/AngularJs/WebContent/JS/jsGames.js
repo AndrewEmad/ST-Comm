@@ -1,164 +1,311 @@
 var app = angular.module('main',[]);    	
 app.controller('ctrl', function($scope, $http) {
 	var gameName;
-	var questions;
+	var questions = [];
 	var numOfQuestions;
 	var questionNum;
 	var score;
 	var time;
 	var copiedGameName;
+	var gameVersion;
 	
-	$scope.username = localStorage.getItem("userName");
-	
-	$("#newCourseName , #newGameName").keyup(function(){
-		document.getElementById("errorCopy").style.display ="none";
-	});
+    $scope.username = localStorage.getItem("userName");
 	
 	$http({
-		url: "http://localhost:8090/st-comm.com/query/registrant-type",
-	    method: "GET",
-	    params: {name : localStorage.getItem("userName")}
-		    }).then(function(response){
-    		if(response.data != 1){
-				document.getElementById("Menu").style.display = "block";	    		
-    		}
-    	});
-	
-	$http({
-		url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
-	    method: "GET",
-	    params: {courseName : localStorage.getItem("courseName")}
-		}).then(function(response){
-    		$scope.games = response.data;
-		})
-	
-	$scope.playGame =function(GameName) {
-		gameName = GameName;
-		questionNum=1;
-		score = 0;
-		
-		$http({
-			url: "http://localhost:8090/st-comm.com/games/play",
-		    method: "GET",
-		    params: {gameName : gameName}
-			}).then(function(response){
-				numOfQuestions = response.data.numOfQuestions;
-				questions = response.data.questions;
-				$scope.gameName = gameName;
-				
-		        document.getElementById("questionNum").innerHTML = "Question "+questionNum+
-		        													" Out of "+numOfQuestions;
-		        document.getElementById("score").innerHTML = "Score 0";
-		        
-		        $scope.question = questions[questionNum-1].questionStatement;
-		        $scope.choices = questions[questionNum-1].choices;
-		        
-		        time = questions[questionNum-1].time;
-		        
-		        var counter = setInterval(function(){ 
-		            time--;
-		            document.getElementById("time").innerHTML = time + " left";
-		          if(time == 0){
-		            clearInterval(counter);
-		            $scope.submitAnswer();
-		           }
-		        }, 1000);
-		        
-			})
-    };
-    $scope.submitAnswer =function(){
-    	if($("input[name=choices]:checked").val() == 
-    		questions[questionNum-1].choices[questions[questionNum-1].correctAnswer]){
-    		score++;
-    		document.getElementById("score").innerHTML = "Score "+ score;
-    	}
+            url: "http://localhost:8090/st-comm.com/query/registrant-type",
+            method: "GET",
+            params: {name : localStorage.getItem("userName")}
+                }).then(function(response){
+                if(response.data != 1){
+                    document.getElementById("Menu").style.display = "block";	    		
+                }
+            });
 
-    	if(questionNum == numOfQuestions){
-    		$('#submitAnswer').prop('disabled', true);
-    	}
-    	else{
-    		questionNum++;
-    		document.getElementById("questionNum").innerHTML = "Question " + questionNum+
-    															" Out of "+numOfQuestions;
-    		$scope.question = questions[questionNum-1].questionStatement;
-            $scope.choices = questions[questionNum-1].choices;
+        $http({
+            url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
+            method: "GET",
+            params: {courseName : localStorage.getItem("courseName")}
+            }).then(function(response){
+                $scope.games = response.data;
+            })
             
-            time = questions[questionNum-1].time;
-	        
-	        var counter = setInterval(function(){ 
-	            time--;
-	            document.getElementById("time").innerHTML = time + " left";
-	          if(time == 0){
-	            clearInterval(counter);
-	            $scope.submitAnswer();
-	           }
-	        }, 1000);
-    	}
+            $scope.games=["game"];  
+            
+    $(document).ready(function(){
+		
+    	//document.getElementById("Menu").style.display ="block";
     	
-    };
+        $("#newCourseName , #newGameName").keyup(function(){
+            document.getElementById("errorCopy").style.display ="none";
+        });
+        
+        $("#mcq12, #mcq22, #mcq32, #mcq42, #answer2").keyup(function(){
+			document.getElementById("invalidAnswer2").style.display ="none";
+		});
+        
+        $('#mcq2').change(function () {
+        	if($(this).is(':checked')) {
+            	document.getElementById("mcq32").style.display = "block";
+            	document.getElementById("mcq42").style.display = "block";
+        	}
+    	});
     
-    document.getElementById("closeGame").onclick = function(){
-    	$('#submitAnswer').prop('disabled', false);
-    	
-    	/* save score only if user is a student*/
-    	$http({ 
-    		url: "http://localhost:8090/st-comm.com/query/registrant-type",
-    	    method: "GET",
-    	    params: {name : localStorage.getItem("userName")}
-   		    }).then(function(response){
-	    		if(response.data == 1){
-	    			$http({
-	    				url: "http://localhost:8090/st-comm.com/games/scores/save",
-	    			    method: "GET",
-	    			    params: {name : localStorage.getItem("userName"),
-	    			    	score : score , gameName : gameName}
-	    			})
-	    		}   		
-	    	})
-    }
-    
-    $scope.openMenu = function(gameName){
-    	document.getElementById(gameName).classList.toggle("show");
-    }
-    
-    $scope.cancelGame = function(gameName){
-    	$http({ 
-    		url: "http://localhost:8090/st-comm.com/games/cancel",
-    	    method: "GET",
-    	    params: {gameName : gameName}
-   		    }).then(function(response){
-   		    	location.reload();   		
-	    	})
-    }
-    
-    $scope.rememberGame = function(gameName){
-    	copiedGameName = gameName;
-    }
-    
-    $scope.copyGame = function(){
-    
-    	$http({ 
-    		url: "http://localhost:8090/st-comm.com/games/copy",
-    	    method: "GET",
-    	    params: {oldGameName : copiedGameName , 
-    	    	newGameName : $scope.newGameName,
-    	    	sourceCourse : localStorage.getItem("courseName") ,
-    	    	destinationCourse : $scope.newCourseName , 
-    	    	newTeacherName : localStorage.getItem("userName")}
-   		    }).then(function(response){
-   		    	if(response)
-   		    		$('#myModal2').modal('hide');
-   		    	else{
-   		    		document.getElementById("errorCopy").style.display ="block";
-   		    	}
-	    	})
-    }
-    
-    
-    document.getElementById("signOut").onclick = function(){
-		localStorage.removeItem("userName");
-		location.href="index.html";
-	}
+    	$('#tf2').change(function () {
+        	if($(this).is(':checked')) {
+            	document.getElementById("mcq32").style.display = "none";
+            	document.getElementById("mcq42").style.display = "none";
+        	}
+    	});
+
+        $scope.playGame =function(GameName) {
+            gameName = GameName;
+            questionNum=1;
+            score = 0;
+
+            $http({
+                url: "http://localhost:8090/st-comm.com/games/play",
+                method: "GET",
+                params: {gameName : gameName}
+                }).then(function(response){
+                    numOfQuestions = response.data.numOfQuestions;
+                    questions = response.data.questions;
+                    $scope.gameName = gameName;
+
+                    document.getElementById("questionNum").innerHTML = "Question "+questionNum+
+                                                                        " Out of "+numOfQuestions;
+                    document.getElementById("score").innerHTML = "Score 0";
+
+                    $scope.question = questions[questionNum-1].questionStatement;
+                    $scope.choices = questions[questionNum-1].choices;
+
+                    time = questions[questionNum-1].time;
+
+                    var counter = setInterval(function(){ 
+                        time--;
+                        document.getElementById("time").innerHTML = time + " left";
+                      if(time == 0){
+                        clearInterval(counter);
+                        $scope.submitAnswer();
+                       }
+                    }, 1000);
+
+                })
+        };
+        $scope.submitAnswer =function(){
+            if($("input[name=choices]:checked").val() == 
+                questions[questionNum-1].choices[questions[questionNum-1].correctAnswer]){
+                score++;
+                document.getElementById("score").innerHTML = "Score "+ score;
+            }
+
+            if(questionNum == numOfQuestions){
+                $('#submitAnswer').prop('disabled', true);
+            }
+            else{
+                questionNum++;
+                document.getElementById("questionNum").innerHTML = "Question " + questionNum+
+                                                                    " Out of "+numOfQuestions;
+                $scope.question = questions[questionNum-1].questionStatement;
+                $scope.choices = questions[questionNum-1].choices;
+
+                time = questions[questionNum-1].time;
+
+                var counter = setInterval(function(){ 
+                    time--;
+                    document.getElementById("time").innerHTML = time + " left";
+                  if(time == 0){
+                    clearInterval(counter);
+                    $scope.submitAnswer();
+                   }
+                }, 1000);
+            }
+
+        };
+        
+        $scope.editGame = function(GameName){
+        	gameName = GameName;
+        	$http({
+                url: "http://localhost:8090/st-comm.com/games/get",
+                method: "GET",
+                params: {gameName : gameName}
+                }).then(function(response){
+                	questionNum = 1;
+                	numOfQuestions = response.data.numOfQuestions;
+                    questions = response.data.questions;
+                    gameVersion = response.version + 1;
+                    $('#myModal3').modal('show');
+                    $scope.editQuestions();
+                })
+        	/*$('#myModal3').modal('show');
+        	
+        	questionNum = 1;
+        	numOfQuestions = 1;
+        	/*question = { choices : ["Ahmed","Ayman"] , correctAnswer : 0 ,
+   				 questionStatement: "what's your name ?",time: 5 };
+        	questions[0] = question; 
+        	question = { choices : ["choice1","not Good","fine"] , correctAnswer : 2 ,
+      				 questionStatement: "how are you ?",time: 6 };
+            questions[0] = question; 
+            $scope.editQuestions();*/
+        };
+        
+        $scope.editQuestions = function(){
+        	
+        	var choices =[];
+	    	var answerIndex;
+	    	var time;
+	    	var matched;
+	    	
+	    	if(questionNum != 1){ // to not validate empty boxes for first time
+	    		time = document.getElementById("time").value;
+		    	choices[0] = $("#mcq12").val();
+		    	choices[1] = $("#mcq22").val();
+		    	
+		    	if($("input[name=Qtype]:checked").val() == "MCQ"){
+						    	
+		    		var i =2;
+		    		
+		    		if($("#mcq32").val() != ""){
+		    			choices[i] = $("#mcq32").val();
+		    			i++;
+		    		}
+		    		if($("#mcq42").val() != ""){
+		    			choices[i] = $("#mcq42").val();
+		    		}
+		    	}
+		    	
+		    	for ( var x=0;x<choices.length;x++){
+						if(choices[x] == $("#answer2").val()){
+							matched= "true";
+							answerIndex = x;
+							break;
+						}
+					}
+				if(matched != "true"){
+					document.getElementById("invalidAnswer2").style.display="block";
+					return;
+				}
+				question = { choices : choices , correctAnswer : answerIndex ,
+	    				 questionStatement: $("#Qstatement2").val(),time: time };
+       	
+				questions[questionNum-2] = question;
+				
+				alert(questions[0].choices[0]);
+				alert(questions[0].choices[1]);
+				alert(questions[0].correctAnswer);
+				alert(questions[0].questionStatement);
+				alert(questions[0].choices[2]);
+				alert(questions[0].choices.length);
+	    	}
+
+        	if(questionNum > numOfQuestions){
+        		$http({
+                    url: "http://localhost:8090/st-comm.com/games/save",
+                    method: "GET",
+                    params: {gameName : gameName , 
+                    	courseName : localStorage.getItem("courseName"),
+                    	teacherName : localStorage.getItem("userName"),
+                    	wrapper : questions,
+                    	version : gameVersion
+                    }
+                    }).then(function(response){
+                    	$('#myModal3').modal('hide');
+        	    		document.getElementById("editQuestion").value = "Edit";
+        	    		return;
+                    })
+        	}
+        	if(questionNum == numOfQuestions){
+	    		$("#editQuestion").val("Finish editing");
+        	}
+        	
+        	document.getElementById("questionNum2").innerHTML = "Question "+questionNum+
+			" Out of "+numOfQuestions;
+        	
+        	$("#Qstatement2").val(questions[questionNum-1].questionStatement);
+        	
+        	$("#mcq12").val(questions[questionNum-1].choices[0]);
+        	$("#mcq22").val(questions[questionNum-1].choices[1]);
+        	
+        	if(questions[questionNum-1].choices.length > 2){
+        		$("#mcq2").attr('checked', 'checked');
+        		document.getElementById("mcq32").style.display = "block";
+            	document.getElementById("mcq42").style.display = "block";
+            	$("#mcq32").val(questions[questionNum-1].choices[2]);
+            	$("#mcq42").val(questions[questionNum-1].choices[3]);
+        	}
+        	
+        	$("#answer2").val(questions[questionNum-1].choices
+        			[questions[questionNum-1].correctAnswer]);
+        	$("#time2").val(questions[questionNum-1].time);
+        		
+        	questionNum++;
+        }
+
+        document.getElementById("closeGame").onclick = function(){
+            $('#submitAnswer').prop('disabled', false);
+
+            /* save score only if user is a student*/
+            $http({ 
+                url: "http://localhost:8090/st-comm.com/query/registrant-type",
+                method: "GET",
+                params: {name : localStorage.getItem("userName")}
+                }).then(function(response){
+                    if(response.data == 1){
+                        $http({
+                            url: "http://localhost:8090/st-comm.com/games/scores/save",
+                            method: "GET",
+                            params: {name : localStorage.getItem("userName"),
+                                score : score , gameName : gameName}
+                        })
+                    }   		
+                })
+        }
+
+        $scope.openMenu = function(gameName){
+            document.getElementById(gameName).classList.toggle("show");
+        }
+
+        $scope.cancelGame = function(gameName){
+            $http({ 
+                url: "http://localhost:8090/st-comm.com/games/cancel",
+                method: "GET",
+                params: {gameName : gameName}
+                }).then(function(response){
+                    location.reload();   		
+                })
+        }
+
+        $scope.rememberGame = function(gameName){
+            copiedGameName = gameName;
+        }
+
+        $scope.copyGame = function(){
+
+            $http({ 
+                url: "http://localhost:8090/st-comm.com/games/copy",
+                method: "GET",
+                params: {oldGameName : copiedGameName , 
+                    newGameName : $scope.newGameName,
+                    sourceCourse : localStorage.getItem("courseName") ,
+                    destinationCourse : $scope.newCourseName , 
+                    newTeacherName : localStorage.getItem("userName")}
+                }).then(function(response){
+                    if(response)
+                        $('#myModal2').modal('hide');
+                    else{
+                        document.getElementById("errorCopy").style.display ="block";
+                    }
+                })
+        }
+
+
+        document.getElementById("signOut").onclick = function(){
+            localStorage.removeItem("userName");
+            location.href="index.html";
+        }
+	})
+	
+	
 });
 
 window.onclick = function(event) {
