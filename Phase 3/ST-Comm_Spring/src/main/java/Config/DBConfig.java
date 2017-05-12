@@ -10,7 +10,7 @@ public class DBConfig {
 	   public JdbcTemplate initJdbcTemplate(){
 	      DataSource dataSource = new DataSource();
 	      dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-	      dataSource.setUrl("jdbc:sqlserver://mssql4.gear.host;databaseName=stcommdb;username=stcommdb;password=Mb3oIjf!~jCk;");
+	      dataSource.setUrl("jdbc:sqlserver://mssql5.gear.host;databaseName=stcomm1;username=stcomm1;password=Ts9j?c0StAj-;");
 	      return new JdbcTemplate(dataSource);
 	   }
 }
