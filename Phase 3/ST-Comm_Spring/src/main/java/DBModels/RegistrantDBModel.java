@@ -2,6 +2,7 @@ package DBModels;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
@@ -130,16 +131,28 @@ public class RegistrantDBModel {
 		return callableSt.getInt(2);
 	}
 	
-	public static void pushNotification(String msg, String registrantName){
-		//add notification string to the list of notifications for this registrant
+	public static void pushNotification(String msg, String registrantName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call pushNotification(?, ?)}");
+		callableSt.setString(1, msg);
+		callableSt.setString(2, registrantName);
+		callableSt.executeUpdate();
 	}
 	
-	public static Vector<String> getNotifications(String registrantName){
-		/*
-		 * 
-		 * 
-		 * 
-		 */
-		return null;
+	public static Vector<String> getNotifications(String registrantName) throws SQLException{
+
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call getNotifications(?)}");
+		callableSt.setString(1, registrantName);
+		Vector<String>notifications=new Vector<String>();
+		ResultSet resultNotifications = callableSt.executeQuery();
+		while(resultNotifications.next()){
+			notifications.add(resultNotifications.getString(1));
+		}
+		return notifications;
 	}
 }

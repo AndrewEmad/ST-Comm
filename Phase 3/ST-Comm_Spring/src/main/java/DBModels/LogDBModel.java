@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -72,7 +73,8 @@ public class LogDBModel {
 			callableSt.setNull(6, Types.NVARCHAR);
 		else
 			callableSt.setString(6, msg.getCollaboratorName());
-		callableSt.setDate(7, new java.sql.Date(msg.getDate().getTime()));
+		SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        callableSt.setDate(7, java.sql.Date.valueOf(s.format(msg.getDate())));
 		callableSt.executeUpdate();
 		
 	}

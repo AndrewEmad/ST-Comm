@@ -67,12 +67,16 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 	}
 
-	public static boolean isEnrolled(String courseName, String collaboratorName){
-		/*
-		 * 
-		 * 
-		 */
-		return false;
+	public static boolean isEnrolled(String courseName, String registrantName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call isEnrolled(?, ?, ?)}");
+		callableSt.setString(1, courseName);
+		callableSt.setString(2, registrantName);
+		callableSt.registerOutParameter(3, Types.BIT);
+		callableSt.executeUpdate();
+		return callableSt.getBoolean(3);
 	}
 	public static Vector<String> getEnrolledStudents(String courseName) throws SQLException{
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
