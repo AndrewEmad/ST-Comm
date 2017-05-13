@@ -3,6 +3,7 @@ package Controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -134,4 +135,13 @@ public class RegistrantController {
 		}
 		return registrantCode;
 	}
+	
+	public static void sendNotification(String msg, String registrantName){
+		RegistrantDBModel.pushNotification(msg, registrantName);
+	}
+	
+	public Vector<String> getNotifications(String registrantName){
+		return RegistrantDBModel.getNotifications(registrantName);
+	}
+	
 }

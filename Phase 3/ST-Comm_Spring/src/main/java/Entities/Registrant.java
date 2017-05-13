@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Registrant {
 
-	private String name;
-	private Date birthdate;
-	private String gender;
-	private String mail;
-	private String country;
-	private String password;
-	private boolean confirmed;
+	protected String name;
+	protected Date birthdate;
+	protected String gender;
+	protected String mail;
+	protected String country;
+	protected String password;
+	protected boolean confirmed;
 	
 	
 	public void setInfo(String name, Date birthdate, String gender, String mail, String country, String password,
@@ -66,7 +66,5 @@ public class Registrant {
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
 	}
-	
-
 
 }

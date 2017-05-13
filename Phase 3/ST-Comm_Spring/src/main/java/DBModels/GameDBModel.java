@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Vector;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,6 +32,52 @@ public class GameDBModel {
 		callableSt.executeUpdate();
 	}
 
+	public static void saveComment(String gameName, String courseName, String comment){
+		/*
+		 * 
+		 * 
+		 */
+	}
+	
+	public static Vector<String> fetchComments(String gameName, String courseName){
+		/*
+		 * 
+		 * 
+		 */
+		return null;
+	}
+	
+	public static void addCollaborator(String collaboratorName, String gameName, String CourseName){
+		/*
+		 * 
+		 * 
+		 */
+	}
+	
+	public static void removeCollaborator(String collaboratorName, String gameName, String CourseName){
+		/*
+		 * 
+		 * 
+		 */
+	}
+	
+	public static void moveCollaborators(String oldGameName, String newGameName, String courseName){
+		/*
+		 * When a collaborator edits a game, he can change its name. And when the gameName is
+		 * changed, the system will call THIS FUNCTION which must perform the following update query:
+		 * 		FOR ALL Collaborator X to "OLD_GAME_NAME" in "courseName"
+		 * 			collaborator X became now collaborator to "NEWGameName" in "courseName"
+		 *
+		 */
+	}
+	public static boolean isCollaborator(String teacherName, String gameName, String CourseName){
+		/*
+		 * 
+		 * 
+		 * 
+		 */
+		return true;
+	}
 	/**
 	 * Retrieve specific game from database
 	 * @param gameName

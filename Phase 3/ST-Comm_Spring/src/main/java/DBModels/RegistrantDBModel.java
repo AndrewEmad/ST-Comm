@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
+import java.util.Vector;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -128,5 +128,18 @@ public class RegistrantDBModel {
 		callableSt.registerOutParameter(2, Types.INTEGER);
 		callableSt.executeUpdate();
 		return callableSt.getInt(2);
+	}
+	
+	public static void pushNotification(String msg, String registrantName){
+		//add notification string to the list of notifications for this registrant
+	}
+	
+	public static Vector<String> getNotifications(String registrantName){
+		/*
+		 * 
+		 * 
+		 * 
+		 */
+		return null;
 	}
 }

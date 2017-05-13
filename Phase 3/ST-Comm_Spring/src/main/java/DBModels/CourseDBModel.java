@@ -5,15 +5,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import Config.DBConfig;
+import Entities.Student;
 
 public class CourseDBModel {
 
@@ -70,6 +68,13 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 	}
 
+	public static Vector<Student> getEnrolledStudents(String courseName){
+		/*
+		 * only students
+		 * 
+		 * */
+		return null;
+	}
 	/**
 	 * Returns all courses in the database
 	 * @return Vector<String>
@@ -127,5 +132,4 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 		return callableSt.getBoolean(2);
 	}
-
 }

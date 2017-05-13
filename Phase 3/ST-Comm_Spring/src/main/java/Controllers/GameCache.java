@@ -61,7 +61,11 @@ public class GameCache {
 
 	public static Vector<String> loadCache(String courseName) throws SQLException {
 		Vector<String> gameNames = CourseDBModel.fetchGames(courseName);
-		cache.clear();
+		if(cache==null)
+			cache=new Hashtable<String,Game>();
+		else{
+			cache.clear();
+		}
 		for(int i=0; i < gameNames.size(); i++){
 			Game game = GameDBModel.fetchGame(gameNames.get(i), courseName);
 			cache.put(gameNames.get(i), game);

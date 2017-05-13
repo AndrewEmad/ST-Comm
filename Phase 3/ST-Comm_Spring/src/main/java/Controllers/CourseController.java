@@ -27,7 +27,7 @@ public class CourseController {
 	 * @return vector of game names that exists in a specific course
 	 */
 	@RequestMapping(method=RequestMethod.GET, value="/st-comm.com/games/courses/list-by-course")
-	public Vector<String> getGames(@RequestParam String courseName) {
+	public static Vector<String> getGames(@RequestParam String courseName) {
 		try {
 			return GameCache.loadCache(courseName);
 		} catch (SQLException e) {
