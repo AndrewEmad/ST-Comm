@@ -1,149 +1,186 @@
 <!DOCTYPE html>
-<html ng-app="main">
-<head >
-    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css" />
+<html>
+<head ng-app="main">
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
     <script src="lib/angular.min.js"></script>
-    <script src="JS/jquery-3.1.1.min.js"></script>
-    <script src="JS/bootstrap.min.js"></script>
-    <script type="text/javascript" src="JS/jsIndex.js" ></script>
-    <link rel="stylesheet" type="text/css" href="CSS/styleIndex.css" />
+    <link href="CSS/font-awesome.min.css" rel="stylesheet" />
+    <link href="CSS/flexslider.css" rel="stylesheet" />
+    <link href="CSS/styleIndex.css" rel="stylesheet" />    
+    <script src="JS/jquery-1.10.2.js"></script>
+    <script src="JS/bootstrap.js"></script> 
+    <script src="JS/jquery.flexslider.js"></script>
+    <script src="JS/scrollReveal.js"></script>
+    <script src="JS/jquery.easing.min.js"></script>
+    <script src="JS/jsIndex.js"></script>
     
+    <title>ST-Comm</title>
     <link rel="icon" href="logo.png" type="image/x-icon">
-    <title>ST_Comm</title>
 </head>
-<body>
-	<div class="container" ng-controller="ctrl">
-    	<nav class="navbar navbar-inverse">
-    	    <div class="container-fluid">
-                <div class="navbar-header">
-                	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-	                <span class="sr-only">Toggle navigation</span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	                <span class="icon-bar"></span>
-	              </button>
-                    <a class="navbar-brand" href="#">ST-Comm</a>
-                  	<a class="navbar-brand" href="#"><img src="logo.png" id="img1"/></a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                <ul class="nav navbar-nav">
-	                  <li><a href="#">Home</a></li>
-	                </ul>
-	                <ul class="nav navbar-nav navbar-right">
-	                  <li id="join"><a href="signIn.html">Join</a></li>
-	                </ul>
-        		</div>
-        	</div>
-    	</nav>
-        <div class="row">
-            <div class="col-lg-12">
-                <center><h1 id="t">Discover what ST-Comm can do for you</h1></center> 
+<body ng-controller="ctrl">
+   
+ <div class="navbar navbar-inverse navbar-fixed-top " id="menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html">ST-comm <img class="logo-custom" src="logo.png" id="logo" /></a>
+            </div>
+            <div class="navbar-collapse collapse move-me">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home"><span>HOME <span class="border"></span></span></a></li>
+                    <li><a href="#contact-sec"><span>CONTACT <span class="border"></span></span></a></li>
+                    <li><a>|</a></li>
+                    <li id="join"><a href="signIn.html"><span>JOIN<span class="border"></span></span></a></li>
+                </ul>
             </div>
         </div>
-        <br><br><br><br>
-        <div class="row">
-            <div class="col-lg-6 col-xs-6">
-                <img src="Teacher.png" id="pic1"/>
-            </div>
-            <div class="col-lg-6 col-xs-6">
-                <br>
-                <div class="row">
-                    <div class="col-lg-6 col-xs-6" id="headline1">
-                        Add courses to your students
+    </div>
+      <!--NAVBAR SECTION END-->
+       <div class="home-sec" id="home" >
+           <div class="overlay">
+               <div class="container">
+                   <div class="row text-center " >
+                       <div class="col-lg-12  col-md-12 col-sm-12">
+                            <div class="flexslider set-flexi" id="main-section" >
+                                <ul class="slides move-me">
+                                    <!-- Slider 01 -->
+                                    <li>
+                                        <h3>Here learning is fun</h3>
+                                        <h1>Here, you will learn at home for free</h1>
+                                    </li>
+                                    <!-- End Slider 01 -->
+
+                                    <!-- Slider 02 -->
+                                    <li>
+                                        <h3>Here learning is fun</h3>
+                                       <h1>Here, you will ignore grades and teacher punishments</h1>
+                                    </li>
+                                    <!-- End Slider 02 -->
+
+                                    <!-- Slider 03 -->
+                                    <li>
+                                        <h3>Here learning is fun</h3>
+                                       <h1>Here, you will learn everything without studying a word</h1>
+                                    </li>
+                                    <!-- End Slider 03 -->
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 col-xs-6" id="paragraph1">
-                        <br><br>
-                        If you are a teacher, you can add new courses in any field you want. you can add educational games to any courses you created.
-                    </div>
+           </div>
+       </div>
+       <!--HOME SECTION END-->   
+    <div  class="tag-line" >
+        <div class="container">
+            <div class="row  text-center" >               
+                <div class="col-lg-12  col-md-12 col-sm-12">
+               
+                    <h2 data-scroll-reveal="enter from the bottom after 0.1s" ><i class="fa fa-circle-o-notch"></i> WELCOME TO ST-Comm <i class="fa fa-circle-o-notch"></i> </h2>
                 </div>
             </div>
         </div>
-        <br><br><br><br>
-        <div class="row">
-            <div class="col-lg-6 col-xs-6">
-                <br>
-                <div class="row">
-                    <div class="col-lg-6 col-xs-6" id="headline2">
-                        Play and learn
-                    </div>
+    </div>
+    <!--HOME SECTION TAG LINE END-->   
+         <div id="features-sec" class="container set-pad" >
+             <div class="row text-center">
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                     <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">FEATURE LIST </h1>
+                     <p data-scroll-reveal="enter from the bottom after 0.3s" >
+                      
+                         </p>
+                 </div>
+             </div>
+             <!--/.HEADER LINE END-->
+
+
+           <div class="row" >
+                 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
+                     <div class="about-div">
+                     <img src="challenge.jpg"  id="img1" />
+                   <h3 >Challenge</h3>
+                 <hr />
+                       <hr />
+                   <p >
+                       Get a score for each game you play,<br> Challenge yourself and get best scores!
+                   </p>
+               
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 col-xs-6" id="paragraph2">
-                        <br><br>
-                        Enroll in the courses you like for free, and you will enjoy several types of educational and interesting games. Challenge yourself to achieve best scores.
-                    </div>
+                   </div>
+                   <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.5s">
+                     <div class="about-div">
+                     <img src="collaborate.png"  id="img2" />
+                   <h3 >Collaborate</h3>
+                 <hr />
+                       <hr />
+                   <p >
+                       Add collaborators to games you create ,<br> together you can produce fantastic games.
+                       
+                   </p>
                 </div>
-            </div>
-            <div class="col-lg-6 col-xs-6">
-                <img src="Play.jpg" id="pic2"/>
-            </div>
-        </div>
-        <br>
-    	<div id="footer">
-            <br>
-            <div class="row">
-                <div class="col-lg-12 col-xs-12" id="contact">
-                    <center>Contact Us</center>
+                   </div>
+                 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.6s">
+                     <div class="about-div">
+                     <img src="notify.png"  id="img3" />
+                   <h3 >Notify</h3>
+                 <hr />
+                       <hr />
+                   <p >
+                       Notify interested students with new games,<br> and get a notification of they comments.
+                   </p>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-lg-12 col-xs-12" id="paragraph3">
-                    <center>If you have a question, we have an answer. <br>If you need something,
+                   </div>
+               </div>
+             </div>
+   <!-- FEATURES SECTION END-->
+
+    <div id="contact-sec"   >
+           <div class="overlay">
+ <div class="container set-pad">
+      <div class="row text-center">
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >CONTACT US  </h1>
+                     <center>If you have a question, we have an answer. <br>If you need something,
                             we'll help you. Contact us anytime.</center>
+                 </div>
+
+             </div>
+             <!--/.HEADER LINE END-->
+           <div class="row set-row-pad"  data-scroll-reveal="enter from the bottom after 0.5s" >
+           
+               
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+                    <form ng-submit="sendMsg()">
+                        <div class="form-group">
+                                <input placeholder="Name*" required id="subject" ng-model="subject" class="form-control " />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control " type="email" placeholder="Email*" required id="email" ng-model="email"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea rows="5" cols="50" placeholder="Message*" required id="message" ng-model="msg" class="form-control" style="min-height: 150px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <center><input type="submit" class="btn btn-default" value="Contact us now" id="contactButton"/></center>
+                            </div>
+
+                    </form>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-lg-12 col-xs-12">
-                    <center>
-                        <input type="button" class="btn btn-default" value="Contact us now" id="contactButton" data-toggle="modal" data-target="#myModal"/>
-                    </center>
+
+               </div>
                 </div>
-            </div>
-            <br>
-            <div id="contactForm" >
-                <form ng-submit="sendMsg()">
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <center><h4 class="modal-title">Contact Form</h4></center>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <center><input placeholder="subject*" required id="subject" ng-model="subject"/></center>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <center><input type="email" placeholder="email*" required id="email" ng-model="email"/></center>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <center><textarea rows="5" cols="50" placeholder="message*" required id="message" ng-model="msg"></textarea></center>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <center><input type="submit" value="Send message" class="btn btn-default"/></center>
-                                        </div>
-                                    </div>
-                               </div>
-                          </div>
-                      </div>
-                  </div>
-              </form>
-          </div>
-        </div>
-	</div>  
+          </div> 
+       </div>
+     <br><br>
+     <!-- CONTACT SECTION END-->
+    <div id="footer">
+          <center>Designed By : Ahmed Abd El-Majeed</center>
+    </div>
+     <!-- FOOTER SECTION END-->
+   
+    
 </body>
 </html>

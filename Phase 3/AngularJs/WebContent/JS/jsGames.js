@@ -25,19 +25,14 @@ app.controller('ctrl', function($scope, $http) {
         	        params: {name : localStorage.getItem("userName")}
         	            }).then(function(response){
         		            if(response.data != 1){
-        		            	$(".M").show();	    		
+        		            	$(".M").show();
+        		            	$("#log").show();
         		            }
         	            });
-            })
-            
-        
-            
-            //$scope.games=["game","game2"];  
+            })  
             
     $(document).ready(function(){
 		
-    	//$(".M").show();
-    	
         $("#newCourseName , #newGameName").keyup(function(){
             document.getElementById("errorCopy").style.display ="none";
         });
@@ -160,39 +155,11 @@ app.controller('ctrl', function($scope, $http) {
                 		document.getElementById("notColl").style.display="block";
                 	}
                 })
-        	
-        	
-        	
-                
-            /*questionNum = 1;
-        	numOfQuestions = 1;
-        	question = { choices : ["Ahmed","Ayman"] , correctAnswer : 0 ,
-   				 questionStatement: "what's your name ?",time: 5 };
-        	questions[0] = question; 
-        	question = { choices : ["choice1","not Good","fine"] , correctAnswer : 2 ,
-      				 questionStatement: "how are you ?",time: 6 };
-            questions[0] = question;
-            
-            $('#myModal3').modal('show');
-            
-            $("#gameName2").val(gameName);
-            $("#numOfQuestions2").val(numOfQuestions);*/
         };
         
         $scope.editGameInfo = function(){
         	newGameName = $("#gameName2").val();
         	newNumOfQ = $("#numOfQuestions2").val();
-        	
-        	/*newGameName = $("#gameName2").val();
-        	newNumOfQ = $("#numOfQuestions2").val();
-        	alert(newGameName);
-        	alert(newNumOfQ);
-        	
-        	$('#myModal3').modal('hide');
-			$('#myModal4').modal('show');
-			 
-            $scope.editQuestions();*/
-				
         	$http({
 				url: "http://localhost:8090/st-comm.com/games/exists",
     			method: "GET",
@@ -251,12 +218,6 @@ app.controller('ctrl', function($scope, $http) {
        	
 				questions[questionNum-2] = question;
 				
-				/*alert(questions[0].choices[0]);
-				alert(questions[0].choices[1]);
-				alert(questions[0].correctAnswer);
-				alert(questions[0].questionStatement);
-				alert(questions[0].choices[2]);
-				alert(questions[0].choices.length);*/
 	    	}
 
         	if(questionNum > newNumOfQ){
@@ -450,3 +411,43 @@ function check(){
 	if ( null == localStorage.getItem("userName"))
 		location.href = "index.html";
 }
+(function ($) {
+    "use strict";
+    var mainApp = {
+        scrollAnimation_fun: function () {
+            window.scrollReveal = new scrollReveal();
+
+        },
+         scroll_fun: function () {
+            $(function () {
+                $('.move-me a').bind('click', function (event) { //just pass move-me in design and start scrolling
+                    var $anchor = $(this);
+                    $('html, body').stop().animate({
+                        scrollTop: $($anchor.attr('href')).offset().top
+                    }, 1000, 'easeInOutQuad');
+                    event.preventDefault();
+                });
+            });
+
+        },
+         top_flex_slider_fun:function()
+         {
+             $('#main-section').flexslider({
+                 animation: "fade", //String: Select your animation type, "fade" or "slide"
+                 slideshowSpeed: 3000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+                 animationSpeed: 1000,           //Integer: Set the speed of animations, in milliseconds
+                 startAt: 0,    //Integer: The slide that the slider should start on. Array notation (0 = first slide)
+             });
+         }
+    }
+   
+   
+    $(document).ready(function () {
+        mainApp.scrollAnimation_fun();
+        mainApp.scroll_fun();
+        mainApp.top_flex_slider_fun();
+        mainApp.custom_fun();
+    });
+}(jQuery));
+
+

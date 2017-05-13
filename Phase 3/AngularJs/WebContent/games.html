@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html ng-app="main">
 <head>
-	<link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="CSS/bootstrap.css" />
+	<link href="CSS/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="CSS/styleGames.css" />
 	<script src="lib/angular.min.js"></script>
-	<script src="JS/jquery-3.1.1.min.js"></script>
-	<script src="JS/bootstrap.min.js"></script>
+    <script src="JS/jquery-1.10.2.js"></script>
+    <script src="JS/bootstrap.js"></script>
+    <script src="JS/jquery.flexslider.js"></script>
+    <script src="JS/scrollReveal.js"></script>
+    <script src="JS/jquery.easing.min.js"></script>
 	<script src="JS/jsGames.js"></script>
 	
 	<link rel="icon" href="logo.png" type="image/x-icon">
     <title>Games</title>
 </head>
-<body onload="check()">
-    <div class="container">
-        <div ng-controller="ctrl">
-        	<nav class="navbar navbar-inverse">
-              <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		                <span class="sr-only">Toggle navigation</span>
-		                <span class="icon-bar"></span>
-		                <span class="icon-bar"></span>
-		                <span class="icon-bar"></span>
-		              </button>
-                    <a class="navbar-brand" href="#">ST-Comm</a>
-                  	<a class="navbar-brand" href="#"><img src="logo.png" id="img1"/></a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                <ul class="nav navbar-nav">
-	                  <li id="home" ><a href="home.html">Home</a></li>
-	                  <li id="home" ><a href="#" ng-click = "getLogs()">Log</a></li>
-	                </ul>
-	                <ul class="nav navbar-nav navbar-right">
-	                  <li><a href="#">{{username}}</a></li>
-	                  <li id="signOut"><a href="#">Sign out</a></li>
-	                </ul>
-	              </div>
-              </div>
-            </nav>
-            
+<body onload="check()" ng-controller="ctrl">
+	<div class="navbar navbar-inverse navbar-fixed-top " id="menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html">ST-comm <img class="logo-custom" src="logo.png" id="logo" /></a>
+            </div>
+            <div class="navbar-collapse collapse move-me">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="home.html"><span>HOME <span class="border"></span></span></a></li>
+                    <li id="log" ><a href="#" ng-click = "getLogs()"><span>Log<span class="border"></span></span></a></li>
+                    <li><a href="#contact-sec"><span>CONTACT <span class="border"></span></span></a></li>
+                    <li><a>|</a></li>
+                    <li><a>{{username}}</a></li>
+                    <li id="signOut"><a href="#"><span>SIGN OUT <span class="border"></span></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        	  <br><br><br><br><br>
             <center><p id="notColl">You are not a collaborator in this game!</p></center>
             <div class="row">
                 <div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="game in games">
@@ -68,6 +68,7 @@
                     </div></center>
                 </div>
             </div>
+    <br><br><br>
             
             <div id="playGameForm" >
                 <form>
@@ -391,9 +392,49 @@
 	              </div>
 	             </form>
             </div>
-            
+    <div id="contact-sec"   >
+           <div class="overlay">
+ <div class="container set-pad">
+      <div class="row text-center">
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >CONTACT US  </h1>
+                     <center>If you have a question, we have an answer. <br>If you need something,
+                            we'll help you. Contact us anytime.</center>
+                 </div>
 
-        </div>
+             </div>
+             <!--/.HEADER LINE END-->
+           <div class="row set-row-pad"  data-scroll-reveal="enter from the bottom after 0.5s" >
+           
+               
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+                    <form ng-submit="sendMsg()">
+                        <div class="form-group">
+                                <input placeholder="Name*" required id="subject" ng-model="subject" class="form-control " />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control " type="email" placeholder="Email*" required id="email" ng-model="email"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea rows="5" cols="50" placeholder="Message*" required id="message" ng-model="msg" class="form-control" style="min-height: 150px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <center><input type="submit" class="btn btn-default" value="Contact us now" id="contactButton"/></center>
+                            </div>
+
+                    </form>
+                </div>
+
+               </div>
+                </div>
+          </div> 
+       </div>
+    <br><br>
+     <!-- CONTACT SECTION END-->
+    <div id="footer">
+          <center>Designed By : Ahmed Abd El-Majeed</center>
     </div>
+     <!-- FOOTER SECTION END-->
+   
 </body>
 </html>
