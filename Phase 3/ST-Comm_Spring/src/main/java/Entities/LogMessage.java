@@ -12,12 +12,10 @@ public class LogMessage {
 	private String collaboratorName;
 	private Date date;
 
-	public LogMessage() {
-	}
-
-	public LogMessage(String operation, String oldGameName, String newGameName, String teacherName, String courseName,
-			Date date) {
-		this.id = -1;
+	public LogMessage(){}
+	public LogMessage(int id,String operation, String oldGameName, String newGameName,
+					   String courseName,String teacherName, Date date) {
+		this.id=id;
 		this.operation = operation;
 		this.oldGameName = oldGameName;
 		this.newGameName = newGameName;
@@ -26,10 +24,10 @@ public class LogMessage {
 		this.collaboratorName = "";
 		this.date = date;
 	}
-
-	public LogMessage(int id, String operation, String oldGameName, String newGameName, String teacherName, String courseName,
+	
+	public LogMessage(String operation, String oldGameName, String newGameName, String teacherName, String courseName,
 			Date date) {
-		this.id = id;
+		this.id = -1;
 		this.operation = operation;
 		this.oldGameName = oldGameName;
 		this.newGameName = newGameName;
