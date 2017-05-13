@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import DBModels.CourseDBModel;
 import DBModels.GameDBModel;
+import DBModels.QuestionDBModel;
+import Entities.Course;
 import Entities.Game;
 import Entities.GameOriginator;
+import Entities.Question;
 
 
 @CrossOrigin(origins = "*") // allow services of this RestController to share
@@ -43,16 +46,20 @@ public class GameCache {
 		try {
 			GameOriginator gameOriginator = new GameOriginator();
 			gameOriginator.saveStateToGame(cache.get(oldGameName).clone());
-			Game game = gameOriginator.produceGame();
-			if(game.getCourseName() != sourceCourse){
+			if(gameOriginator.getCourseName() != sourceCourse){
 				gameOriginator.saveStateToGame(GameDBModel.fetchGame(oldGameName, sourceCourse));
 			}
 			gameOriginator.setVersion(1);
 			gameOriginator.setGameName(newGameName);
 			gameOriginator.setCourseName(destinationCourse);
 			gameOriginator.setTeacherName(newTeacherName);
-			game = gameOriginator.produceGame();
+			Game game = gameOriginator.produceGame();
 			GameDBModel.saveGameVersion(game);
+			Vector<Question> questions = game.getQuestions();
+			for (int i = 0; i < questions.size(); i++) {
+				QuestionDBModel.saveQuestion(questions.get(i), newGameName,destinationCourse) ;
+				
+			}
 		} catch (Exception e) {
 			return false;
 		}

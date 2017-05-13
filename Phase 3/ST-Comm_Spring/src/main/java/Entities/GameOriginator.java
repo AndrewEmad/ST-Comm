@@ -57,4 +57,8 @@ public class GameOriginator {
 	public void setVersion(int version){
 		this.version = version;
 	}
+
+	public String getCourseName() {
+		return courseName;
+	}
 }

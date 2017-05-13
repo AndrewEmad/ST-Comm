@@ -11,7 +11,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import Config.DBConfig;
-import Entities.Student;
 
 public class CourseDBModel {
 
@@ -68,6 +67,13 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 	}
 
+	public static boolean isEnrolled(String courseName, String collaboratorName){
+		/*
+		 * 
+		 * 
+		 */
+		return false;
+	}
 	public static Vector<String> getEnrolledStudents(String courseName) throws SQLException{
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);

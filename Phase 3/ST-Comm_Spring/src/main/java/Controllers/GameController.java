@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import DBModels.CourseDBModel;
 import DBModels.GameDBModel;
 import DBModels.LogDBModel;
 import DBModels.QuestionDBModel;
@@ -227,6 +228,13 @@ public class GameController {
 										  @RequestParam String gameName, @RequestParam String courseName){
 		if(isCollaborator(teacherName, gameName, courseName) == false){
 			return false;
+		}
+		if(CourseDBModel.isEnrolled(courseName, collaboratorName) == false){
+			try {
+				CourseDBModel.enroll(courseName, collaboratorName);
+			} catch (SQLException e) {
+				return false;
+			}
 		}
 		try {
 			GameDBModel.addCollaborator(collaboratorName, gameName, courseName);
