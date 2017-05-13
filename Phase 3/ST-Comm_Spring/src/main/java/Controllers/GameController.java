@@ -126,7 +126,6 @@ public class GameController {
 		} catch (SQLException e) {
 			return false;
 		}
-		return true;
 	}
 	
 	public static boolean saveGame(String gameName, String courseName, String teacherName,
