@@ -17,6 +17,7 @@ public class AddCollaborator
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
+		driver.get("http://localhost:8080/AngularJs/");
 		FileInputStream fileStream=new FileInputStream(new File("addCollaborator.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
 		XSSFSheet sheet=workBook.getSheetAt(0);
@@ -48,19 +49,21 @@ public class AddCollaborator
 			driver.findElement(By.id("getCollForm")).click();
 			Thread.sleep(15000);
 			if(collaboratorName==null||collaboratorName.length()<=1)
-				collaboratorName="";
-			driver.findElement(By.id("collName")).sendKeys(collaboratorName);
-			Thread.sleep(1000);
-			driver.findElement(By.id("addColl")).click();
-			Thread.sleep(1000);
-			driver.findElement(By.id("cancelAdding")).click();
+			{
+				   collaboratorName="";
+				   driver.findElement(By.id("collName")).sendKeys(collaboratorName);
+				   driver.findElement(By.id("cancelAdding")).click();
+			}
+			else
+			{
+				driver.findElement(By.id("collName")).sendKeys(collaboratorName);
+				Thread.sleep(1000);
+				driver.findElement(By.id("addColl")).click();
+			}
 			Thread.sleep(1000);
 			driver.findElement(By.id("home")).click();
 			Thread.sleep(15000);
 		}
-		
-		
-		
 		fileStream.close();
 		workBook.close();
 		driver.close();

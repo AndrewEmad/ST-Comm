@@ -16,6 +16,7 @@ public class CancelGame
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
+		driver.get("http://localhost:8080/AngularJs/");
 		FileInputStream fileStream=new FileInputStream(new File("cancelGame.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
 		XSSFSheet sheet=workBook.getSheetAt(0);
@@ -25,20 +26,20 @@ public class CancelGame
 		for(int row=0;row<numOfRows;row++)
 		{
 			driver.findElement(By.id("join"));
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 			driver.findElement(By.id("signIn")).click();
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 			name=sheet.getRow(row).getCell(0).getStringCellValue();
 			password=sheet.getRow(row).getCell(1).getStringCellValue();
 			driver.findElement(By.id("userName")).sendKeys(name);
 			driver.findElement(By.id("password")).sendKeys(password);
 			driver.findElement(By.id("SignIn")).click();
 			
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 			courseName=sheet.getRow(row).getCell(2).getStringCellValue();
 			
 			driver.findElement(By.id(courseName)).click();
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 			
 			cancelGame=sheet.getRow(row).getCell(3).getStringCellValue();
 			
@@ -46,22 +47,18 @@ public class CancelGame
 			{
 				//gameName=sheet.getRow(row).getCell(4).getStringCellValue();
 				//driver.findElement(By.id(gameName)).click();
-				Thread.sleep(15000);
+				Thread.sleep(5000);
 				driver.findElement(By.id("Menu")).click();
-				Thread.sleep(15000);
+				Thread.sleep(5000);
 				driver.findElement(By.id("cancelGame")).click();
-				Thread.sleep(15000);
+				Thread.sleep(5000);
 			}
-			
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 			driver.findElement(By.id("signOut")).click();
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 		}
-		
 		fileStream.close();
 		workBook.close();
 		driver.close();
-		
 	}
-
 }

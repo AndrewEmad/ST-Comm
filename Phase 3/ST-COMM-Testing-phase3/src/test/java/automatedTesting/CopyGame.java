@@ -16,6 +16,7 @@ public class CopyGame
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver driver=new FirefoxDriver();
 		driver.manage().window().maximize();
+		driver.get("http://localhost:8080/AngularJs/");
 		FileInputStream fileStream=new FileInputStream(new File("copyGame.xlsx"));
 		XSSFWorkbook workBook=new XSSFWorkbook(fileStream);
 		XSSFSheet sheet=workBook.getSheetAt(0);
@@ -50,12 +51,17 @@ public class CopyGame
 			if(newCourseName==null)newCourseName="";
 			String newGameName=sheet.getRow(row).getCell(3).getStringCellValue();
 			if(newGameName==null)newGameName="";
-			
 			driver.findElement(By.id("newGameName")).sendKeys(newGameName);
 			driver.findElement(By.id("newCourseName")).sendKeys(newCourseName);
-			driver.findElement(By.id("performCopy")).click();
 			Thread.sleep(15000);
-			driver.findElement(By.id("cancelCopy")).click();
+			if(newGameName.equals("")||newCourseName.equals(""))
+			{
+				driver.findElement(By.id("cancelCopy")).click();
+			}
+			else
+			{
+				driver.findElement(By.id("performCopy")).click();
+			}
 			Thread.sleep(15000);
 			driver.findElement(By.id("home")).click();
 			Thread.sleep(15000);
