@@ -13,8 +13,9 @@ public class LogMessage {
 	private Date date;
 
 	public LogMessage(){}
-	public LogMessage(String operation, String oldGameName, String newGameName,
-					  String teacherName, String courseName, Date date) {
+	public LogMessage(int id,String operation, String oldGameName, String newGameName,
+					   String courseName,String teacherName, Date date) {
+		this.id=id;
 		this.operation = operation;
 		this.oldGameName = oldGameName;
 		this.newGameName = newGameName;
