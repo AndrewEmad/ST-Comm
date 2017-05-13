@@ -122,11 +122,10 @@ public class GameController {
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/exists")
 	public boolean exists(@RequestParam String gameName, @RequestParam String courseName){
 		try {
-			GameDBModel.exists(gameName, courseName);
+			return GameDBModel.exists(gameName, courseName);
 		} catch (SQLException e) {
 			return false;
 		}
-		return true;
 	}
 	
 	public static boolean saveGame(String gameName, String courseName, String teacherName,
