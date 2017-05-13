@@ -27,8 +27,9 @@ public class QuestionDBModel {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call fetchQuestions(?)}");
+		CallableStatement callableSt = connection.prepareCall("{call fetchQuestions(?,?)}");
 		callableSt.setString(1, gameName);
+		callableSt.setString(2, courseName);
 		Vector<Question>questions=new Vector<Question>();
 		ResultSet resultQuestions = callableSt.executeQuery();
 		while(resultQuestions.next()){
@@ -55,7 +56,7 @@ public class QuestionDBModel {
 		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
-		CallableStatement callableSt = connection.prepareCall("{call saveQuestion(?, ?, ?)}");
+		CallableStatement callableSt = connection.prepareCall("{call saveQuestion(?, ?, ?, ?, ?)}");
 		callableSt.setString(1, question.getQuestionStatement());
 		callableSt.setInt(2, question.getTime());
 		callableSt.setString(3,gameName);
