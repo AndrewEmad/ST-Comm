@@ -210,7 +210,11 @@ public class GameController {
 		} catch (SQLException e) {
 			return false;
 		}
-		RegistrantDBModel.pushNotification(message, registrantName);
+		try {
+			RegistrantDBModel.pushNotification(message, registrantName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
@@ -229,7 +233,16 @@ public class GameController {
 		if(isCollaborator(teacherName, gameName, courseName) == false){
 			return false;
 		}
-		if(CourseDBModel.isEnrolled(courseName, collaboratorName) == false){
+		try {
+			if(CourseDBModel.isEnrolled(courseName, collaboratorName) == false){
+				try {
+					CourseDBModel.enroll(courseName, collaboratorName);
+				} catch (SQLException e) {
+					return false;
+				}
+			}
+		} catch (SQLException e1) {
+			//cannot check whether the collaborator is enrolled, so try to enroll him/ her
 			try {
 				CourseDBModel.enroll(courseName, collaboratorName);
 			} catch (SQLException e) {

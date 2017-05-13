@@ -145,11 +145,19 @@ public class RegistrantController {
 	}
 	
 	public static void sendNotification(String msg, String registrantName){
-		RegistrantDBModel.pushNotification(msg, registrantName);
+		try {
+			RegistrantDBModel.pushNotification(msg, registrantName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Vector<String> getNotifications(String registrantName){
-		return RegistrantDBModel.getNotifications(registrantName);
+		try {
+			return RegistrantDBModel.getNotifications(registrantName);
+		} catch (SQLException e) {
+			return new Vector<String>();
+		}
 	}
 	
 }
