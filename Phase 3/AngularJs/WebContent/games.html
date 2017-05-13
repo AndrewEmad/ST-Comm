@@ -29,6 +29,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav">
 	                  <li id="home" ><a href="home.html">Home</a></li>
+	                  <li id="home" ><a href="#" ng-click = "getLogs()">Log</a></li>
 	                </ul>
 	                <ul class="nav navbar-nav navbar-right">
 	                  <li><a href="#">{{username}}</a></li>
@@ -43,7 +44,7 @@
                     <center><div class="thumbnail">
                         <img src="logo.png">
                         
-                        <div class="dropdown dropbtn" ng-click="openMenu(game)" id="Menu">
+                        <div class="dropdown dropbtn M" ng-click="openMenu(game)" id="Menu">
 						    <div class="smallMenu" ></div>
 						    <div class="smallMenu" ></div>
 						    <div class="smallMenu" ></div>
@@ -51,6 +52,7 @@
 						    <div id={{game}} class="dropdown-content">
 						        <a href="#" id="editGame" ng-click="editGame(game)">Edit</a>
 						        <a href="#" id="copyGame" data-toggle="modal" data-target="#myModal2" ng-click="rememberGame(game)">Copy</a>
+						        <a href="#" id="getCollForm" data-toggle="modal" data-target="#myModal6" ng-click="rememberGame(game)">Add collaborator</a>
 						        <a href="#" id="cancelGame" ng-click="cancelGame(game)">Cancel</a>
 						    </div>
 						</div>
@@ -324,6 +326,69 @@
                 </form> 
             </div>
             
+            <div id="logForm">                    
+	            <div class="modal fade" id="myModal5" role="dialog">
+	                <div class="modal-dialog">
+	
+	                  <!-- Modal content-->
+	                  <div class="modal-content">
+	                    <div class="modal-header">
+	                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                      <center><h4 class="modal-title">Log Form</h4></center>
+	                    </div>
+	                    <div class="modal-body" >
+	                        <div class="row" ng-repeat="log in logs">
+	                        	<div class="col-lg-12 col-md-12 col-xs-12" >
+	                        		{{log.newGameName}} in {{log.courseName}}  
+	                        		=> {{log.operation}} by
+	                        		<input type="button" value="Undo" id={{log.id}} class="btn btn-default undo" ng-click ="undoOperation(log.id)"/>  
+	                        		<br>
+	                        		{{log.teacherName}}
+	                        	</div>
+	                        	<hr/>
+	                        </div>    
+							
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+            </div>
+            <div id="collaboratorsForm">
+            	<form ng-submit="addColl()">                    
+	            <div class="modal fade" id="myModal6" role="dialog">
+	                <div class="modal-dialog">
+	
+	                  <!-- Modal content-->
+	                  <div class="modal-content">
+	                    <div class="modal-header">
+	                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                      <center><h4 class="modal-title">Collaborator Form</h4></center>
+	                    </div>
+	                    <br>
+	                    <div class="modal-body" >
+	                        <div class="row">
+	                        	<div class="col-lg-12 col-md-12 col-xs-12" >
+	                        		<center><input id="collName" placeholder="Collaborator Name*" required ng-model ="collName"/></center>
+	                        	</div>
+	                        </div>
+	                        <br>
+	                        <div class="row">
+                                  
+                                 <div class="col-lg-12">
+                                     <center><input type="submit" id="addColl" value="Save" 
+                                            class="btn btn-default" /></center>
+                                 </div>
+                            </div>
+	                    </div>
+	                    <br>
+	                    <div class="modal-footer">
+                        	 <button type="button" id="cancelAdding" class=" btn btn-default" data-dismiss="modal" >Cancel</button>
+                    	</div>
+	                  </div>
+	                </div>
+	              </div>
+	             </form>
+            </div>
             
 
         </div>

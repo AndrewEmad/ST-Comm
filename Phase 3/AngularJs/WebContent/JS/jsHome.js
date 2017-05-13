@@ -217,6 +217,6 @@ function disable(id){
 	$(id).attr("disabled","true");
 }
 function check(){
-	if ( null == localStorage.getItem("userName"))
-		location.href = "index.html";
+	/*if ( null == localStorage.getItem("userName"))
+		location.href = "index.html";*/
 }

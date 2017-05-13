@@ -94,3 +94,7 @@ body{
 	width:7%;
 	text-align:center;
 }
+.modal-body{
+    height: 250px;
+    overflow-y: auto;
+}

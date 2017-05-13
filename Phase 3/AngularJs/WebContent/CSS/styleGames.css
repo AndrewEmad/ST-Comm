@@ -131,3 +131,19 @@ body{
 	border: none;
 	border-bottom: 2px solid #82B1FF;
 }
+.modal-body{
+   
+    overflow-y: auto;
+}
+hr{
+    width:50%;
+    border: 1px solid #82B1FF;
+}
+.undo{
+	float :right;
+}
+#collName{
+	text-align:center;
+	border: none;
+	border-bottom: 2px solid #82B1FF;
+}

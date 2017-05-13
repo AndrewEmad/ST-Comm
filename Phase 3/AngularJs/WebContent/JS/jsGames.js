@@ -12,16 +12,6 @@ app.controller('ctrl', function($scope, $http) {
 	var gameVersion;
 	
     $scope.username = localStorage.getItem("userName");
-	
-	$http({
-            url: "http://localhost:8090/st-comm.com/query/registrant-type",
-            method: "GET",
-            params: {name : localStorage.getItem("userName")}
-                }).then(function(response){
-                if(response.data != 1){
-                    document.getElementById("Menu").style.display = "block";	    		
-                }
-            });
 
         $http({
             url: "http://localhost:8090/st-comm.com/games/courses/list-by-course",
@@ -31,11 +21,21 @@ app.controller('ctrl', function($scope, $http) {
                 $scope.games = response.data;
             })
             
-            //$scope.games=["game"];  
+        $http({
+	        url: "http://localhost:8090/st-comm.com/query/registrant-type",
+	        method: "GET",
+	        params: {name : localStorage.getItem("userName")}
+	            }).then(function(response){
+		            if(response.data != 1){
+		            	$(".M").show();	    		
+		            }
+	            });
+            
+            //$scope.games=["game","game2"];  
             
     $(document).ready(function(){
 		
-    	//document.getElementById("Menu").style.display ="block";
+    	//$(".M").show();
     	
         $("#newCourseName , #newGameName").keyup(function(){
             document.getElementById("errorCopy").style.display ="none";
@@ -329,8 +329,8 @@ app.controller('ctrl', function($scope, $http) {
                 })
         }
 
-        $scope.rememberGame = function(gameName){
-            copiedGameName = gameName;
+        $scope.rememberGame = function(GameName){
+            copiedGameName = GameName;
         }
 
         $scope.copyGame = function(){
@@ -351,15 +351,52 @@ app.controller('ctrl', function($scope, $http) {
                     }
                 })
         }
-
-
+        
+        $scope.getLogs = function(){
+        	$http({ 
+                url: "http://localhost:8090/st-comm.com/games/log",
+                method: "GET"
+                }).then(function(response){
+                	$("#myModal5").modal('show');    
+                	for(var i =0;i<response.data.length;i++){          		
+                		if(response.data[i].operation == "Collaborator Added" 
+                    		|| response.data[i].operation == "Collaborator Removed"){
+                    		response.data[i].operation += " ("+response.data[i].collaboratorName+")";
+                    	}
+                	}
+                    $scope.logs = response.data;
+                })
+        }
+        $scope.undoOperation = function(id){
+        	alert(id);
+        	$http({ 
+                url: "http://localhost:8090/st-comm.com/games/undo",
+                method: "GET",
+                params:{msgId : id , teacherName : localStorage.getItem("userName")}
+                }).then(function(response){
+                	document.getElementById(id).disabled = true;
+                })
+        }
+        
+        $scope.addColl = function(){
+        	$http({ 
+                url: "http://localhost:8090/st-comm.com/games/collaborators/new",
+                method: "GET",
+                params:{teacherName : localStorage.getItem("userName"),
+                		collaboratorName : $scope.collName,
+                		gameName : copiedGameName , 
+                		courseName : localStorage.getItem("courseName")
+                }
+                }).then(function(response){
+                	$("#myModal6").modal('hide');
+                })
+        }
+        
         document.getElementById("signOut").onclick = function(){
             localStorage.removeItem("userName");
             location.href="index.html";
         }
 	})
-	
-	
 });
 
 window.onclick = function(event) {
@@ -376,6 +413,6 @@ window.onclick = function(event) {
   }
 }
 function check(){
-	/*if ( null == localStorage.getItem("userName"))
-		location.href = "index.html";*/
+	if ( null == localStorage.getItem("userName"))
+		location.href = "index.html";
 }
