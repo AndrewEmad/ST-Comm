@@ -19,17 +19,18 @@ app.controller('ctrl', function($scope, $http) {
             params: {courseName : localStorage.getItem("courseName")}
             }).then(function(response){
                 $scope.games = response.data;
+                $http({
+        	        url: "http://localhost:8090/st-comm.com/query/registrant-type",
+        	        method: "GET",
+        	        params: {name : localStorage.getItem("userName")}
+        	            }).then(function(response){
+        		            if(response.data != 1){
+        		            	$(".M").show();	    		
+        		            }
+        	            });
             })
             
-        $http({
-	        url: "http://localhost:8090/st-comm.com/query/registrant-type",
-	        method: "GET",
-	        params: {name : localStorage.getItem("userName")}
-	            }).then(function(response){
-		            if(response.data != 1){
-		            	$(".M").show();	    		
-		            }
-	            });
+        
             
             //$scope.games=["game","game2"];  
             
