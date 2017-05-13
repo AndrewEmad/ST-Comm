@@ -44,9 +44,8 @@ public class CancelGame
 			
 			if(cancelGame.equals("cancel"))
 			{
-				gameName=sheet.getRow(row).getCell(4).getStringCellValue();
-				
-				driver.findElement(By.name(gameName)).click();
+				//gameName=sheet.getRow(row).getCell(4).getStringCellValue();
+				//driver.findElement(By.id(gameName)).click();
 				Thread.sleep(15000);
 				driver.findElement(By.id("Menu")).click();
 				Thread.sleep(15000);
