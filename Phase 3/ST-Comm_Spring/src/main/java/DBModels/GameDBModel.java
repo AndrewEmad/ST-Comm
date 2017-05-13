@@ -32,51 +32,66 @@ public class GameDBModel {
 		callableSt.executeUpdate();
 	}
 
-	public static void saveComment(String gameName, String courseName, String comment){
-		/*
-		 * 
-		 * 
-		 */
+	public static void saveComment(String gameName, String courseName, String comment) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call saveComment(?, ?, ?)}");
+		callableSt.setString(1, gameName);
+		callableSt.setString(2, courseName);
+		callableSt.setString(3, comment);
+		callableSt.executeUpdate();
 	}
 	
-	public static Vector<String> fetchComments(String gameName, String courseName){
-		/*
-		 * 
-		 * 
-		 */
-		return null;
+	public static Vector<String> fetchComments(String gameName, String courseName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call fetchComments(?,?)}");
+		callableSt.setString(1, gameName);
+		callableSt.setString(2, courseName);
+		Vector<String>comments=new Vector<String>();
+		ResultSet resultComments = callableSt.executeQuery();
+		while(resultComments.next()){
+			comments.add(resultComments.getString(1));
+		}
+		return comments;
 	}
 	
-	public static void addCollaborator(String collaboratorName, String gameName, String CourseName){
-		/*
-		 * 
-		 * 
-		 */
+	public static void addCollaborator(String collaboratorName, String gameName, String CourseName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call addCollaborator(?, ?, ?)}");
+		callableSt.setString(1, collaboratorName);
+		callableSt.setString(2, gameName);
+		callableSt.setString(3, CourseName);
+		callableSt.executeUpdate();
 	}
 	
-	public static void removeCollaborator(String collaboratorName, String gameName, String CourseName){
-		/*
-		 * 
-		 * 
-		 */
+	public static void removeCollaborator(String collaboratorName, String gameName, String CourseName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call removeCollaborator(?, ?, ?)}");
+		callableSt.setString(1, collaboratorName);
+		callableSt.setString(2, gameName);
+		callableSt.setString(3, CourseName);
+		callableSt.executeUpdate();
 	}
 	
-	public static void moveCollaborators(String oldGameName, String newGameName, String courseName){
-		/*
-		 * When a collaborator edits a game, he can change its name. And when the gameName is
-		 * changed, the system will call THIS FUNCTION which must perform the following update query:
-		 * 		FOR ALL Collaborator X to "OLD_GAME_NAME" in "courseName"
-		 * 			collaborator X became now collaborator to "NEWGameName" in "courseName"
-		 *
-		 */
-	}
-	public static boolean isCollaborator(String teacherName, String gameName, String CourseName){
-		/*
-		 * 
-		 * 
-		 * 
-		 */
-		return true;
+	
+	public static boolean isCollaborator(String teacherName, String gameName, String CourseName)throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call isCollaborator(?, ?, ?, ?)}");
+		callableSt.setString(1, teacherName);
+		callableSt.setString(2, gameName);
+		callableSt.setString(3, CourseName);
+		callableSt.registerOutParameter(4, Types.BIT);
+		callableSt.executeUpdate();
+		return callableSt.getBoolean(4);
 	}
 	/**
 	 * Retrieve specific game from database

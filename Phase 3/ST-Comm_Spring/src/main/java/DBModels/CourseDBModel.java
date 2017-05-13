@@ -68,12 +68,19 @@ public class CourseDBModel {
 		callableSt.executeUpdate();
 	}
 
-	public static Vector<Student> getEnrolledStudents(String courseName){
-		/*
-		 * only students
-		 * 
-		 * */
-		return null;
+	public static Vector<String> getEnrolledStudents(String courseName) throws SQLException{
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+	    JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		CallableStatement callableSt = connection.prepareCall("{call getEnrolledStudents(?)}");
+		callableSt.setString(1, courseName);
+		Vector<String>students=new Vector<String>();
+		ResultSet resultStudents = callableSt.executeQuery();
+		while(resultStudents.next()){
+			students.add(resultStudents.getString(1));
+		}
+		return students;
+		
 	}
 	/**
 	 * Returns all courses in the database
