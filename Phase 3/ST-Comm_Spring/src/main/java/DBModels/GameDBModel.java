@@ -25,9 +25,9 @@ public class GameDBModel {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call saveGame(?, ?, ?, ?)}");
 		callableSt.setString(1, game.getName());
-		callableSt.setInt(2, game.getNumOfQuestions());
-		callableSt.setString(3, game.getTeacherName());
-		callableSt.setString(4, game.getCourseName());
+		callableSt.setString(2, game.getCourseName());
+		callableSt.setInt(3, game.getNumOfQuestions());
+		callableSt.setString(4, game.getTeacherName());
 		callableSt.executeUpdate();
 	}
 
@@ -38,8 +38,7 @@ public class GameDBModel {
 	 * @throws SQLException
 	 */
 	public static Game fetchGame(String gameName,String courseName) throws SQLException {
-		
-		 AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
+		AnnotationConfigApplicationContext configurationContext = new AnnotationConfigApplicationContext(DBConfig.class);
 		JdbcTemplate jdbcTemplate = configurationContext.getBean(JdbcTemplate.class);
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		CallableStatement callableSt = connection.prepareCall("{call fetchGame(?,?)}");
