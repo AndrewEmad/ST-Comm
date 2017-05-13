@@ -5,10 +5,8 @@ import Controllers.RegistrantController;
 public class Student extends Registrant {
 
 	private int score;
-	private Course course;
 	
-	Student(Course course, String studentName){
-		this.course = course;
+	Student(String studentName){
 		this.name = studentName;
 	}
 

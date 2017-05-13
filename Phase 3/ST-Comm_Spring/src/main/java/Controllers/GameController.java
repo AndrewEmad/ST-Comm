@@ -20,6 +20,7 @@ import Entities.Course;
 import Entities.Game;
 import Entities.GameOriginator;
 import Entities.LogMessage;
+import Entities.LogOperation;
 import Entities.Question;
 import Entities.QuestionJSONWrapper;
 
@@ -127,9 +128,8 @@ public class GameController {
 		return true;
 	}
 	
-	public static boolean saveGame(@RequestParam String gameName, @RequestParam String courseName,
-			  @RequestParam String teacherName, @RequestParam QuestionJSONWrapper wrapper,
-			  @RequestParam int version){
+	public static boolean saveGame(String gameName, String courseName, String teacherName,
+								   QuestionJSONWrapper wrapper, int version){
 		GameOriginator gameOriginator = new GameOriginator();
 		Vector<Question> questions = wrapper.getQuestions();
 		gameOriginator.setInfo(gameName, courseName, questions.size(), teacherName, questions, false, version);
@@ -144,14 +144,15 @@ public class GameController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/cancel")
-	public static boolean cancelGame(@RequestParam String gameName, @RequestParam String courseName, @RequestParam String teacherName){
+	public static boolean cancelGame(@RequestParam String gameName, @RequestParam String courseName,
+									 @RequestParam String teacherName){
 		if(isCollaborator(teacherName, gameName, courseName) == false){
 			return false;
 		}
 		GameCache.removeFromCache(gameName);
 		try {
 			GameDBModel.cancelGame(gameName, courseName);
-			LogDBModel.writeMessage(new LogMessage("cancel", gameName, gameName, teacherName, courseName, new Date()));
+			LogDBModel.writeMessage(new LogMessage(LogOperation.CANCEL.getValue(), gameName, gameName, teacherName, courseName, new Date()));
 		} catch (SQLException e) {
 			return false;
 		}
@@ -166,7 +167,7 @@ public class GameController {
 		}
 		try {
 			GameDBModel.uncancelGame(gameName, courseName);
-			LogDBModel.writeMessage(new LogMessage("uncancel", gameName, gameName, teacherName, courseName, new Date()));
+			LogDBModel.writeMessage(new LogMessage(LogOperation.UNCANCEL.getValue(), gameName, gameName, teacherName, courseName, new Date()));
 		} catch (SQLException e) {
 			return false;
 		}
@@ -190,8 +191,11 @@ public class GameController {
 		version++;
 		cancelGame(oldGameName, courseName, teacherName);
 		saveGame(newGameName, courseName, teacherName, wrapper, version);
-		GameDBModel.moveCollaborators(oldGameName, newGameName, courseName);
-		LogDBModel.writeMessage(new LogMessage("edit", oldGameName, newGameName, teacherName, courseName, new Date()));
+		try {
+			LogDBModel.writeMessage(new LogMessage(LogOperation.EDIT.getValue(), oldGameName, newGameName, teacherName, courseName, new Date()));
+		} catch (SQLException e) { // does not return false because the edit has been committed
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
@@ -200,14 +204,22 @@ public class GameController {
 							  @RequestParam String comment, @RequestParam String registrantName){
 		String message;
 		message = "New comment on game \"" + gameName + "\" by \"" + registrantName + "\"";
-		GameDBModel.saveComment(gameName, courseName, comment);
+		try {
+			GameDBModel.saveComment(gameName, courseName, comment);
+		} catch (SQLException e) {
+			return false;
+		}
 		RegistrantDBModel.pushNotification(message, registrantName);
 		return true;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/query/comments")
 	public Vector<String> getComments(@RequestParam String gameName, @RequestParam String courseName){
-		return GameDBModel.fetchComments(gameName, courseName);
+		try {
+			return GameDBModel.fetchComments(gameName, courseName);
+		} catch (SQLException e) {
+			return new Vector<String>();
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/collaborators/new")
@@ -216,10 +228,18 @@ public class GameController {
 		if(isCollaborator(teacherName, gameName, courseName) == false){
 			return false;
 		}
-		GameDBModel.addCollaborator(collaboratorName, gameName, courseName);
-		LogMessage logMessage = new LogMessage("addCollaborator", gameName, gameName, teacherName, courseName, new Date());
+		try {
+			GameDBModel.addCollaborator(collaboratorName, gameName, courseName);
+		} catch (SQLException e) {
+			return false;
+		}
+		LogMessage logMessage = new LogMessage(LogOperation.ADD_COLLABORATOR.getValue(), gameName, gameName, teacherName, courseName, new Date());
 		logMessage.setCollaboratorName(collaboratorName);
-		LogController.addLogMessage(logMessage);
+		try {
+			LogController.addLogMessage(logMessage);
+		} catch (SQLException e) { //does not return false because the collaborator has been added
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
@@ -229,24 +249,41 @@ public class GameController {
 		if(isCollaborator(teacherName, gameName, courseName) == false){
 			return false;
 		}
-		GameDBModel.removeCollaborator(collaboratorName, gameName, courseName);
-		LogMessage logMessage = new LogMessage("removeCollaborator", gameName, gameName, teacherName, courseName, new Date());
+		try {
+			GameDBModel.removeCollaborator(collaboratorName, gameName, courseName);
+		} catch (SQLException e) {
+			return false;
+		}
+		LogMessage logMessage = new LogMessage(LogOperation.REMOVE_COLLABORATOR.getValue(), gameName, gameName, teacherName, courseName, new Date());
 		logMessage.setCollaboratorName(collaboratorName);
-		LogController.addLogMessage(logMessage);
+		try {
+			LogController.addLogMessage(logMessage);
+		} catch (SQLException e) { //does not return false because the collaborator has been removed
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/query/collaborators")
 	public static boolean isCollaborator(@RequestParam String teacherName, @RequestParam String gameName,
-			   					  @RequestParam String courseName){
-		return GameDBModel.isCollaborator(teacherName, gameName, courseName);
+			   					  		 @RequestParam String courseName){
+		try {
+			return GameDBModel.isCollaborator(teacherName, gameName, courseName);
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/st-comm.com/games/undo")
 	public static boolean undoChange(@RequestParam int msgId, @RequestParam String teacherName){
-		LogMessage logMessage = LogDBModel.fetchMessage(msgId);
+		LogMessage logMessage;
+		try {
+			logMessage = LogDBModel.fetchMessage(msgId);
+		} catch (SQLException e) {
+			return false;
+		}
 		String operation = logMessage.getOperation();
-		if(operation.equals("edit")){
+		if(operation.equals(LogOperation.EDIT.getValue())){
 			if(uncancelGame(logMessage.getOldGameName(), logMessage.getCourseName(), teacherName) == false){
 				return false;
 			}
@@ -256,22 +293,22 @@ public class GameController {
 				return false;
 			}
 		}
-		else if(operation.equals("cancel")){
+		else if(operation.equals(LogOperation.CANCEL.getValue())){
 			if(uncancelGame(logMessage.getOldGameName(), logMessage.getCourseName(), teacherName) == false){
 				return false;
 			}
 		}
-		else if(operation.equals("uncancel")){
+		else if(operation.equals(LogOperation.UNCANCEL.getValue())){
 			if(cancelGame(logMessage.getOldGameName(), logMessage.getCourseName(), teacherName) == false){
 				return false;
 			}
 		}
-		else if(operation.equals("addCollaborator")){
+		else if(operation.equals(LogOperation.ADD_COLLABORATOR.getValue())){
 			if(removeCollaborator(teacherName, logMessage.getCollaboratorName(), logMessage.getOldGameName(), logMessage.getCourseName()) == false){
 				return false;
 			}
 		}
-		else if(operation.equals("removeCollaborator")){
+		else if(operation.equals(LogOperation.REMOVE_COLLABORATOR.getValue())){
 			if(addCollaborator(teacherName, logMessage.getCollaboratorName(), logMessage.getOldGameName(), logMessage.getCourseName()) == false){
 				return false;
 			}

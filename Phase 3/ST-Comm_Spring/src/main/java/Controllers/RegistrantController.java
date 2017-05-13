@@ -98,26 +98,34 @@ public class RegistrantController {
 	}
 
 	@RequestMapping("/st-comm.com/confirm/{name}/{activationCode}")
-	public void setConfirmed(@PathVariable String name, @PathVariable String activationCode) throws IOException {
+	public void setConfirmed(@PathVariable String name, @PathVariable String activationCode) {
 		try {
 			if(RegistrantDBModel.setConfirmed(name, activationCode))
 				httpServletResponse.sendRedirect("/accountActivated.html");
 			else
 				httpServletResponse.sendRedirect("/accountActivationError.html");
-		} catch (SQLException e) {
-			httpServletResponse.sendRedirect("/accountActivationError.html");
+		} catch (Exception e) {
+			try {
+				httpServletResponse.sendRedirect("/accountActivationError.html");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 
-	public void sendConfirmationMail(String activationCode, Registrant registrant) throws MessagingException {
+	public void sendConfirmationMail(String activationCode, Registrant registrant) {
 		String name = registrant.getName();
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper;
-		helper = new MimeMessageHelper(message, true);
-		helper.setTo(registrant.getMail());
-		helper.setSubject("ST-Comm account confirmation");
-		helper.setText("<b>Hey "+name+",</b><br/>We're ready to activate your account. All we need to do is make sure this is your email address.<br/><a href=\"http://localhost:8090/st-comm.com/confirm/"+name+"/"+activationCode+"\">Click here to activate your account</a><br/>If you didn't create a ST-Comm account, just delete this email and everything will go back to the way it was.", true);
-		javaMailSender.send(message);
+		try {
+			helper = new MimeMessageHelper(message, true);
+			helper.setTo(registrant.getMail());
+			helper.setSubject("ST-Comm account confirmation");
+			helper.setText("<b>Hey "+name+",</b><br/>We're ready to activate your account. All we need to do is make sure this is your email address.<br/><a href=\"http://localhost:8090/st-comm.com/confirm/"+name+"/"+activationCode+"\">Click here to activate your account</a><br/>If you didn't create a ST-Comm account, just delete this email and everything will go back to the way it was.", true);
+			javaMailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
