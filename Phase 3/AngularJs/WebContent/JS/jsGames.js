@@ -107,6 +107,8 @@ app.controller('ctrl', function($scope, $http) {
 
             if(questionNum == numOfQuestions){
                 $('#submitAnswer').prop('disabled', true);
+                document.getElementById("time").innerHTML = 0 + " left";
+                return;
             }
             else{
                 questionNum++;
@@ -132,18 +134,35 @@ app.controller('ctrl', function($scope, $http) {
         $scope.editGame = function(GameName){
         	gameName = GameName;
         	$http({
-                url: "http://localhost:8090/st-comm.com/games/get",
+                url: "http://localhost:8090/st-comm.com/games/query/collaborators",
                 method: "GET",
-                params: {gameName : gameName}
+                params: {teacherName : localStorage.getItem("userName") ,
+                		gameName : gameName,
+                		courseName : localStorage.getItem("courseName")
+                }
                 }).then(function(response){
-                	questionNum = 1;
-                	numOfQuestions = response.data.numOfQuestions;
-                    questions = response.data.questions;
-                    gameVersion = response.version;
-                    $('#myModal3').modal('show');
-                    $("#gameName2").val(gameName);
-                    $("#numOfQuestions2").val(numOfQuestions);
+                	if(response){
+                		$http({
+                            url: "http://localhost:8090/st-comm.com/games/get",
+                            method: "GET",
+                            params: {gameName : gameName}
+                            }).then(function(response){
+                            	questionNum = 1;
+                            	numOfQuestions = response.data.numOfQuestions;
+                                questions = response.data.questions;
+                                gameVersion = response.version;
+                                $('#myModal3').modal('show');
+                                $("#gameName2").val(gameName);
+                                $("#numOfQuestions2").val(numOfQuestions);
+                            })
+                	}
+                	else{
+                		document.getElementById("notColl").style.display="block";
+                	}
                 })
+        	
+        	
+        	
                 
             /*questionNum = 1;
         	numOfQuestions = 1;
@@ -161,6 +180,8 @@ app.controller('ctrl', function($scope, $http) {
         };
         
         $scope.editGameInfo = function(){
+        	newGameName = $("#gameName2").val();
+        	newNumOfQ = $("#numOfQuestions2").val();
         	
         	/*newGameName = $("#gameName2").val();
         	newNumOfQ = $("#numOfQuestions2").val();
@@ -178,8 +199,7 @@ app.controller('ctrl', function($scope, $http) {
     			params: {gameName : newGameName , courseName : localStorage.getItem("courseName")}
 	    		}).then(function(response){
 	    			if(!response.data){
-	    				newGameName = $("#gameName2").val();
-	    	        	newNumOfQ = $("#numOfQuestions2").val();
+	    				
 						$('#myModal3').modal('hide');
 						$('#myModal4').modal('show');
 						$scope.editQuestions();
@@ -314,19 +334,33 @@ app.controller('ctrl', function($scope, $http) {
                 })
         }
 
-        $scope.openMenu = function(gameName){
-            document.getElementById(gameName).classList.toggle("show");
+        $scope.openMenu = function(GameName){
+            document.getElementById(GameName).classList.toggle("show");
         }
 
-        $scope.cancelGame = function(gameName){
-            $http({ 
-                url: "http://localhost:8090/st-comm.com/games/cancel",
+        $scope.cancelGame = function(GameName){
+        	$http({
+                url: "http://localhost:8090/st-comm.com/games/query/collaborators",
                 method: "GET",
-                params: {gameName : gameName , 
-                	courseName : localStorage.getItem("courseName"),
-                	teacherName : localStorage.getItem("userName")}
+                params: {teacherName : localStorage.getItem("userName") ,
+                		gameName : gameName,
+                		courseName : localStorage.getItem("courseName")
+                }
                 }).then(function(response){
-                    location.reload();   		
+                	if(response){
+                		$http({ 
+                            url: "http://localhost:8090/st-comm.com/games/cancel",
+                            method: "GET",
+                            params: {gameName : GameName , 
+                            	courseName : localStorage.getItem("courseName"),
+                            	teacherName : localStorage.getItem("userName")}
+                            }).then(function(response){
+                                location.reload();   		
+                            })
+                	}
+                	else{
+                		document.getElementById("notColl").style.display="block";
+                	}
                 })
         }
 
@@ -369,7 +403,6 @@ app.controller('ctrl', function($scope, $http) {
                 })
         }
         $scope.undoOperation = function(id){
-        	alert(id);
         	$http({ 
                 url: "http://localhost:8090/st-comm.com/games/undo",
                 method: "GET",

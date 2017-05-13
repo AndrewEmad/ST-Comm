@@ -147,3 +147,7 @@ hr{
 	border: none;
 	border-bottom: 2px solid #82B1FF;
 }
+#notColl{
+	display : none;
+	color:red;
+}
